@@ -10,4 +10,4 @@ pluginManagement {
   }
 }
 
-rootProject.name = "com.pulumi.provider-boilerplate"
+rootProject.name = "com.biznetgio.biznetgio"
