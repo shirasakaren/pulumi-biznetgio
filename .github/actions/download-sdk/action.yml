@@ -18,4 +18,3 @@ runs:
     - name: UnTar SDK folder
       shell: bash
       run: tar -zxf ${{ github.workspace }}/sdk/${{ inputs.language }}.tar.gz -C ${{ github.workspace }}/sdk/${{ inputs.language }}
-// wip 48
