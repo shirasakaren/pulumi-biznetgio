@@ -84,3 +84,89 @@ func (s *NeoliteProService) VMChangeName(ctx context.Context, accountID int64, n
 
 func (s *NeoliteProService) VMChangeKeypair(ctx context.Context, accountID, keypairID int64) (map[string]any, error) {
 	raw, err := s.client.doJSON(ctx, http.MethodPut,
+		fmt.Sprintf("/neolite-pros/accounts/%d/keypair", accountID),
+		map[string]int64{"keypair_id": keypairID})
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *NeoliteProService) VMChangePackage(
+	ctx context.Context, accountID int64, req ChangePackagePayload,
+) (*BillingResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost,
+		fmt.Sprintf("/neolite-pros/accounts/%d/change-package", accountID), req)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[*BillingResource](raw)
+}
+
+func (s *NeoliteProService) VMChangeStorage(
+	ctx context.Context, accountID int64, req UpgradePayload,
+) (*BillingResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPut,
+		fmt.Sprintf("/neolite-pros/accounts/%d/storage", accountID), req)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[*BillingResource](raw)
+}
+
+func (s *NeoliteProService) ChangePackageOptions(ctx context.Context, accountID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet,
+		fmt.Sprintf("/neolite-pros/accounts/%d/change-package", accountID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *NeoliteProService) StorageOptions(ctx context.Context, accountID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet,
+		fmt.Sprintf("/neolite-pros/accounts/%d/storage", accountID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *NeoliteProService) DiskCreate(ctx context.Context, req NeoliteDiskCreatePayload) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost, "/neolite-pros/disks", req)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *NeoliteProService) DisksList(ctx context.Context, status string) ([]map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, s.path("/disks/accounts", status), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]map[string]any](raw)
+}
+
+func (s *NeoliteProService) DiskGet(ctx context.Context, accountID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, fmt.Sprintf("/neolite-pros/disks/accounts/%d", accountID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *NeoliteProService) DiskUpgrade(
+	ctx context.Context, accountID int64, req DiskUpgradePayload,
+) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPut, fmt.Sprintf("/neolite-pros/disks/accounts/%d", accountID), req)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *NeoliteProService) DiskDelete(ctx context.Context, accountID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodDelete, fmt.Sprintf("/neolite-pros/disks/%d", accountID), nil)
+	if err != nil {
+		return nil, err
