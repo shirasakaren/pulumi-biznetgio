@@ -80,3 +80,44 @@ func (ObjectStorageBucket) Read(
 ) (infer.ReadResponse[ObjectStorageBucketArgs, ObjectStorageBucketState], error) {
 	resp := infer.ReadResponse[ObjectStorageBucketArgs, ObjectStorageBucketState]{
 		ID:     req.ID,
+		Inputs: req.Inputs,
+		State:  ObjectStorageBucketState{ObjectStorageBucketArgs: req.Inputs},
+	}
+	c := GetClient(ctx)
+	m, ok, err := osFindBucket(ctx, c, osParseID(req.Inputs.AccountID), req.Inputs.Name)
+	if err != nil {
+		return resp, err
+	}
+	if !ok {
+		return resp, fmt.Errorf("biznetgio: object storage bucket %s not found", req.ID)
+	}
+	if v, ok := osString(m, "acl"); ok {
+		resp.State.Acl = &v
+	}
+	resp.State.Raw = string(osJSON(m))
+	return resp, nil
+}
+
+func (ObjectStorageBucket) Delete(
+	ctx context.Context, req infer.DeleteRequest[ObjectStorageBucketState],
+) (infer.DeleteResponse, error) {
+	c := GetClient(ctx)
+	if _, err := c.ObjectStorage().BucketDelete(ctx, osParseID(req.State.AccountID),
+		req.State.Name); err != nil && !client.IsNotFound(err) {
+		return infer.DeleteResponse{}, err
+	}
+	return infer.DeleteResponse{}, nil
+}
+
+func osFindBucket(ctx context.Context, c *client.Client, accountID int64, name string) (map[string]any, bool, error) {
+	items, err := c.ObjectStorage().BucketsList(ctx, accountID)
+	if err != nil {
+		return nil, false, err
+	}
+	for _, it := range items {
+		if bn, ok := osString(it, "name", "bucket_name"); ok && bn == name {
+			return it, true, nil
+		}
+	}
+	return nil, false, nil
+}
