@@ -21,7 +21,7 @@ if [[ "|$AZURE_SIGNING_CLIENT_ID|$AZURE_SIGNING_CLIENT_SECRET|$AZURE_SIGNING_TEN
     exit 0;
 fi
 
-file="dist/build-provider-sign-windows_windows_$GORELEASER_ARCH/pulumi-resource-provider-boilerplate.exe";
+file="dist/build-provider-sign-windows_windows_$GORELEASER_ARCH/pulumi-resource-biznetgio.exe";
 >&2 echo "Moving $file to $file.unsigned";
 mv "$file" "$file.unsigned";
 
