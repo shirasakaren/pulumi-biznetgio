@@ -1,11 +1,11 @@
 template: native
-provider: provider-boilerplate
+provider: biznetgio
 major-version: 0
 providerDefaultBranch: main
 publishRegistry: false
-providerVersion: github.com/pulumi/pulumi-provider-boilerplate/provider.Version
+providerVersion: github.com/biznetgio/pulumi-biznetgio/provider.Version
 parallel: 3
-sdkModuleDir: sdk/go/pulumi-provider-boilerplate
+sdkModuleDir: sdk/go/pulumi-biznetgio
 esc:
     enabled: true
     environment: imports/github-secrets
