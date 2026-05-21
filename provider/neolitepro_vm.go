@@ -218,3 +218,4 @@ func (NeoliteProVm) Update(
 			return infer.UpdateResponse[NeoliteProVmState]{},
 				fmt.Errorf("set neolite pro vm power state %q: %w", strPtr(in.PowerState), err)
 		}
+// wip 165
