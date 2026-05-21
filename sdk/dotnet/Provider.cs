@@ -6,12 +6,26 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
+using Pulumi;
 
-namespace Pulumi.ProviderBoilerplate
+namespace Biznetgio.Biznetgio
 {
-    [ProviderBoilerplateResourceType("pulumi:providers:provider-boilerplate")]
+    [BiznetgioResourceType("pulumi:providers:biznetgio")]
     public partial class Provider : global::Pulumi.ProviderResource
     {
+        /// <summary>
+        /// BiznetGIO API token (x-token header). Falls back to BIZNETGIO_API_KEY.
+        /// </summary>
+        [Output("apiToken")]
+        public Output<string?> ApiToken { get; private set; } = null!;
+
+        /// <summary>
+        /// BiznetGIO API base URL. Falls back to BIZNETGIO_BASE_URL.
+        /// </summary>
+        [Output("baseUrl")]
+        public Output<string?> BaseUrl { get; private set; } = null!;
+
+
         /// <summary>
         /// Create a Provider resource with the given unique name, arguments, and options.
         /// </summary>
@@ -20,7 +34,7 @@ namespace Pulumi.ProviderBoilerplate
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public Provider(string name, ProviderArgs? args = null, CustomResourceOptions? options = null)
-            : base("provider-boilerplate", name, args ?? new ProviderArgs(), MakeResourceOptions(options, ""))
+            : base("biznetgio", name, args ?? new ProviderArgs(), MakeResourceOptions(options, ""))
         {
         }
 
@@ -29,6 +43,10 @@ namespace Pulumi.ProviderBoilerplate
             var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
+                AdditionalSecretOutputs =
+                {
+                    "apiToken",
+                },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
@@ -39,13 +57,33 @@ namespace Pulumi.ProviderBoilerplate
 
     public sealed class ProviderArgs : global::Pulumi.ResourceArgs
     {
-        [Input("itsasecret", json: true)]
-        public Input<bool>? Itsasecret { get; set; }
+        [Input("apiToken")]
+        private Input<string>? _apiToken;
+
+        /// <summary>
+        /// BiznetGIO API token (x-token header). Falls back to BIZNETGIO_API_KEY.
+        /// </summary>
+        public Input<string>? ApiToken
+        {
+            get => _apiToken;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _apiToken = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
+
+        /// <summary>
+        /// BiznetGIO API base URL. Falls back to BIZNETGIO_BASE_URL.
+        /// </summary>
+        [Input("baseUrl")]
+        public Input<string>? BaseUrl { get; set; }
 
         public ProviderArgs()
         {
+            ApiToken = Utilities.GetEnv("BIZNETGIO_API_KEY");
+            BaseUrl = Utilities.GetEnv("BIZNETGIO_BASE_URL") ?? "https://api.portal.biznetgio.com/v1";
         }
         public static new ProviderArgs Empty => new ProviderArgs();
     }
 }
-// wip 132
