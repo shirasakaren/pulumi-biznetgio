@@ -48,3 +48,4 @@ namespace Pulumi.ProviderBoilerplate
         public static new ProviderArgs Empty => new ProviderArgs();
     }
 }
+// wip 132
