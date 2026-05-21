@@ -6,3 +6,4 @@ my_random_component = boilerplate.RandomComponent("myRandomComponent", length=24
 pulumi.export("output", {
     "value": my_random_resource.result,
 })
+// wip 125
