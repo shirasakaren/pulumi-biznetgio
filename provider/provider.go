@@ -1,55 +1,84 @@
-// Copyright 2025, Pulumi Corporation.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-// Package provider implements a simple random resource and component.
 package provider
 
 import (
+	"context"
 	"fmt"
+	"time"
 
 	p "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
+
+	"github.com/biznetgio/pulumi-biznetgio/provider/client"
 )
 
-// Version is initialized by the Go linker to contain the semver of this build.
 var Version string
 
-// Name controls how this provider is referenced in package names and elsewhere.
-const Name string = "provider-boilerplate"
+const Name string = "biznetgio"
 
-// Provider creates a new instance of the provider.
 func Provider() p.Provider {
 	p, err := infer.NewProviderBuilder().
-		WithDisplayName("pulumi-provider-boilerplate").
-		WithDescription("An example built with pulumi-go-provider.").
-		WithHomepage("https://www.pulumi.com").
-		WithNamespace("pulumi").
-		WithGoImportPath("github.com/pulumi/pulumi-provider-boilerplate/sdk/go/pulumi-provider-boilerplate").
-		WithResources(infer.Resource(Random{})).
-		WithComponents(infer.ComponentF(NewRandomComponent)).
-		WithConfig(infer.Config(&Config{})).
-		WithModuleMap(map[tokens.ModuleName]tokens.ModuleName{
-			"provider": "index",
-		}).Build()
-	if err != nil {
-		panic(fmt.Errorf("unable to build provider: %w", err))
-	}
-	return p
-}
-
-// Config defines provider-level configuration
-type Config struct {
-	Scream *bool `pulumi:"itsasecret,optional"`
-}
+		WithDisplayName("Pulumi BiznetGIO Provider").
+		WithDescription("Pulumi provider for BiznetGIO cloud — NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.").
+		WithHomepage("https://www.biznetgio.com").
+		WithRepository("github.com/biznetgio/pulumi-biznetgio").
+		WithPublisher("biznetgio").
+		WithKeywords("biznetgio", "cloud", "indonesia", "neo").
+		WithLicense("Apache-2.0").
+		WithNamespace("biznetgio").
+		WithLanguageMap(map[string]any{
+			"nodejs": map[string]any{"packageName": "@biznetgio/biznetgio"},
+			"python": map[string]any{"packageName": "pulumi_biznetgio"},
+			"dotnet": map[string]any{"packageName": "Biznetgio.Biznetgio"},
+			"java":   map[string]any{},
+		}).
+		WithGoImportPath("github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio").
+		WithResources(
+			// metal dulu
+			infer.Resource(Baremetal{}),
+			infer.Resource(BaremetalKeypair{}),
+			infer.Resource(BaremetalAdditionalIp{}),
+			infer.Resource(BaremetalAdditionalIpAssignment{}),
+			infer.Resource(BaremetalElasticStorage{}),
+			// gpu cekidot
+			infer.Resource(GpuInstance{}),
+			infer.Resource(GpuKeypair{}),
+			// neolite gaskeun
+			infer.Resource(NeoliteVm{}),
+			infer.Resource(NeoliteKeypair{}),
+			infer.Resource(NeoliteSnapshot{}),
+			infer.Resource(NeoliteVmFromSnapshot{}),
+			infer.Resource(NeoliteDisk{}),
+			// pro gacor
+			infer.Resource(NeoliteProVm{}),
+			infer.Resource(NeoliteProKeypair{}),
+			infer.Resource(NeoliteProSnapshot{}),
+			infer.Resource(NeoliteProDisk{}),
+			// object storage jos
+			infer.Resource(ObjectStorage{}),
+			infer.Resource(ObjectStorageBucket{}),
+			infer.Resource(ObjectStorageCredential{}),
+			infer.Resource(ObjectStorageObject{}),
+		).
+		WithFunctions(
+			// metal dulu
+			infer.Function(BaremetalProducts{}),
+			infer.Function(BaremetalRebuildOsList{}),
+			infer.Function(BaremetalOpenvpn{}),
+			// gpu cekidot
+			infer.Function(GpuProducts{}),
+			infer.Function(GpuConsole{}),
+			infer.Function(GpuGraph{}),
+			// neolite gaskeun
+			infer.Function(NeoliteProducts{}),
+			infer.Function(NeoliteOsList{}),
+			infer.Function(NeoliteChangePackageOptions{}),
+			infer.Function(NeoliteStorageUpgradeOptions{}),
+			infer.Function(NeoliteIPAvailability{}),
+			// pro gacor
+			infer.Function(NeoliteProProducts{}),
+			infer.Function(NeoliteProOsList{}),
+			infer.Function(NeoliteProChangePackageOptions{}),
+			infer.Function(NeoliteProStorageUpgradeOptions{}),
+			infer.Function(NeoliteProIPAvailability{}),
+			// object storage jos
