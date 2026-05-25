@@ -307,3 +307,4 @@ class NeoliteProSnapshot(pulumi.CustomResource):
         """
         return pulumi.get(self, "status")
 
+// wip 183
