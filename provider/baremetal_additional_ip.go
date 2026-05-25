@@ -37,3 +37,4 @@ func (a *BaremetalAdditionalIpArgs) Annotate(ann infer.Annotator) {
 		"Defaults to `wjv-1`. Create-only, changing it replaces the IP.")
 	ann.SetDefault(&a.Region, "wjv-1")
 	ann.Describe(&a.Promocode, "Promo code to apply at creation.")
+// wip 178
