@@ -76,3 +76,78 @@ func (a *BaremetalRebuildOsListArgs) Annotate(ann infer.Annotator) {
 }
 
 func (r *BaremetalRebuildOsListResult) Annotate(ann infer.Annotator) {
+	ann.Describe(&r.Oss, "Valid OS values for the `rebuildOs` input of Baremetal, "+
+		"from `GET /baremetals/{account_id}/rebuild/oss`.")
+	ann.Describe(&r.Raw, "Raw JSON of the full list response.")
+}
+
+func (BaremetalRebuildOsList) Invoke(
+	ctx context.Context, req infer.FunctionRequest[BaremetalRebuildOsListArgs],
+) (infer.FunctionResponse[BaremetalRebuildOsListResult], error) {
+	c := GetClient(ctx)
+	items, err := c.Baremetal().RebuildOSList(ctx, req.Input.AccountID)
+	if err != nil {
+		return infer.FunctionResponse[BaremetalRebuildOsListResult]{}, err
+	}
+	out := BaremetalRebuildOsListResult{Oss: make([]string, 0, len(items))}
+	for _, it := range items {
+		if s, ok := it.(string); ok {
+			out.Oss = append(out.Oss, s)
+		}
+	}
+	out.Raw = string(bmtJSONList(items))
+	return infer.FunctionResponse[BaremetalRebuildOsListResult]{Output: out}, nil
+}
+
+type BaremetalOpenvpn struct{}
+
+type BaremetalOpenvpnArgs struct{}
+
+type BaremetalOpenvpnResult struct {
+	Config string `pulumi:"config" provider:"secret"`
+	Raw    string `pulumi:"raw" provider:"secret"`
+}
+
+func (a *BaremetalOpenvpnArgs) Annotate(_ infer.Annotator) {}
+
+func (r *BaremetalOpenvpnResult) Annotate(ann infer.Annotator) {
+	ann.Describe(&r.Config, "OpenVPN client config from `GET /baremetals/openvpn`.")
+	ann.Describe(&r.Raw, "Raw JSON of the full response.")
+}
+
+func (BaremetalOpenvpn) Invoke(
+	ctx context.Context, _ infer.FunctionRequest[BaremetalOpenvpnArgs],
+) (infer.FunctionResponse[BaremetalOpenvpnResult], error) {
+	c := GetClient(ctx)
+	m, err := c.Baremetal().OpenVPN(ctx)
+	if err != nil {
+		return infer.FunctionResponse[BaremetalOpenvpnResult]{}, err
+	}
+	config, ok := bmtString(m, "config", "openvpn", "config_file", "ovpn")
+	if !ok {
+		return infer.FunctionResponse[BaremetalOpenvpnResult]{},
+			fmt.Errorf("biznetgio: openvpn response missing config: %s", bmtJSON(m))
+	}
+	return infer.FunctionResponse[BaremetalOpenvpnResult]{Output: BaremetalOpenvpnResult{
+		Config: config,
+		Raw:    string(bmtJSON(m)),
+	}}, nil
+}
+
+func bmtStringDefaultInt64(m map[string]any, keys ...string) int64 {
+	v, _ := bmtInt64(m, keys...)
+	return v
+}
+
+func bmtJSONList(items any) []byte {
+	if maps, ok := items.([]map[string]any); ok {
+		out := make([]map[string]any, 0, len(maps))
+		for _, m := range maps {
+			out = append(out, redactMap(m))
+		}
+		b, _ := json.Marshal(out)
+		return b
+	}
+	b, _ := json.Marshal(items)
+	return b
+}
