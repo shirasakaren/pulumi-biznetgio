@@ -82,3 +82,45 @@ func (NeoliteProDisk) Create(
 		return infer.CreateResponse[NeoliteProDiskState]{},
 			fmt.Errorf("create neolite pro disk response tidak ada account_id: %s", neoRawJSON(out))
 	}
+	id := fmt.Sprintf("%d", diskID)
+	partial := NeoliteProDiskState{NeoliteProDiskArgs: in}
+	partial.OrderID = neoAliasStr(out, "order_id", "orderid")
+	partial.Raw = neoRawJSON(out)
+
+	done, err := client.WaitForStatus(ctx, 5*time.Second,
+		func(ctx context.Context) (map[string]any, error) {
+			return c.NeolitePro().DiskGet(ctx, diskID)
+		},
+		neoliteDiskStatus, []string{"active"}, []string{"suspended", "terminated"})
+	if err != nil {
+		if ctx.Err() == context.DeadlineExceeded {
+			return infer.CreateResponse[NeoliteProDiskState]{ID: id, Output: partial},
+				infer.ResourceInitFailedError{Reasons: []string{fmt.Sprintf("neolite pro disk %d belum active: %s", diskID, err)}}
+		}
+		return infer.CreateResponse[NeoliteProDiskState]{}, err
+	}
+
+	state := partial
+	state.Status = neoAliasStr(done, "status", "state")
+	state.Raw = neoRawJSON(done)
+	return infer.CreateResponse[NeoliteProDiskState]{ID: id, Output: state}, nil
+}
+
+func (NeoliteProDisk) Update(
+	ctx context.Context, req infer.UpdateRequest[NeoliteProDiskArgs, NeoliteProDiskState],
+) (infer.UpdateResponse[NeoliteProDiskState], error) {
+	if req.DryRun {
+		return infer.UpdateResponse[NeoliteProDiskState]{Output: NeoliteProDiskState{NeoliteProDiskArgs: req.Inputs}}, nil
+	}
+
+	c := GetClient(ctx)
+	id, err := parseNeoID(req.ID)
+	if err != nil {
+		return infer.UpdateResponse[NeoliteProDiskState]{}, err
+	}
+	newSize := i64Val(req.Inputs.Size)
+	oldSize := i64Val(req.State.Size)
+	if newSize == oldSize {
+		return infer.UpdateResponse[NeoliteProDiskState]{Output: req.State}, nil
+	}
+	if newSize < oldSize {
