@@ -204,3 +204,4 @@ public class BaremetalAdditionalIp extends com.pulumi.resources.CustomResource {
     }
 }
 // wip 113
+// wip 287
