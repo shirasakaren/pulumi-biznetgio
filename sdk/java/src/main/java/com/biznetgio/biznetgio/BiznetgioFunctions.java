@@ -391,3 +391,4 @@ public final class BiznetgioFunctions {
         return Deployment.getInstance().invokeAsync("biznetgio:index:objectStorageInstances", TypeShape.of(ObjectStorageInstancesResult.class), args, Utilities.withVersion(options));
     }
 }
+// wip 327
