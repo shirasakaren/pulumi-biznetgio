@@ -1,113 +1,116 @@
-# Pulumi Native Provider Boilerplate
+# Pulumi BiznetGIO Provider
 
-This repository is a boilerplate showing how to create and locally test a native Pulumi provider (with examples of both CustomResource and ComponentResource [resource types](https://www.pulumi.com/docs/iac/concepts/resources/)). 
+A native [Pulumi](https://www.pulumi.com) provider for managing
+[BiznetGIO](https://www.biznetgio.com) cloud infrastructure via the
+[BiznetGIO Portal API](https://api.portal.biznetgio.com/v1/docs).
 
-## Authoring a Pulumi Native Provider
+Covers NEO Metal (bare metal), NEO Lite / NEO Lite Pro (VMs), NEO GPU, and
+NEO Object Storage (S3-compatible), with matching provider functions for
+catalog lookups (products, OS lists, upgrade options, IP availability).
 
-This boilerplate creates a working Pulumi-owned provider named `provider-boilerplate`.
-It implements a random number generator that you can [build and test out for yourself](#test-against-the-example) and then replace the Random code with code specific to your provider.
+## Install
 
+The provider is published as `biznetgio` in the Pulumi Registry. SDK packages:
 
-### Prerequisites
+| Language | Package |
+|---|---|
+| Node.js | `@biznetgio/biznetgio` |
+| Python | `pulumi_biznetgio` |
+| Go | `github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio` |
+| .NET | `Biznetgio.Biznetgio` |
+| Java | `com.biznetgio.biznetgio` |
 
-You will need to ensure the following tools are installed and present in your `$PATH`:
+## Authentication
 
-* [`pulumictl`](https://github.com/pulumi/pulumictl#installation)
-* [Go 1.21](https://golang.org/dl/) or 1.latest
-* [NodeJS](https://nodejs.org/en/) 14.x.  We recommend using [nvm](https://github.com/nvm-sh/nvm) to manage NodeJS installations.
-* [Yarn](https://yarnpkg.com/)
-* [TypeScript](https://www.typescriptlang.org/)
-* [Python](https://www.python.org/downloads/) (called as `python3`).  For recent versions of MacOS, the system-installed version is fine.
-* [.NET](https://dotnet.microsoft.com/download)
+Set the API token via config (secret) or environment:
 
-
-### Build & test the boilerplate provider
-
-1. Run `make build install` to build and install the provider.
-1. Run `make gen_examples` to generate the example programs in `examples/` off of the source `examples/yaml` example program.
-1. Run `make up` to run the example program in `examples/yaml`.
-1. Run `make down` to tear down the example program.
-
-### Creating a new provider repository
-
-Pulumi offers this repository as a [GitHub template repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) for convenience.  From this repository:
-
-1. Click "Use this template".
-1. Set the following options:
-   * Owner: pulumi 
-   * Repository name: pulumi-provider-boilerplate (replace "provider-boilerplate" with the name of your provider)
-   * Description: Pulumi provider for xyz
-   * Repository type: Public
-1. Clone the generated repository.
-
-From the templated repository:
-
-1. Run the following command to update files to use the name of your provider (third-party: use your GitHub organization/username):
-
-    ```bash
-    make prepare NAME=foo ORG=myorg REPOSITORY=github.com/myorg/pulumi-foo
-    ```
-
-   This will do the following:
-   - rename folders in `provider/cmd` to `pulumi-resource-{NAME}`
-   - replace dependencies in `provider/go.mod` to reflect your repository name
-   - find and replace all instances of `provider-boilerplate` with the `NAME` of your provider.
-   - find and replace all instances of the boilerplate `abc` with the `ORG` of your provider.
-   - replace all instances of the `github.com/pulumi/pulumi-provider-boilerplate` repository with the `REPOSITORY` location
-
-#### Build the provider and install the plugin
-
-   ```bash
-   $ make build install
-   ```
-   
-This will:
-
-1. Create the SDK codegen binary and place it in a `./bin` folder (gitignored)
-2. Create the provider binary and place it in the `./bin` folder (gitignored)
-3. Generate the dotnet, Go, Node, and Python SDKs and place them in the `./sdk` folder
-4. Install the provider on your machine.
-
-#### Test against the example
-   
 ```bash
-$ cd examples/simple
-$ yarn link @pulumi/provider-boilerplate
-$ yarn install
-$ pulumi stack init test
-$ pulumi up
+pulumi config set --secret biznetgio:apiToken <token>
+# or: export BIZNETGIO_API_KEY=<token>
 ```
 
-Now that you have completed all of the above steps, you have a working provider that generates a random string for you.
+The token is sent as the `x-token` header. `baseUrl` defaults to
+`https://api.portal.biznetgio.com/v1` (override with `BIZNETGIO_BASE_URL` or
+`pulumi config set biznetgio:baseUrl ...`).
 
-#### A brief repository overview
+## Example
 
-You now have:
+```typescript
+import * as biznetgio from "@biznetgio/biznetgio";
 
-1. A `provider/` folder containing the building and implementation logic.
-    1. `cmd/pulumi-resource-provider-boilerplate/main.go` - holds the provider's sample implementation logic.
-2. `Makefile` - targets to help with building and publishing the provider. Run `make ci-mgmt` to regenerate CI workflows.
-3. `sdk` - holds the generated code libraries created by `pulumi gen-sdk`.
-4. `examples` a folder of Pulumi programs to try locally and/or use in CI.
-5. A `Makefile` and this `README`.
+const plans = biznetgio.getNeoliteProducts();
 
-#### Additional Details
+const keypair = new biznetgio.NeoliteKeypair("deploy", { name: "deploy-key" });
 
-This repository depends on the pulumi-go-provider library. For more details on building providers, please check
-the [Pulumi Go Provider docs](https://github.com/pulumi/pulumi-go-provider).
+const vm = new biznetgio.NeoliteVm("web", {
+  vmName: "web-1",
+  productId: plans.products[0].productId,
+  selectOs: "Ubuntu 22.04",
+  keypairId: keypair.id,
+  cycle: "m",
+  // defaults to true: the invoice is paid automatically with the stored card.
+  // set false to keep the order pending until paid manually in the portal.
+  payWithCreditCard: true,
+});
 
-### Build Examples
+export const vmStatus = vm.status;
+```
 
-Create an example program using the resources defined in your provider, and place it in the `examples/` folder.
+> **Billing note**: every create/upgrade call places a real order and may
+> charge the credit card on file. Resources created with
+> `payWithCreditCard = false` stay `Pending` until the invoice is paid in the
+> portal.
 
-You can now repeat the steps for [build, install, and test](#test-against-the-example).
+## Resources
 
-## Configuring CI and releases
+`Baremetal`, `BaremetalKeypair`, `BaremetalAdditionalIp`,
+`BaremetalAdditionalIpAssignment`, `BaremetalElasticStorage`, `GpuInstance`,
+`GpuKeypair`, `NeoliteVm`, `NeoliteKeypair`, `NeoliteSnapshot`,
+`NeoliteVmFromSnapshot`, `NeoliteDisk`, `NeoliteProVm`, `NeoliteProKeypair`,
+`NeoliteProSnapshot`, `NeoliteProDisk`, `ObjectStorage`,
+`ObjectStorageBucket`, `ObjectStorageCredential`, `ObjectStorageObject`.
 
-1. Follow the instructions laid out in the [deployment templates](./deployment-templates/README-DEPLOYMENT.md).
+## Functions
 
-## References
+`baremetalProducts`, `baremetalRebuildOsList`, `baremetalOpenvpn`,
+`gpuProducts`, `gpuConsole`, `gpuGraph`, `neoliteProducts`,
+`neoliteOsList`, `neoliteChangePackageOptions`,
+`neoliteStorageUpgradeOptions`, `neoliteIPAvailability`,
+`neoliteProProducts`, `neoliteProOsList`,
+`neoliteProChangePackageOptions`, `neoliteProStorageUpgradeOptions`,
+`neoliteProIPAvailability`, `objectStorageInstances`,
+`objectStorageBuckets`, `objectStorageCredentials`.
 
-Other resources/examples for implementing providers:
-* [Pulumi Command provider](https://github.com/pulumi/pulumi-command/blob/master/provider/pkg/provider/provider.go)
-* [Pulumi Go Provider repository](https://github.com/pulumi/pulumi-go-provider)
+## Notes on the BiznetGIO API
+
+- The Portal API does not publish response schemas. Response handling is
+  defensive and was cross-checked against BiznetGIO's own SDKs and CLI; report
+  any field mismatch as an issue. Every resource exposes a secret-marked `raw`
+  output (secrets redacted) with the full last-read payload.
+- Power actions are declarative (`powerState`); the API is only called when
+  the value changes. One-shot actions (reset, rebuild, reserve GPU hours,
+  migrate-to-pro) are trigger attributes: change the value to re-fire.
+- Long-running provisioning is polled until active; on timeout the partial
+  state is kept and the next `pulumi up` resumes the update.
+- Products with no public API (NEO Virtual Compute, NEO Kubernetes, NEO DNS,
+  domains, web hosting, gio-private, gio-enterprise-cloud, gio-backup) are out
+  of scope.
+
+## Development
+
+```sh
+make build install   # provider binary + all-language SDK codegen
+make test_provider   # Go unit tests
+make lint            # golangci-lint
+```
+
+## Publishing
+
+`make ci-mgmt` regenerates release workflows from `.ci-mgmt.yaml`. Before
+publishing, replace the placeholder `biznetgio` GitHub org with the real one
+and set `publishRegistry: true`. Release secrets come from a Pulumi ESC
+environment (`imports/github-secrets` in `.ci-mgmt.yaml`).
+
+## License
+
+Apache-2.0
