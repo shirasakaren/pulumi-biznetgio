@@ -106,36 +106,3 @@ func (NeoliteProSnapshot) Read(
 	if err != nil {
 		return infer.ReadResponse[NeoliteProSnapshotArgs, NeoliteProSnapshotState]{}, err
 	}
-	for _, sn := range list {
-		if sn.AccountID == req.ID {
-			state := req.State
-			state.Status = sn.Status
-			if sn.ExtraDetails.Name != "" {
-				state.Name = &sn.ExtraDetails.Name
-			}
-			if sn.ExtraDetails.Description != "" {
-				state.Description = &sn.ExtraDetails.Description
-			}
-			return infer.ReadResponse[NeoliteProSnapshotArgs, NeoliteProSnapshotState]{State: state}, nil
-		}
-	}
-	return infer.ReadResponse[NeoliteProSnapshotArgs, NeoliteProSnapshotState]{},
-		fmt.Errorf("neolite pro snapshot %s not found", req.ID)
-}
-
-func (NeoliteProSnapshot) Delete(
-	ctx context.Context, req infer.DeleteRequest[NeoliteProSnapshotState],
-) (infer.DeleteResponse, error) {
-	c := GetClient(ctx)
-	id, err := parseNeoID(req.ID)
-	if err != nil {
-		return infer.DeleteResponse{}, err
-	}
-	if _, err := c.NeolitePro().SnapshotDelete(ctx, id); err != nil {
-		if client.IsNotFound(err) {
-			return infer.DeleteResponse{}, nil
-		}
-		return infer.DeleteResponse{}, err
-	}
-	return infer.DeleteResponse{}, nil
-}
