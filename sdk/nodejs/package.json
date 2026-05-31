@@ -1,7 +1,15 @@
 {
-    "name": "@pulumi/provider-boilerplate",
-    "version": "1.0.0-alpha.0+dev",
-    "homepage": "https://www.pulumi.com",
+    "name": "@biznetgio/biznetgio",
+    "version": "${VERSION}",
+    "keywords": [
+        "biznetgio",
+        "cloud",
+        "indonesia",
+        "neo"
+    ],
+    "homepage": "https://www.biznetgio.com",
+    "repository": "github.com/biznetgio/pulumi-biznetgio",
+    "license": "Apache-2.0",
     "scripts": {
         "build": "tsc"
     },
@@ -14,8 +22,6 @@
     },
     "pulumi": {
         "resource": true,
-        "name": "provider-boilerplate",
-        "version": "1.0.0-alpha.0+dev"
+        "name": "biznetgio"
     }
 }
-// wip 101
