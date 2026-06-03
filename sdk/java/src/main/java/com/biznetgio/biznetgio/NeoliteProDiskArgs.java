@@ -320,3 +320,4 @@ public final class NeoliteProDiskArgs extends com.pulumi.resources.ResourceArgs 
     }
 
 }
+// wip 349
