@@ -130,3 +130,221 @@ func (NeoliteProVm) Create(
 	})
 	if err != nil {
 		return infer.CreateResponse[NeoliteProVmState]{}, err
+	}
+	if billing.AccountID == "" {
+		return infer.CreateResponse[NeoliteProVmState]{},
+			fmt.Errorf("create neolite pro vm response tidak ada account_id: order_id=%s", billing.OrderID)
+	}
+	id := billing.AccountID
+	partial := NeoliteProVmState{NeoliteProVmArgs: in, OrderID: billing.OrderID}
+
+	_, err = client.WaitForStatus(ctx, 5*time.Second,
+		func(ctx context.Context) (*client.AccountResource, error) {
+			n, err := parseNeoID(id)
+			if err != nil {
+				return nil, err
+			}
+			return c.NeolitePro().AccountGet(ctx, n)
+		},
+		neoliteStatus, []string{"active"}, []string{"suspended", "terminated"})
+	if err != nil {
+		if ctx.Err() == context.DeadlineExceeded {
+			return infer.CreateResponse[NeoliteProVmState]{ID: id, Output: partial},
+				infer.ResourceInitFailedError{Reasons: []string{fmt.Sprintf("neolite pro vm %s belum active: %s", id, err)}}
+		}
+		return infer.CreateResponse[NeoliteProVmState]{}, err
+	}
+
+	state, err := readNeoliteProVm(ctx, c, id, in, partial)
+	if err != nil {
+		return infer.CreateResponse[NeoliteProVmState]{}, err
+	}
+	return infer.CreateResponse[NeoliteProVmState]{ID: id, Output: state}, nil
+}
+
+func (NeoliteProVm) Update(
+	ctx context.Context, req infer.UpdateRequest[NeoliteProVmArgs, NeoliteProVmState],
+) (infer.UpdateResponse[NeoliteProVmState], error) {
+	if req.DryRun {
+		return infer.UpdateResponse[NeoliteProVmState]{Output: NeoliteProVmState{NeoliteProVmArgs: req.Inputs}}, nil
+	}
+
+	c := GetClient(ctx)
+	id, err := parseNeoID(req.ID)
+	if err != nil {
+		return infer.UpdateResponse[NeoliteProVmState]{}, err
+	}
+	in := req.Inputs
+	old := req.State
+
+	if !eqStrPtr(in.VMName, old.VMName) {
+		if _, err := c.NeolitePro().VMChangeName(ctx, id, strPtr(in.VMName)); err != nil {
+			return infer.UpdateResponse[NeoliteProVmState]{}, fmt.Errorf("change neolite pro vm name: %w", err)
+		}
+	}
+	if in.KeypairID != old.KeypairID {
+		if _, err := c.NeolitePro().VMChangeKeypair(ctx, id, in.KeypairID); err != nil {
+			return infer.UpdateResponse[NeoliteProVmState]{}, fmt.Errorf("change neolite pro vm keypair: %w", err)
+		}
+	}
+
+	needsPoll := false
+	if in.ProductID != old.ProductID {
+		if _, err := c.NeolitePro().VMChangePackage(ctx, id, client.ChangePackagePayload{
+			NewProductID:     in.ProductID,
+			PayInvoiceWithCC: yesNo(in.PayWithCreditCard),
+		}); err != nil {
+			return infer.UpdateResponse[NeoliteProVmState]{}, fmt.Errorf("change neolite pro vm package: %w", err)
+		}
+		needsPoll = true
+	}
+	if !eqI64Ptr(in.DiskSize, old.DiskSize) {
+		newSize := i64Val(in.DiskSize)
+		oldSize := i64Val(old.DiskSize)
+		if newSize < oldSize {
+			return infer.UpdateResponse[NeoliteProVmState]{},
+				fmt.Errorf("neolite pro vm storage cuma bisa di-upgrade: %d -> %d", oldSize, newSize)
+		}
+		if _, err := c.NeolitePro().VMChangeStorage(ctx, id, client.UpgradePayload{
+			DiskSize:         newSize,
+			PayInvoiceWithCC: yesNo(in.PayWithCreditCard),
+		}); err != nil {
+			return infer.UpdateResponse[NeoliteProVmState]{}, fmt.Errorf("change neolite pro vm storage: %w", err)
+		}
+		needsPoll = true
+	}
+	if !eqStrPtr(in.PowerState, old.PowerState) {
+		if _, err := c.NeolitePro().VMState(ctx, id, strPtr(in.PowerState)); err != nil {
+			return infer.UpdateResponse[NeoliteProVmState]{},
+				fmt.Errorf("set neolite pro vm power state %q: %w", strPtr(in.PowerState), err)
+		}
+	}
+	if !eqStrPtr(in.RebuildOS, old.RebuildOS) {
+		if _, err := c.NeolitePro().VMRebuild(ctx, id, strPtr(in.RebuildOS)); err != nil {
+			return infer.UpdateResponse[NeoliteProVmState]{}, fmt.Errorf("rebuild neolite pro vm: %w", err)
+		}
+		needsPoll = true
+	}
+
+	if needsPoll {
+		_, err := client.WaitForStatus(ctx, 5*time.Second,
+			func(ctx context.Context) (*client.AccountResource, error) {
+				return c.NeolitePro().AccountGet(ctx, id)
+			},
+			neoliteStatus, []string{"active"}, []string{"suspended", "terminated"})
+		if err != nil {
+			if errors.Is(err, context.DeadlineExceeded) {
+				return infer.UpdateResponse[NeoliteProVmState]{
+						Output: NeoliteProVmState{NeoliteProVmArgs: in},
+					}, infer.ResourceInitFailedError{Reasons: []string{
+						fmt.Sprintf("neolite pro vm %d belum active: %s", id, err),
+					}}
+			}
+			return infer.UpdateResponse[NeoliteProVmState]{}, fmt.Errorf("neolite pro vm %d gagal balik active: %w", id, err)
+		}
+	}
+
+	state, err := readNeoliteProVm(ctx, c, req.ID, in, old)
+	if err != nil {
+		return infer.UpdateResponse[NeoliteProVmState]{}, err
+	}
+	return infer.UpdateResponse[NeoliteProVmState]{Output: state}, nil
+}
+
+func (NeoliteProVm) Read(
+	ctx context.Context, req infer.ReadRequest[NeoliteProVmArgs, NeoliteProVmState],
+) (infer.ReadResponse[NeoliteProVmArgs, NeoliteProVmState], error) {
+	c := GetClient(ctx)
+	state, err := readNeoliteProVm(ctx, c, req.ID, req.State.NeoliteProVmArgs, req.State)
+	if err != nil {
+		return infer.ReadResponse[NeoliteProVmArgs, NeoliteProVmState]{}, err
+	}
+	return infer.ReadResponse[NeoliteProVmArgs, NeoliteProVmState]{State: state}, nil
+}
+
+func (NeoliteProVm) Delete(
+	ctx context.Context, req infer.DeleteRequest[NeoliteProVmState],
+) (infer.DeleteResponse, error) {
+	c := GetClient(ctx)
+	id, err := parseNeoID(req.ID)
+	if err != nil {
+		return infer.DeleteResponse{}, err
+	}
+	if _, err := c.NeolitePro().VMDelete(ctx, id); err != nil {
+		if client.IsNotFound(err) {
+			return infer.DeleteResponse{}, nil
+		}
+		return infer.DeleteResponse{}, err
+	}
+	return infer.DeleteResponse{}, nil
+}
+
+func readNeoliteProVm(
+	ctx context.Context, c *client.Client, id string, in NeoliteProVmArgs, prev NeoliteProVmState,
+) (NeoliteProVmState, error) {
+	n, err := parseNeoID(id)
+	if err != nil {
+		return prev, fmt.Errorf("neolite pro vm %s invalid id: %w", id, err)
+	}
+	acc, err := c.NeolitePro().AccountGet(ctx, n)
+	if err != nil {
+		if client.IsNotFound(err) {
+			return prev, fmt.Errorf("neolite pro vm %s not found", id)
+		}
+		return prev, err
+	}
+
+	st := NeoliteProVmState{NeoliteProVmArgs: in}
+	st.OrderID = prev.OrderID
+	st.Status = acc.Status
+	st.Billingcycle = acc.Billingcycle
+	st.NextDue = acc.NextDue
+	st.RecurringAmount = acc.RecurringAmount
+	st.ProductID = acc.ProductID
+	st.ProductName = acc.ProductName
+	st.Description = &acc.Description
+	st.Region = acc.ExtraDetails.Region
+	st.RegionLabel = acc.ExtraDetails.RegionLabel
+	st.CIUser = acc.ExtraDetails.CIUser
+	st.CIPassword = acc.ExtraDetails.CIPassword
+	st.OSName = acc.ExtraDetails.OSName
+	if acc.ExtraDetails.KeypairID != 0 {
+		st.KeypairID = acc.ExtraDetails.KeypairID
+	}
+	if v := acc.ExtraDetails.DiskSize; v != "" {
+		if n, err := strconv.ParseInt(v, 10, 64); err == nil {
+			st.DiskSize = &n
+		}
+	}
+	if v := acc.ExtraDetails.Name; v != "" {
+		st.VMName = &v
+	}
+	st.LastInvoice = NeoliteLastInvoice{
+		ID:          acc.LastInvoice.ID,
+		PaidID:      acc.LastInvoice.PaidID,
+		Status:      acc.LastInvoice.Status,
+		Date:        acc.LastInvoice.Date,
+		Duedate:     acc.LastInvoice.Duedate,
+		Paybefore:   acc.LastInvoice.Paybefore,
+		Datepaid:    acc.LastInvoice.Datepaid,
+		InvoiceType: acc.LastInvoice.InvoiceType,
+	}
+
+	if n, err := parseNeoID(id); err == nil {
+		if vm, err := c.NeolitePro().VMDetails(ctx, n); err == nil {
+			st.Uptime = vm.Uptime
+			st.MaxDisk = vm.MaxDisk
+			st.MaxMem = vm.MaxMem
+			st.Mem = vm.Mem
+			st.CPUs = vm.CPUs
+		}
+	}
+
+	if b, err := json.Marshal(acc); err == nil {
+		var m map[string]any
+		if json.Unmarshal(b, &m) == nil {
+			st.Raw = string(RedactJSON(m))
+		}
+	}
+	return st, nil
+}
