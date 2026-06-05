@@ -103,3 +103,4 @@ public final class GpuFlavor {
         }
     }
 }
+// wip 359
