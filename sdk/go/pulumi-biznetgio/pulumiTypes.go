@@ -538,3 +538,543 @@ func (o NeoliteLastInvoiceOutput) PaidId() pulumi.IntOutput {
 	return o.ApplyT(func(v NeoliteLastInvoice) int { return v.PaidId }).(pulumi.IntOutput)
 }
 
+func (o NeoliteLastInvoiceOutput) Paybefore() pulumi.StringOutput {
+	return o.ApplyT(func(v NeoliteLastInvoice) string { return v.Paybefore }).(pulumi.StringOutput)
+}
+
+func (o NeoliteLastInvoiceOutput) Status() pulumi.StringOutput {
+	return o.ApplyT(func(v NeoliteLastInvoice) string { return v.Status }).(pulumi.StringOutput)
+}
+
+type NeoliteOsItem struct {
+	Maxcpu int    `pulumi:"maxcpu"`
+	Maxmem int    `pulumi:"maxmem"`
+	Name   string `pulumi:"name"`
+	Node   string `pulumi:"node"`
+	Vmid   int    `pulumi:"vmid"`
+}
+
+type NeoliteOsItemOutput struct{ *pulumi.OutputState }
+
+func (NeoliteOsItemOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*NeoliteOsItem)(nil)).Elem()
+}
+
+func (o NeoliteOsItemOutput) ToNeoliteOsItemOutput() NeoliteOsItemOutput {
+	return o
+}
+
+func (o NeoliteOsItemOutput) ToNeoliteOsItemOutputWithContext(ctx context.Context) NeoliteOsItemOutput {
+	return o
+}
+
+func (o NeoliteOsItemOutput) Maxcpu() pulumi.IntOutput {
+	return o.ApplyT(func(v NeoliteOsItem) int { return v.Maxcpu }).(pulumi.IntOutput)
+}
+
+func (o NeoliteOsItemOutput) Maxmem() pulumi.IntOutput {
+	return o.ApplyT(func(v NeoliteOsItem) int { return v.Maxmem }).(pulumi.IntOutput)
+}
+
+func (o NeoliteOsItemOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v NeoliteOsItem) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o NeoliteOsItemOutput) Node() pulumi.StringOutput {
+	return o.ApplyT(func(v NeoliteOsItem) string { return v.Node }).(pulumi.StringOutput)
+}
+
+func (o NeoliteOsItemOutput) Vmid() pulumi.IntOutput {
+	return o.ApplyT(func(v NeoliteOsItem) int { return v.Vmid }).(pulumi.IntOutput)
+}
+
+type NeoliteOsItemArrayOutput struct{ *pulumi.OutputState }
+
+func (NeoliteOsItemArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]NeoliteOsItem)(nil)).Elem()
+}
+
+func (o NeoliteOsItemArrayOutput) ToNeoliteOsItemArrayOutput() NeoliteOsItemArrayOutput {
+	return o
+}
+
+func (o NeoliteOsItemArrayOutput) ToNeoliteOsItemArrayOutputWithContext(ctx context.Context) NeoliteOsItemArrayOutput {
+	return o
+}
+
+func (o NeoliteOsItemArrayOutput) Index(i pulumi.IntInput) NeoliteOsItemOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) NeoliteOsItem {
+		return vs[0].([]NeoliteOsItem)[vs[1].(int)]
+	}).(NeoliteOsItemOutput)
+}
+
+type NeolitePlanBilling struct {
+	Components []NeolitePlanComponent `pulumi:"components"`
+	Cycle      string                 `pulumi:"cycle"`
+	Label      string                 `pulumi:"label"`
+	Price      int                    `pulumi:"price"`
+}
+
+type NeolitePlanBillingOutput struct{ *pulumi.OutputState }
+
+func (NeolitePlanBillingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*NeolitePlanBilling)(nil)).Elem()
+}
+
+func (o NeolitePlanBillingOutput) ToNeolitePlanBillingOutput() NeolitePlanBillingOutput {
+	return o
+}
+
+func (o NeolitePlanBillingOutput) ToNeolitePlanBillingOutputWithContext(ctx context.Context) NeolitePlanBillingOutput {
+	return o
+}
+
+func (o NeolitePlanBillingOutput) Components() NeolitePlanComponentArrayOutput {
+	return o.ApplyT(func(v NeolitePlanBilling) []NeolitePlanComponent { return v.Components }).(NeolitePlanComponentArrayOutput)
+}
+
+func (o NeolitePlanBillingOutput) Cycle() pulumi.StringOutput {
+	return o.ApplyT(func(v NeolitePlanBilling) string { return v.Cycle }).(pulumi.StringOutput)
+}
+
+func (o NeolitePlanBillingOutput) Label() pulumi.StringOutput {
+	return o.ApplyT(func(v NeolitePlanBilling) string { return v.Label }).(pulumi.StringOutput)
+}
+
+func (o NeolitePlanBillingOutput) Price() pulumi.IntOutput {
+	return o.ApplyT(func(v NeolitePlanBilling) int { return v.Price }).(pulumi.IntOutput)
+}
+
+type NeolitePlanBillingArrayOutput struct{ *pulumi.OutputState }
+
+func (NeolitePlanBillingArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]NeolitePlanBilling)(nil)).Elem()
+}
+
+func (o NeolitePlanBillingArrayOutput) ToNeolitePlanBillingArrayOutput() NeolitePlanBillingArrayOutput {
+	return o
+}
+
+func (o NeolitePlanBillingArrayOutput) ToNeolitePlanBillingArrayOutputWithContext(ctx context.Context) NeolitePlanBillingArrayOutput {
+	return o
+}
+
+func (o NeolitePlanBillingArrayOutput) Index(i pulumi.IntInput) NeolitePlanBillingOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) NeolitePlanBilling {
+		return vs[0].([]NeolitePlanBilling)[vs[1].(int)]
+	}).(NeolitePlanBillingOutput)
+}
+
+type NeolitePlanComponent struct {
+	Field  string             `pulumi:"field"`
+	Label  string             `pulumi:"label"`
+	Prices []NeolitePlanPrice `pulumi:"prices"`
+}
+
+type NeolitePlanComponentOutput struct{ *pulumi.OutputState }
+
+func (NeolitePlanComponentOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*NeolitePlanComponent)(nil)).Elem()
+}
+
+func (o NeolitePlanComponentOutput) ToNeolitePlanComponentOutput() NeolitePlanComponentOutput {
+	return o
+}
+
+func (o NeolitePlanComponentOutput) ToNeolitePlanComponentOutputWithContext(ctx context.Context) NeolitePlanComponentOutput {
+	return o
+}
+
+func (o NeolitePlanComponentOutput) Field() pulumi.StringOutput {
+	return o.ApplyT(func(v NeolitePlanComponent) string { return v.Field }).(pulumi.StringOutput)
+}
+
+func (o NeolitePlanComponentOutput) Label() pulumi.StringOutput {
+	return o.ApplyT(func(v NeolitePlanComponent) string { return v.Label }).(pulumi.StringOutput)
+}
+
+func (o NeolitePlanComponentOutput) Prices() NeolitePlanPriceArrayOutput {
+	return o.ApplyT(func(v NeolitePlanComponent) []NeolitePlanPrice { return v.Prices }).(NeolitePlanPriceArrayOutput)
+}
+
+type NeolitePlanComponentArrayOutput struct{ *pulumi.OutputState }
+
+func (NeolitePlanComponentArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]NeolitePlanComponent)(nil)).Elem()
+}
+
+func (o NeolitePlanComponentArrayOutput) ToNeolitePlanComponentArrayOutput() NeolitePlanComponentArrayOutput {
+	return o
+}
+
+func (o NeolitePlanComponentArrayOutput) ToNeolitePlanComponentArrayOutputWithContext(ctx context.Context) NeolitePlanComponentArrayOutput {
+	return o
+}
+
+func (o NeolitePlanComponentArrayOutput) Index(i pulumi.IntInput) NeolitePlanComponentOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) NeolitePlanComponent {
+		return vs[0].([]NeolitePlanComponent)[vs[1].(int)]
+	}).(NeolitePlanComponentOutput)
+}
+
+type NeolitePlanItem struct {
+	Billing      []NeolitePlanBilling `pulumi:"billing"`
+	CategoryId   int                  `pulumi:"categoryId"`
+	CategoryName string               `pulumi:"categoryName"`
+	Description  string               `pulumi:"description"`
+	Name         string               `pulumi:"name"`
+	Options      NeolitePlanOptions   `pulumi:"options"`
+	ProductId    int                  `pulumi:"productId"`
+}
+
+type NeolitePlanItemOutput struct{ *pulumi.OutputState }
+
+func (NeolitePlanItemOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*NeolitePlanItem)(nil)).Elem()
+}
+
+func (o NeolitePlanItemOutput) ToNeolitePlanItemOutput() NeolitePlanItemOutput {
+	return o
+}
+
+func (o NeolitePlanItemOutput) ToNeolitePlanItemOutputWithContext(ctx context.Context) NeolitePlanItemOutput {
+	return o
+}
+
+func (o NeolitePlanItemOutput) Billing() NeolitePlanBillingArrayOutput {
+	return o.ApplyT(func(v NeolitePlanItem) []NeolitePlanBilling { return v.Billing }).(NeolitePlanBillingArrayOutput)
+}
+
+func (o NeolitePlanItemOutput) CategoryId() pulumi.IntOutput {
+	return o.ApplyT(func(v NeolitePlanItem) int { return v.CategoryId }).(pulumi.IntOutput)
+}
+
+func (o NeolitePlanItemOutput) CategoryName() pulumi.StringOutput {
+	return o.ApplyT(func(v NeolitePlanItem) string { return v.CategoryName }).(pulumi.StringOutput)
+}
+
+func (o NeolitePlanItemOutput) Description() pulumi.StringOutput {
+	return o.ApplyT(func(v NeolitePlanItem) string { return v.Description }).(pulumi.StringOutput)
+}
+
+func (o NeolitePlanItemOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v NeolitePlanItem) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o NeolitePlanItemOutput) Options() NeolitePlanOptionsOutput {
+	return o.ApplyT(func(v NeolitePlanItem) NeolitePlanOptions { return v.Options }).(NeolitePlanOptionsOutput)
+}
+
+func (o NeolitePlanItemOutput) ProductId() pulumi.IntOutput {
+	return o.ApplyT(func(v NeolitePlanItem) int { return v.ProductId }).(pulumi.IntOutput)
+}
+
+type NeolitePlanItemArrayOutput struct{ *pulumi.OutputState }
+
+func (NeolitePlanItemArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]NeolitePlanItem)(nil)).Elem()
+}
+
+func (o NeolitePlanItemArrayOutput) ToNeolitePlanItemArrayOutput() NeolitePlanItemArrayOutput {
+	return o
+}
+
+func (o NeolitePlanItemArrayOutput) ToNeolitePlanItemArrayOutputWithContext(ctx context.Context) NeolitePlanItemArrayOutput {
+	return o
+}
+
+func (o NeolitePlanItemArrayOutput) Index(i pulumi.IntInput) NeolitePlanItemOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) NeolitePlanItem {
+		return vs[0].([]NeolitePlanItem)[vs[1].(int)]
+	}).(NeolitePlanItemOutput)
+}
+
+type NeolitePlanOptions struct {
+	AllowDowngrade int    `pulumi:"allowDowngrade"`
+	Cores          int    `pulumi:"cores"`
+	Memory         int    `pulumi:"memory"`
+	Type           string `pulumi:"type"`
+}
+
+type NeolitePlanOptionsOutput struct{ *pulumi.OutputState }
+
+func (NeolitePlanOptionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*NeolitePlanOptions)(nil)).Elem()
+}
+
+func (o NeolitePlanOptionsOutput) ToNeolitePlanOptionsOutput() NeolitePlanOptionsOutput {
+	return o
+}
+
+func (o NeolitePlanOptionsOutput) ToNeolitePlanOptionsOutputWithContext(ctx context.Context) NeolitePlanOptionsOutput {
+	return o
+}
+
+func (o NeolitePlanOptionsOutput) AllowDowngrade() pulumi.IntOutput {
+	return o.ApplyT(func(v NeolitePlanOptions) int { return v.AllowDowngrade }).(pulumi.IntOutput)
+}
+
+func (o NeolitePlanOptionsOutput) Cores() pulumi.IntOutput {
+	return o.ApplyT(func(v NeolitePlanOptions) int { return v.Cores }).(pulumi.IntOutput)
+}
+
+func (o NeolitePlanOptionsOutput) Memory() pulumi.IntOutput {
+	return o.ApplyT(func(v NeolitePlanOptions) int { return v.Memory }).(pulumi.IntOutput)
+}
+
+func (o NeolitePlanOptionsOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v NeolitePlanOptions) string { return v.Type }).(pulumi.StringOutput)
+}
+
+type NeolitePlanPrice struct {
+	Price  int `pulumi:"price"`
+	QtyMax int `pulumi:"qtyMax"`
+	QtyMin int `pulumi:"qtyMin"`
+}
+
+type NeolitePlanPriceOutput struct{ *pulumi.OutputState }
+
+func (NeolitePlanPriceOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*NeolitePlanPrice)(nil)).Elem()
+}
+
+func (o NeolitePlanPriceOutput) ToNeolitePlanPriceOutput() NeolitePlanPriceOutput {
+	return o
+}
+
+func (o NeolitePlanPriceOutput) ToNeolitePlanPriceOutputWithContext(ctx context.Context) NeolitePlanPriceOutput {
+	return o
+}
+
+func (o NeolitePlanPriceOutput) Price() pulumi.IntOutput {
+	return o.ApplyT(func(v NeolitePlanPrice) int { return v.Price }).(pulumi.IntOutput)
+}
+
+func (o NeolitePlanPriceOutput) QtyMax() pulumi.IntOutput {
+	return o.ApplyT(func(v NeolitePlanPrice) int { return v.QtyMax }).(pulumi.IntOutput)
+}
+
+func (o NeolitePlanPriceOutput) QtyMin() pulumi.IntOutput {
+	return o.ApplyT(func(v NeolitePlanPrice) int { return v.QtyMin }).(pulumi.IntOutput)
+}
+
+type NeolitePlanPriceArrayOutput struct{ *pulumi.OutputState }
+
+func (NeolitePlanPriceArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]NeolitePlanPrice)(nil)).Elem()
+}
+
+func (o NeolitePlanPriceArrayOutput) ToNeolitePlanPriceArrayOutput() NeolitePlanPriceArrayOutput {
+	return o
+}
+
+func (o NeolitePlanPriceArrayOutput) ToNeolitePlanPriceArrayOutputWithContext(ctx context.Context) NeolitePlanPriceArrayOutput {
+	return o
+}
+
+func (o NeolitePlanPriceArrayOutput) Index(i pulumi.IntInput) NeolitePlanPriceOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) NeolitePlanPrice {
+		return vs[0].([]NeolitePlanPrice)[vs[1].(int)]
+	}).(NeolitePlanPriceOutput)
+}
+
+type ObjectStorageBucketsBucket struct {
+	Acl  string `pulumi:"acl"`
+	Name string `pulumi:"name"`
+	Raw  string `pulumi:"raw"`
+}
+
+type ObjectStorageBucketsBucketOutput struct{ *pulumi.OutputState }
+
+func (ObjectStorageBucketsBucketOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ObjectStorageBucketsBucket)(nil)).Elem()
+}
+
+func (o ObjectStorageBucketsBucketOutput) ToObjectStorageBucketsBucketOutput() ObjectStorageBucketsBucketOutput {
+	return o
+}
+
+func (o ObjectStorageBucketsBucketOutput) ToObjectStorageBucketsBucketOutputWithContext(ctx context.Context) ObjectStorageBucketsBucketOutput {
+	return o
+}
+
+func (o ObjectStorageBucketsBucketOutput) Acl() pulumi.StringOutput {
+	return o.ApplyT(func(v ObjectStorageBucketsBucket) string { return v.Acl }).(pulumi.StringOutput)
+}
+
+func (o ObjectStorageBucketsBucketOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v ObjectStorageBucketsBucket) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o ObjectStorageBucketsBucketOutput) Raw() pulumi.StringOutput {
+	return o.ApplyT(func(v ObjectStorageBucketsBucket) string { return v.Raw }).(pulumi.StringOutput)
+}
+
+type ObjectStorageBucketsBucketArrayOutput struct{ *pulumi.OutputState }
+
+func (ObjectStorageBucketsBucketArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]ObjectStorageBucketsBucket)(nil)).Elem()
+}
+
+func (o ObjectStorageBucketsBucketArrayOutput) ToObjectStorageBucketsBucketArrayOutput() ObjectStorageBucketsBucketArrayOutput {
+	return o
+}
+
+func (o ObjectStorageBucketsBucketArrayOutput) ToObjectStorageBucketsBucketArrayOutputWithContext(ctx context.Context) ObjectStorageBucketsBucketArrayOutput {
+	return o
+}
+
+func (o ObjectStorageBucketsBucketArrayOutput) Index(i pulumi.IntInput) ObjectStorageBucketsBucketOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) ObjectStorageBucketsBucket {
+		return vs[0].([]ObjectStorageBucketsBucket)[vs[1].(int)]
+	}).(ObjectStorageBucketsBucketOutput)
+}
+
+type ObjectStorageCredentialsCredential struct {
+	AccessKey string `pulumi:"accessKey"`
+	Active    bool   `pulumi:"active"`
+}
+
+type ObjectStorageCredentialsCredentialOutput struct{ *pulumi.OutputState }
+
+func (ObjectStorageCredentialsCredentialOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ObjectStorageCredentialsCredential)(nil)).Elem()
+}
+
+func (o ObjectStorageCredentialsCredentialOutput) ToObjectStorageCredentialsCredentialOutput() ObjectStorageCredentialsCredentialOutput {
+	return o
+}
+
+func (o ObjectStorageCredentialsCredentialOutput) ToObjectStorageCredentialsCredentialOutputWithContext(ctx context.Context) ObjectStorageCredentialsCredentialOutput {
+	return o
+}
+
+func (o ObjectStorageCredentialsCredentialOutput) AccessKey() pulumi.StringOutput {
+	return o.ApplyT(func(v ObjectStorageCredentialsCredential) string { return v.AccessKey }).(pulumi.StringOutput)
+}
+
+func (o ObjectStorageCredentialsCredentialOutput) Active() pulumi.BoolOutput {
+	return o.ApplyT(func(v ObjectStorageCredentialsCredential) bool { return v.Active }).(pulumi.BoolOutput)
+}
+
+type ObjectStorageCredentialsCredentialArrayOutput struct{ *pulumi.OutputState }
+
+func (ObjectStorageCredentialsCredentialArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]ObjectStorageCredentialsCredential)(nil)).Elem()
+}
+
+func (o ObjectStorageCredentialsCredentialArrayOutput) ToObjectStorageCredentialsCredentialArrayOutput() ObjectStorageCredentialsCredentialArrayOutput {
+	return o
+}
+
+func (o ObjectStorageCredentialsCredentialArrayOutput) ToObjectStorageCredentialsCredentialArrayOutputWithContext(ctx context.Context) ObjectStorageCredentialsCredentialArrayOutput {
+	return o
+}
+
+func (o ObjectStorageCredentialsCredentialArrayOutput) Index(i pulumi.IntInput) ObjectStorageCredentialsCredentialOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) ObjectStorageCredentialsCredential {
+		return vs[0].([]ObjectStorageCredentialsCredential)[vs[1].(int)]
+	}).(ObjectStorageCredentialsCredentialOutput)
+}
+
+type ObjectStorageInstancesInstance struct {
+	Id        string `pulumi:"id"`
+	Label     string `pulumi:"label"`
+	ProductId int    `pulumi:"productId"`
+	Quota     int    `pulumi:"quota"`
+	Raw       string `pulumi:"raw"`
+	Status    string `pulumi:"status"`
+}
+
+type ObjectStorageInstancesInstanceOutput struct{ *pulumi.OutputState }
+
+func (ObjectStorageInstancesInstanceOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ObjectStorageInstancesInstance)(nil)).Elem()
+}
+
+func (o ObjectStorageInstancesInstanceOutput) ToObjectStorageInstancesInstanceOutput() ObjectStorageInstancesInstanceOutput {
+	return o
+}
+
+func (o ObjectStorageInstancesInstanceOutput) ToObjectStorageInstancesInstanceOutputWithContext(ctx context.Context) ObjectStorageInstancesInstanceOutput {
+	return o
+}
+
+func (o ObjectStorageInstancesInstanceOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v ObjectStorageInstancesInstance) string { return v.Id }).(pulumi.StringOutput)
+}
+
+func (o ObjectStorageInstancesInstanceOutput) Label() pulumi.StringOutput {
+	return o.ApplyT(func(v ObjectStorageInstancesInstance) string { return v.Label }).(pulumi.StringOutput)
+}
+
+func (o ObjectStorageInstancesInstanceOutput) ProductId() pulumi.IntOutput {
+	return o.ApplyT(func(v ObjectStorageInstancesInstance) int { return v.ProductId }).(pulumi.IntOutput)
+}
+
+func (o ObjectStorageInstancesInstanceOutput) Quota() pulumi.IntOutput {
+	return o.ApplyT(func(v ObjectStorageInstancesInstance) int { return v.Quota }).(pulumi.IntOutput)
+}
+
+func (o ObjectStorageInstancesInstanceOutput) Raw() pulumi.StringOutput {
+	return o.ApplyT(func(v ObjectStorageInstancesInstance) string { return v.Raw }).(pulumi.StringOutput)
+}
+
+func (o ObjectStorageInstancesInstanceOutput) Status() pulumi.StringOutput {
+	return o.ApplyT(func(v ObjectStorageInstancesInstance) string { return v.Status }).(pulumi.StringOutput)
+}
+
+type ObjectStorageInstancesInstanceArrayOutput struct{ *pulumi.OutputState }
+
+func (ObjectStorageInstancesInstanceArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]ObjectStorageInstancesInstance)(nil)).Elem()
+}
+
+func (o ObjectStorageInstancesInstanceArrayOutput) ToObjectStorageInstancesInstanceArrayOutput() ObjectStorageInstancesInstanceArrayOutput {
+	return o
+}
+
+func (o ObjectStorageInstancesInstanceArrayOutput) ToObjectStorageInstancesInstanceArrayOutputWithContext(ctx context.Context) ObjectStorageInstancesInstanceArrayOutput {
+	return o
+}
+
+func (o ObjectStorageInstancesInstanceArrayOutput) Index(i pulumi.IntInput) ObjectStorageInstancesInstanceOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) ObjectStorageInstancesInstance {
+		return vs[0].([]ObjectStorageInstancesInstance)[vs[1].(int)]
+	}).(ObjectStorageInstancesInstanceOutput)
+}
+
+func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*GpuOnDemandArgsInput)(nil)).Elem(), GpuOnDemandArgsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GpuOnDemandArgsPtrInput)(nil)).Elem(), GpuOnDemandArgsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GpuSubscriptionArgsInput)(nil)).Elem(), GpuSubscriptionArgsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GpuSubscriptionArgsPtrInput)(nil)).Elem(), GpuSubscriptionArgsArgs{})
+	pulumi.RegisterOutputType(BaremetalProductOutput{})
+	pulumi.RegisterOutputType(BaremetalProductArrayOutput{})
+	pulumi.RegisterOutputType(GpuFlavorOutput{})
+	pulumi.RegisterOutputType(GpuFlavorArrayOutput{})
+	pulumi.RegisterOutputType(GpuOnDemandArgsOutput{})
+	pulumi.RegisterOutputType(GpuOnDemandArgsPtrOutput{})
+	pulumi.RegisterOutputType(GpuProductOutput{})
+	pulumi.RegisterOutputType(GpuProductArrayOutput{})
+	pulumi.RegisterOutputType(GpuSubscriptionArgsOutput{})
+	pulumi.RegisterOutputType(GpuSubscriptionArgsPtrOutput{})
+	pulumi.RegisterOutputType(NeoliteLastInvoiceOutput{})
+	pulumi.RegisterOutputType(NeoliteOsItemOutput{})
+	pulumi.RegisterOutputType(NeoliteOsItemArrayOutput{})
+	pulumi.RegisterOutputType(NeolitePlanBillingOutput{})
+	pulumi.RegisterOutputType(NeolitePlanBillingArrayOutput{})
+	pulumi.RegisterOutputType(NeolitePlanComponentOutput{})
+	pulumi.RegisterOutputType(NeolitePlanComponentArrayOutput{})
+	pulumi.RegisterOutputType(NeolitePlanItemOutput{})
+	pulumi.RegisterOutputType(NeolitePlanItemArrayOutput{})
+	pulumi.RegisterOutputType(NeolitePlanOptionsOutput{})
+	pulumi.RegisterOutputType(NeolitePlanPriceOutput{})
+	pulumi.RegisterOutputType(NeolitePlanPriceArrayOutput{})
+	pulumi.RegisterOutputType(ObjectStorageBucketsBucketOutput{})
+	pulumi.RegisterOutputType(ObjectStorageBucketsBucketArrayOutput{})
+	pulumi.RegisterOutputType(ObjectStorageCredentialsCredentialOutput{})
+	pulumi.RegisterOutputType(ObjectStorageCredentialsCredentialArrayOutput{})
+	pulumi.RegisterOutputType(ObjectStorageInstancesInstanceOutput{})
+	pulumi.RegisterOutputType(ObjectStorageInstancesInstanceArrayOutput{})
+}
