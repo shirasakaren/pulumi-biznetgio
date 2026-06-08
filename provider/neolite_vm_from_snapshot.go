@@ -78,3 +78,80 @@ func (NeoliteVmFromSnapshot) Create(
 		KeypairID:         in.KeypairID,
 		Name:              in.Name,
 		Description:       strPtr(in.Description),
+		SSHAndConsoleUser: in.SSHAndConsoleUser,
+		ConsolePassword:   in.ConsolePassword,
+		Promocode:         strPtr(in.Promocode),
+		PayInvoiceWithCC:  yesNo(in.PayWithCreditCard),
+	})
+	if err != nil {
+		return infer.CreateResponse[NeoliteVmFromSnapshotState]{}, err
+	}
+	if billing.AccountID == "" {
+		return infer.CreateResponse[NeoliteVmFromSnapshotState]{},
+			fmt.Errorf("create neolite vm from snapshot response tidak ada account_id: order_id=%s", billing.OrderID)
+	}
+	id := billing.AccountID
+	partial := NeoliteVmFromSnapshotState{NeoliteVmFromSnapshotArgs: in, OrderID: billing.OrderID}
+
+	acc, err := client.WaitForStatus(ctx, 5*time.Second,
+		func(ctx context.Context) (*client.AccountResource, error) {
+			n, err := parseNeoID(id)
+			if err != nil {
+				return nil, err
+			}
+			return c.Neolite().AccountGet(ctx, n)
+		},
+		neoliteStatus, []string{"active"}, []string{"suspended", "terminated"})
+	if err != nil {
+		if ctx.Err() == context.DeadlineExceeded {
+			return infer.CreateResponse[NeoliteVmFromSnapshotState]{ID: id, Output: partial},
+				infer.ResourceInitFailedError{Reasons: []string{
+					fmt.Sprintf("neolite vm from snapshot %s belum active: %s", id, err),
+				}}
+		}
+		return infer.CreateResponse[NeoliteVmFromSnapshotState]{}, err
+	}
+
+	state := partial
+	state.Status = acc.Status
+	return infer.CreateResponse[NeoliteVmFromSnapshotState]{ID: id, Output: state}, nil
+}
+
+func (NeoliteVmFromSnapshot) Read(
+	ctx context.Context, req infer.ReadRequest[NeoliteVmFromSnapshotArgs, NeoliteVmFromSnapshotState],
+) (infer.ReadResponse[NeoliteVmFromSnapshotArgs, NeoliteVmFromSnapshotState], error) {
+	c := GetClient(ctx)
+	id, err := parseNeoID(req.ID)
+	if err != nil {
+		return infer.ReadResponse[NeoliteVmFromSnapshotArgs, NeoliteVmFromSnapshotState]{}, err
+	}
+	acc, err := c.Neolite().AccountGet(ctx, id)
+	if err != nil {
+		if client.IsNotFound(err) {
+			return infer.ReadResponse[NeoliteVmFromSnapshotArgs, NeoliteVmFromSnapshotState]{},
+				fmt.Errorf("neolite vm from snapshot %s not found", req.ID)
+		}
+		return infer.ReadResponse[NeoliteVmFromSnapshotArgs, NeoliteVmFromSnapshotState]{}, err
+	}
+	state := req.State
+	state.Status = acc.Status
+	return infer.ReadResponse[NeoliteVmFromSnapshotArgs, NeoliteVmFromSnapshotState]{State: state}, nil
+}
+
+func (NeoliteVmFromSnapshot) Delete(
+	ctx context.Context, req infer.DeleteRequest[NeoliteVmFromSnapshotState],
+) (infer.DeleteResponse, error) {
+	c := GetClient(ctx)
+	// delete = delete VM hasil restore.
+	id, err := parseNeoID(req.ID)
+	if err != nil {
+		return infer.DeleteResponse{}, err
+	}
+	if _, err := c.Neolite().VMDelete(ctx, id); err != nil {
+		if client.IsNotFound(err) {
+			return infer.DeleteResponse{}, nil
+		}
+		return infer.DeleteResponse{}, err
+	}
+	return infer.DeleteResponse{}, nil
+}
