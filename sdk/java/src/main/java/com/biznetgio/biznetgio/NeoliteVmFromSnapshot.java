@@ -245,3 +245,4 @@ public class NeoliteVmFromSnapshot extends com.pulumi.resources.CustomResource {
         return new NeoliteVmFromSnapshot(name, id, options);
     }
 }
+// wip 433
