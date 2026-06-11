@@ -83,3 +83,4 @@ public final class NeoliteProIPAvailabilityArgs extends com.pulumi.resources.Inv
     }
 
 }
+// wip 395
