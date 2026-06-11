@@ -72,3 +72,77 @@ func (NeoliteKeypair) Read(
 	ctx context.Context, req infer.ReadRequest[NeoliteKeypairArgs, NeoliteKeypairState],
 ) (infer.ReadResponse[NeoliteKeypairArgs, NeoliteKeypairState], error) {
 	c := GetClient(ctx)
+	list, err := c.Neolite().KeypairList(ctx)
+	if err != nil {
+		return infer.ReadResponse[NeoliteKeypairArgs, NeoliteKeypairState]{}, err
+	}
+	for _, kp := range list {
+		if strconv.FormatInt(kp.KeypairID, 10) == req.ID {
+			state := req.State
+			state.KeypairID = kp.KeypairID
+			state.Name = kp.Name
+			state.PublicKey = kp.PublicKey
+			// private key write-only: keep value lama dari state.
+			return infer.ReadResponse[NeoliteKeypairArgs, NeoliteKeypairState]{State: state}, nil
+		}
+	}
+	return infer.ReadResponse[NeoliteKeypairArgs, NeoliteKeypairState]{},
+		fmt.Errorf("neolite keypair %s not found", req.ID)
+}
+
+func (NeoliteKeypair) Delete(
+	ctx context.Context, req infer.DeleteRequest[NeoliteKeypairState],
+) (infer.DeleteResponse, error) {
+	c := GetClient(ctx)
+	if _, err := c.Neolite().KeypairDelete(ctx, req.State.KeypairID); err != nil {
+		if client.IsNotFound(err) {
+			return infer.DeleteResponse{}, nil
+		}
+		return infer.DeleteResponse{}, err
+	}
+	return infer.DeleteResponse{}, nil
+}
+
+// neoAliasStr cari value string pake beberapa kandidat key, case-insensitive.
+func neoAliasStr(v map[string]any, keys ...string) string {
+	for k, x := range v {
+		for _, want := range keys {
+			if !strings.EqualFold(k, want) {
+				continue
+			}
+			if s, ok := x.(string); ok {
+				return s
+			}
+		}
+	}
+	return ""
+}
+
+// neoAliasInt cari value int64 pake beberapa kandidat key (number atau string numerik).
+func neoAliasInt(v map[string]any, keys ...string) int64 {
+	for k, x := range v {
+		for _, want := range keys {
+			if !strings.EqualFold(k, want) {
+				continue
+			}
+			switch n := x.(type) {
+			case float64:
+				return int64(n)
+			case string:
+				i, err := strconv.ParseInt(n, 10, 64)
+				if err == nil {
+					return i
+				}
+			}
+		}
+	}
+	return 0
+}
+
+// neoRawJSON marshal map ke string JSON pake RedactJSON, fallback empty string.
+func neoRawJSON(v map[string]any) string {
+	if v == nil {
+		return ""
+	}
+	return string(RedactJSON(v))
+}
