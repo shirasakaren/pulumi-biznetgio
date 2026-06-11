@@ -15,7 +15,7 @@ on:
     - "**"
   workflow_dispatch: {}
 env:
-  PROVIDER: provider-boilerplate
+  PROVIDER: biznetgio
   TRAVIS_OS_NAME: linux
   GOVERSION: "1.21.x"
   NODEVERSION: "20.x"
