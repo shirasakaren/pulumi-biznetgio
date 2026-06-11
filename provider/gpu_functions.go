@@ -112,3 +112,77 @@ func (r *GpuConsoleResult) Annotate(ann infer.Annotator) {
 		"Side-effecting: each call may mint a new one-time session, do not use inside plan diffing.")
 	ann.Describe(&r.Raw, "Raw JSON of the full response.")
 }
+
+func (GpuConsole) Invoke(
+	ctx context.Context, req infer.FunctionRequest[GpuConsoleArgs],
+) (infer.FunctionResponse[GpuConsoleResult], error) {
+	c := GetClient(ctx)
+	accountID, err := strconv.ParseInt(req.Input.AccountID, 10, 64)
+	if err != nil {
+		return infer.FunctionResponse[GpuConsoleResult]{},
+			fmt.Errorf("biznetgio: invalid accountId %q: %s", req.Input.AccountID, err)
+	}
+	m, err := c.GPU().ConsoleAccess(ctx, accountID)
+	if err != nil {
+		return infer.FunctionResponse[GpuConsoleResult]{}, err
+	}
+	u, ok := gpuString(m, "url", "console_url", "access_url", "href")
+	if !ok {
+		return infer.FunctionResponse[GpuConsoleResult]{},
+			fmt.Errorf("biznetgio: console access response missing url: %s", gpuJSON(m))
+	}
+	return infer.FunctionResponse[GpuConsoleResult]{Output: GpuConsoleResult{
+		URL: u,
+		Raw: string(gpuJSON(m)),
+	}}, nil
+}
+
+type GpuGraph struct{}
+
+type GpuGraphArgs struct {
+	AccountID string  `pulumi:"accountId"`
+	Timeframe *string `pulumi:"timeframe,optional"`
+}
+
+type GpuGraphResult struct {
+	Graph string `pulumi:"graph"`
+	Raw   string `pulumi:"raw" provider:"secret"`
+}
+
+func (a *GpuGraphArgs) Annotate(ann infer.Annotator) {
+	ann.Describe(&a.AccountID, "Account id of the GPU instance to get the monitoring graph for.")
+	ann.Describe(&a.Timeframe, "Timeframe of the graph: `hour`, `day`, `week`, `month`, or `year`. Defaults to `hour`.")
+}
+
+func (r *GpuGraphResult) Annotate(ann infer.Annotator) {
+	ann.Describe(&r.Graph, "Monitoring graph payload from `GET /neo-gpus/accounts/{account_id}/graph-monitor`, "+
+		"falls back to the raw JSON when no graph field is present.")
+	ann.Describe(&r.Raw, "Raw JSON of the full response.")
+}
+
+func (GpuGraph) Invoke(
+	ctx context.Context, req infer.FunctionRequest[GpuGraphArgs],
+) (infer.FunctionResponse[GpuGraphResult], error) {
+	c := GetClient(ctx)
+	accountID, err := strconv.ParseInt(req.Input.AccountID, 10, 64)
+	if err != nil {
+		return infer.FunctionResponse[GpuGraphResult]{},
+			fmt.Errorf("biznetgio: invalid accountId %q: %s", req.Input.AccountID, err)
+	}
+	timeframe := "hour"
+	if req.Input.Timeframe != nil && *req.Input.Timeframe != "" {
+		timeframe = *req.Input.Timeframe
+	}
+	m, err := c.GPU().GraphMonitor(ctx, accountID, timeframe)
+	if err != nil {
+		return infer.FunctionResponse[GpuGraphResult]{}, err
+	}
+	g, ok := gpuString(m, "graph", "data", "payload", "content")
+	if !ok {
+		g = string(gpuJSON(m))
+	}
+	return infer.FunctionResponse[GpuGraphResult]{Output: GpuGraphResult{
+		Graph: g,
+		Raw:   string(gpuJSON(m)),
+	}}, nil
+}
