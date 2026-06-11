@@ -74,3 +74,79 @@ func (a *NeoliteProOsListArgs) Annotate(ann infer.Annotator) {
 
 func (NeoliteProOsList) Invoke(
 	ctx context.Context, req infer.FunctionRequest[NeoliteProOsListArgs],
+) (infer.FunctionResponse[NeoliteProOsListResult], error) {
+	c := GetClient(ctx)
+	oss, err := c.NeolitePro().ProductOSList(ctx, req.Input.ProductID)
+	if err != nil {
+		return infer.FunctionResponse[NeoliteProOsListResult]{}, err
+	}
+
+	result := NeoliteProOsListResult{}
+	for _, os := range oss {
+		result.Oss = append(result.Oss, NeoliteOsItem{
+			VMID:   os.VMID,
+			Node:   os.Node,
+			Name:   os.Name,
+			MaxMem: os.MaxMem,
+			MaxCPU: os.MaxCPU,
+		})
+	}
+	return infer.FunctionResponse[NeoliteProOsListResult]{Output: result}, nil
+}
+
+// ---------- getNeoliteProChangePackageOptions ----------
+
+type NeoliteProChangePackageOptions struct{}
+
+type NeoliteProChangePackageOptionsArgs struct {
+	AccountID int64 `pulumi:"accountId"`
+}
+
+type NeoliteProChangePackageOptionsResult struct {
+	Raw string `pulumi:"raw" provider:"secret"`
+}
+
+func (a *NeoliteProChangePackageOptionsArgs) Annotate(ann infer.Annotator) {
+	ann.Describe(&a.AccountID, "Account id VM NEO Lite Pro.")
+}
+
+func (NeoliteProChangePackageOptions) Invoke(
+	ctx context.Context, req infer.FunctionRequest[NeoliteProChangePackageOptionsArgs],
+) (infer.FunctionResponse[NeoliteProChangePackageOptionsResult], error) {
+	c := GetClient(ctx)
+	out, err := c.NeolitePro().ChangePackageOptions(ctx, req.Input.AccountID)
+	if err != nil {
+		return infer.FunctionResponse[NeoliteProChangePackageOptionsResult]{}, err
+	}
+	return infer.FunctionResponse[NeoliteProChangePackageOptionsResult]{
+		Output: NeoliteProChangePackageOptionsResult{Raw: neoRawJSON(out)},
+	}, nil
+}
+
+// ---------- getNeoliteProStorageUpgradeOptions ----------
+
+type NeoliteProStorageUpgradeOptions struct{}
+
+type NeoliteProStorageUpgradeOptionsArgs struct {
+	AccountID int64 `pulumi:"accountId"`
+}
+
+type NeoliteProStorageUpgradeOptionsResult struct {
+	Raw string `pulumi:"raw" provider:"secret"`
+}
+
+func (a *NeoliteProStorageUpgradeOptionsArgs) Annotate(ann infer.Annotator) {
+	ann.Describe(&a.AccountID, "Account id VM NEO Lite Pro.")
+}
+
+func (NeoliteProStorageUpgradeOptions) Invoke(
+	ctx context.Context, req infer.FunctionRequest[NeoliteProStorageUpgradeOptionsArgs],
+) (infer.FunctionResponse[NeoliteProStorageUpgradeOptionsResult], error) {
+	c := GetClient(ctx)
+	out, err := c.NeolitePro().StorageOptions(ctx, req.Input.AccountID)
+	if err != nil {
+		return infer.FunctionResponse[NeoliteProStorageUpgradeOptionsResult]{}, err
+	}
+	return infer.FunctionResponse[NeoliteProStorageUpgradeOptionsResult]{
+		Output: NeoliteProStorageUpgradeOptionsResult{Raw: neoRawJSON(out)},
+	}, nil
