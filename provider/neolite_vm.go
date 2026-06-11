@@ -127,3 +127,175 @@ func (NeoliteVm) Create(
 			ID:     "0",
 			Output: NeoliteVmState{NeoliteVmArgs: req.Inputs},
 		}, nil
+	}
+
+	c := GetClient(ctx)
+	in := req.Inputs
+	billing, err := c.Neolite().VMCreate(ctx, client.NeoliteCreatePayload{
+		ProductID:         in.ProductID,
+		Cycle:             in.Cycle,
+		SelectOS:          in.SelectOS,
+		KeypairID:         in.KeypairID,
+		VMName:            strPtr(in.VMName),
+		Description:       strPtr(in.Description),
+		SSHAndConsoleUser: in.SSHAndConsoleUser,
+		ConsolePassword:   in.ConsolePassword,
+		Promocode:         strPtr(in.Promocode),
+		PayInvoiceWithCC:  yesNo(in.PayWithCreditCard),
+	})
+	if err != nil {
+		return infer.CreateResponse[NeoliteVmState]{}, err
+	}
+	if billing.AccountID == "" {
+		return infer.CreateResponse[NeoliteVmState]{},
+			fmt.Errorf("create neolite vm response tidak ada account_id: order_id=%s", billing.OrderID)
+	}
+	id := billing.AccountID
+	partial := NeoliteVmState{NeoliteVmArgs: in, OrderID: billing.OrderID}
+
+	_, err = client.WaitForStatus(ctx, 5*time.Second,
+		func(ctx context.Context) (*client.AccountResource, error) {
+			n, err := parseNeoID(id)
+			if err != nil {
+				return nil, err
+			}
+			return c.Neolite().AccountGet(ctx, n)
+		},
+		neoliteStatus, []string{"active"}, []string{"suspended", "terminated"})
+	if err != nil {
+		if ctx.Err() == context.DeadlineExceeded {
+			return infer.CreateResponse[NeoliteVmState]{ID: id, Output: partial},
+				infer.ResourceInitFailedError{Reasons: []string{fmt.Sprintf("neolite vm %s belum active: %s", id, err)}}
+		}
+		return infer.CreateResponse[NeoliteVmState]{}, err
+	}
+
+	state, err := readNeoliteVm(ctx, c, id, in, partial)
+	if err != nil {
+		return infer.CreateResponse[NeoliteVmState]{}, err
+	}
+	return infer.CreateResponse[NeoliteVmState]{ID: id, Output: state}, nil
+}
+
+func (NeoliteVm) Update(
+	ctx context.Context, req infer.UpdateRequest[NeoliteVmArgs, NeoliteVmState],
+) (infer.UpdateResponse[NeoliteVmState], error) {
+	if req.DryRun {
+		return infer.UpdateResponse[NeoliteVmState]{Output: NeoliteVmState{NeoliteVmArgs: req.Inputs}}, nil
+	}
+
+	c := GetClient(ctx)
+	id, err := parseNeoID(req.ID)
+	if err != nil {
+		return infer.UpdateResponse[NeoliteVmState]{}, err
+	}
+	in := req.Inputs
+	old := req.State
+
+	if !eqStrPtr(in.VMName, old.VMName) {
+		if _, err := c.Neolite().VMChangeName(ctx, id, strPtr(in.VMName)); err != nil {
+			return infer.UpdateResponse[NeoliteVmState]{}, fmt.Errorf("change neolite vm name: %w", err)
+		}
+	}
+	if in.KeypairID != old.KeypairID {
+		if _, err := c.Neolite().VMChangeKeypair(ctx, id, in.KeypairID); err != nil {
+			return infer.UpdateResponse[NeoliteVmState]{}, fmt.Errorf("change neolite vm keypair: %w", err)
+		}
+	}
+
+	needsPoll := false
+	if in.ProductID != old.ProductID {
+		if _, err := c.Neolite().VMChangePackage(ctx, id, client.ChangePackagePayload{
+			NewProductID:     in.ProductID,
+			PayInvoiceWithCC: yesNo(in.PayWithCreditCard),
+		}); err != nil {
+			return infer.UpdateResponse[NeoliteVmState]{}, fmt.Errorf("change neolite vm package: %w", err)
+		}
+		needsPoll = true
+	}
+	if !eqI64Ptr(in.DiskSize, old.DiskSize) {
+		newSize := i64Val(in.DiskSize)
+		oldSize := i64Val(old.DiskSize)
+		if newSize < oldSize {
+			return infer.UpdateResponse[NeoliteVmState]{},
+				fmt.Errorf("neolite vm storage cuma bisa di-upgrade: %d -> %d", oldSize, newSize)
+		}
+		if _, err := c.Neolite().VMChangeStorage(ctx, id, client.UpgradePayload{
+			DiskSize:         newSize,
+			PayInvoiceWithCC: yesNo(in.PayWithCreditCard),
+		}); err != nil {
+			return infer.UpdateResponse[NeoliteVmState]{}, fmt.Errorf("change neolite vm storage: %w", err)
+		}
+		needsPoll = true
+	}
+	if !eqStrPtr(in.PowerState, old.PowerState) {
+		if _, err := c.Neolite().VMState(ctx, id, strPtr(in.PowerState)); err != nil {
+			return infer.UpdateResponse[NeoliteVmState]{},
+				fmt.Errorf("set neolite vm power state %q: %w", strPtr(in.PowerState), err)
+		}
+	}
+	if !eqStrPtr(in.RebuildOS, old.RebuildOS) {
+		if _, err := c.Neolite().VMRebuild(ctx, id, strPtr(in.RebuildOS)); err != nil {
+			return infer.UpdateResponse[NeoliteVmState]{}, fmt.Errorf("rebuild neolite vm: %w", err)
+		}
+		needsPoll = true
+	}
+	if !eqStrPtr(in.MigrateToPro, old.MigrateToPro) {
+		proProductID, err := strconv.ParseInt(strPtr(in.MigrateToPro), 10, 64)
+		if err != nil {
+			return infer.UpdateResponse[NeoliteVmState]{},
+				fmt.Errorf("migrateToPro harus berisi neolitepro_product_id numeric: %q", strPtr(in.MigrateToPro))
+		}
+		if _, err := c.Neolite().MigrateToPro(ctx, id, client.MigrateToProPayload{
+			NeoliteproProductID: proProductID,
+			PayInvoiceWithCC:    yesNo(in.PayWithCreditCard),
+		}); err != nil {
+			return infer.UpdateResponse[NeoliteVmState]{}, fmt.Errorf("migrate neolite vm to pro: %w", err)
+		}
+		needsPoll = true
+	}
+
+	if needsPoll {
+		_, err := client.WaitForStatus(ctx, 5*time.Second,
+			func(ctx context.Context) (*client.AccountResource, error) {
+				return c.Neolite().AccountGet(ctx, id)
+			},
+			neoliteStatus, []string{"active"}, []string{"suspended", "terminated"})
+		if err != nil {
+			if errors.Is(err, context.DeadlineExceeded) {
+				return infer.UpdateResponse[NeoliteVmState]{
+						Output: NeoliteVmState{NeoliteVmArgs: in},
+					}, infer.ResourceInitFailedError{Reasons: []string{
+						fmt.Sprintf("neolite vm %d belum active: %s", id, err),
+					}}
+			}
+			return infer.UpdateResponse[NeoliteVmState]{}, fmt.Errorf("neolite vm %d gagal balik active: %w", id, err)
+		}
+	}
+
+	state, err := readNeoliteVm(ctx, c, req.ID, in, old)
+	if err != nil {
+		return infer.UpdateResponse[NeoliteVmState]{}, err
+	}
+	return infer.UpdateResponse[NeoliteVmState]{Output: state}, nil
+}
+
+func (NeoliteVm) Read(
+	ctx context.Context, req infer.ReadRequest[NeoliteVmArgs, NeoliteVmState],
+) (infer.ReadResponse[NeoliteVmArgs, NeoliteVmState], error) {
+	c := GetClient(ctx)
+	state, err := readNeoliteVm(ctx, c, req.ID, req.State.NeoliteVmArgs, req.State)
+	if err != nil {
+		return infer.ReadResponse[NeoliteVmArgs, NeoliteVmState]{}, err
+	}
+	return infer.ReadResponse[NeoliteVmArgs, NeoliteVmState]{State: state}, nil
+}
+
+func (NeoliteVm) Delete(ctx context.Context, req infer.DeleteRequest[NeoliteVmState]) (infer.DeleteResponse, error) {
+	c := GetClient(ctx)
+	id, err := parseNeoID(req.ID)
+	if err != nil {
+		return infer.DeleteResponse{}, err
+	}
+	if _, err := c.Neolite().VMDelete(ctx, id); err != nil {
+		if client.IsNotFound(err) {
