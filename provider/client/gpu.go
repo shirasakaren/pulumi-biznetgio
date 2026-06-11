@@ -39,3 +39,4 @@ func (s *GPUService) AccountsList(ctx context.Context, status string) ([]map[str
 
 func (s *GPUService) AccountGet(ctx context.Context, accountID int64) (map[string]any, error) {
 	raw, err := s.client.doJSON(ctx, http.MethodGet, fmt.Sprintf("/neo-gpus/accounts/%d", accountID), nil)
+// wip 432
