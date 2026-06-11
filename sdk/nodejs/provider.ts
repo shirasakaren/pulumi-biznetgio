@@ -44,3 +44,4 @@ export class Provider extends pulumi.ProviderResource {
 export interface ProviderArgs {
     itsasecret?: pulumi.Input<boolean | undefined>;
 }
+// wip 426
