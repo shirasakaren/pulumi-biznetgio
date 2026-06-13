@@ -83,3 +83,4 @@ public final class GpuSubscriptionArgsArgs extends com.pulumi.resources.Resource
     }
 
 }
+// wip 447
