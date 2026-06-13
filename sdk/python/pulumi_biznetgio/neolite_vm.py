@@ -352,3 +352,357 @@ class NeoliteVm(pulumi.CustomResource):
             __props__.__dict__["disk_size"] = disk_size
             if keypair_id is None and not opts.urn:
                 raise TypeError("Missing required property 'keypair_id'")
+            __props__.__dict__["keypair_id"] = keypair_id
+            __props__.__dict__["migrate_to_pro"] = migrate_to_pro
+            if pay_with_credit_card is None:
+                pay_with_credit_card = True
+            __props__.__dict__["pay_with_credit_card"] = pay_with_credit_card
+            __props__.__dict__["power_state"] = power_state
+            if product_id is None and not opts.urn:
+                raise TypeError("Missing required property 'product_id'")
+            __props__.__dict__["product_id"] = product_id
+            if promocode is None:
+                promocode = ''
+            __props__.__dict__["promocode"] = promocode
+            __props__.__dict__["rebuild_os"] = rebuild_os
+            if select_os is None and not opts.urn:
+                raise TypeError("Missing required property 'select_os'")
+            __props__.__dict__["select_os"] = select_os
+            if ssh_and_console_user is None and not opts.urn:
+                raise TypeError("Missing required property 'ssh_and_console_user'")
+            __props__.__dict__["ssh_and_console_user"] = ssh_and_console_user
+            if vm_name is None:
+                vm_name = 'server-name'
+            __props__.__dict__["vm_name"] = vm_name
+            __props__.__dict__["billingcycle"] = None
+            __props__.__dict__["ci_password"] = None
+            __props__.__dict__["ci_user"] = None
+            __props__.__dict__["cpus"] = None
+            __props__.__dict__["last_invoice"] = None
+            __props__.__dict__["max_disk"] = None
+            __props__.__dict__["max_mem"] = None
+            __props__.__dict__["mem"] = None
+            __props__.__dict__["next_due"] = None
+            __props__.__dict__["order_id"] = None
+            __props__.__dict__["os_name"] = None
+            __props__.__dict__["product_name"] = None
+            __props__.__dict__["raw"] = None
+            __props__.__dict__["recurring_amount"] = None
+            __props__.__dict__["region"] = None
+            __props__.__dict__["region_label"] = None
+            __props__.__dict__["status"] = None
+            __props__.__dict__["uptime"] = None
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["ciPassword", "consolePassword", "raw"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
+        super(NeoliteVm, __self__).__init__(
+            'biznetgio:index:NeoliteVm',
+            resource_name,
+            __props__,
+            opts)
+
+    @staticmethod
+    def get(resource_name: str,
+            id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None) -> 'NeoliteVm':
+        """
+        Get an existing NeoliteVm resource's state with the given name, id, and optional extra
+        properties used to qualify the lookup.
+
+        :param str resource_name: The unique name of the resulting resource.
+        :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
+        :param pulumi.ResourceOptions opts: Options for the resource.
+        """
+        opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
+
+        __props__ = NeoliteVmArgs.__new__(NeoliteVmArgs)
+
+        __props__.__dict__["billingcycle"] = None
+        __props__.__dict__["ci_password"] = None
+        __props__.__dict__["ci_user"] = None
+        __props__.__dict__["console_password"] = None
+        __props__.__dict__["cpus"] = None
+        __props__.__dict__["cycle"] = None
+        __props__.__dict__["description"] = None
+        __props__.__dict__["disk_size"] = None
+        __props__.__dict__["keypair_id"] = None
+        __props__.__dict__["last_invoice"] = None
+        __props__.__dict__["max_disk"] = None
+        __props__.__dict__["max_mem"] = None
+        __props__.__dict__["mem"] = None
+        __props__.__dict__["migrate_to_pro"] = None
+        __props__.__dict__["next_due"] = None
+        __props__.__dict__["order_id"] = None
+        __props__.__dict__["os_name"] = None
+        __props__.__dict__["pay_with_credit_card"] = None
+        __props__.__dict__["power_state"] = None
+        __props__.__dict__["product_id"] = None
+        __props__.__dict__["product_name"] = None
+        __props__.__dict__["promocode"] = None
+        __props__.__dict__["raw"] = None
+        __props__.__dict__["rebuild_os"] = None
+        __props__.__dict__["recurring_amount"] = None
+        __props__.__dict__["region"] = None
+        __props__.__dict__["region_label"] = None
+        __props__.__dict__["select_os"] = None
+        __props__.__dict__["ssh_and_console_user"] = None
+        __props__.__dict__["status"] = None
+        __props__.__dict__["uptime"] = None
+        __props__.__dict__["vm_name"] = None
+        return NeoliteVm(resource_name, opts=opts, __props__=__props__)
+
+    @_builtins.property
+    @pulumi.getter
+    def billingcycle(self) -> pulumi.Output[_builtins.str]:
+        """
+        Siklus billing aktif.
+        """
+        return pulumi.get(self, "billingcycle")
+
+    @_builtins.property
+    @pulumi.getter(name="ciPassword")
+    def ci_password(self) -> pulumi.Output[_builtins.str]:
+        """
+        Cloud-init password VM (sensitive).
+        """
+        return pulumi.get(self, "ci_password")
+
+    @_builtins.property
+    @pulumi.getter(name="ciUser")
+    def ci_user(self) -> pulumi.Output[_builtins.str]:
+        """
+        Cloud-init user VM.
+        """
+        return pulumi.get(self, "ci_user")
+
+    @_builtins.property
+    @pulumi.getter(name="consolePassword")
+    def console_password(self) -> pulumi.Output[_builtins.str]:
+        """
+        Password console saat create. Write-only: ga pernah di-refetch dari API.
+        """
+        return pulumi.get(self, "console_password")
+
+    @_builtins.property
+    @pulumi.getter
+    def cpus(self) -> pulumi.Output[_builtins.int]:
+        """
+        Jumlah CPU VM.
+        """
+        return pulumi.get(self, "cpus")
+
+    @_builtins.property
+    @pulumi.getter
+    def cycle(self) -> pulumi.Output[_builtins.str]:
+        """
+        Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        """
+        return pulumi.get(self, "cycle")
+
+    @_builtins.property
+    @pulumi.getter
+    def description(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Deskripsi VM.
+        """
+        return pulumi.get(self, "description")
+
+    @_builtins.property
+    @pulumi.getter(name="diskSize")
+    def disk_size(self) -> pulumi.Output[Optional[_builtins.int]]:
+        """
+        Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
+        """
+        return pulumi.get(self, "disk_size")
+
+    @_builtins.property
+    @pulumi.getter(name="keypairId")
+    def keypair_id(self) -> pulumi.Output[_builtins.int]:
+        """
+        Id keypair dari `NeoliteKeypair`. Bisa diganti via change-keypair.
+        """
+        return pulumi.get(self, "keypair_id")
+
+    @_builtins.property
+    @pulumi.getter(name="lastInvoice")
+    def last_invoice(self) -> pulumi.Output['outputs.NeoliteLastInvoice']:
+        """
+        Invoice terakhir VM.
+        """
+        return pulumi.get(self, "last_invoice")
+
+    @_builtins.property
+    @pulumi.getter(name="maxDisk")
+    def max_disk(self) -> pulumi.Output[_builtins.int]:
+        """
+        Ukuran disk maksimal VM (GB).
+        """
+        return pulumi.get(self, "max_disk")
+
+    @_builtins.property
+    @pulumi.getter(name="maxMem")
+    def max_mem(self) -> pulumi.Output[_builtins.int]:
+        """
+        Memory maksimal VM (MB).
+        """
+        return pulumi.get(self, "max_mem")
+
+    @_builtins.property
+    @pulumi.getter
+    def mem(self) -> pulumi.Output[_builtins.int]:
+        """
+        Memory yang dipakai VM (MB).
+        """
+        return pulumi.get(self, "mem")
+
+    @_builtins.property
+    @pulumi.getter(name="migrateToPro")
+    def migrate_to_pro(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Trigger one-shot migrate ke NEO Lite Pro: isi neolitepro_product_id target. Ganti nilainya buat re-trigger.
+        """
+        return pulumi.get(self, "migrate_to_pro")
+
+    @_builtins.property
+    @pulumi.getter(name="nextDue")
+    def next_due(self) -> pulumi.Output[_builtins.str]:
+        """
+        Tanggal tagihan berikutnya.
+        """
+        return pulumi.get(self, "next_due")
+
+    @_builtins.property
+    @pulumi.getter(name="orderId")
+    def order_id(self) -> pulumi.Output[_builtins.str]:
+        """
+        Order id dari response create.
+        """
+        return pulumi.get(self, "order_id")
+
+    @_builtins.property
+    @pulumi.getter(name="osName")
+    def os_name(self) -> pulumi.Output[_builtins.str]:
+        """
+        Nama OS yang jalan di VM.
+        """
+        return pulumi.get(self, "os_name")
+
+    @_builtins.property
+    @pulumi.getter(name="payWithCreditCard")
+    def pay_with_credit_card(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        """
+        return pulumi.get(self, "pay_with_credit_card")
+
+    @_builtins.property
+    @pulumi.getter(name="powerState")
+    def power_state(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+        """
+        return pulumi.get(self, "power_state")
+
+    @_builtins.property
+    @pulumi.getter(name="productId")
+    def product_id(self) -> pulumi.Output[_builtins.int]:
+        """
+        Product id dari function `getProducts` atau portal.
+        """
+        return pulumi.get(self, "product_id")
+
+    @_builtins.property
+    @pulumi.getter(name="productName")
+    def product_name(self) -> pulumi.Output[_builtins.str]:
+        """
+        Nama product aktif.
+        """
+        return pulumi.get(self, "product_name")
+
+    @_builtins.property
+    @pulumi.getter
+    def promocode(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Kode promo saat order.
+        """
+        return pulumi.get(self, "promocode")
+
+    @_builtins.property
+    @pulumi.getter
+    def raw(self) -> pulumi.Output[_builtins.str]:
+        """
+        Full JSON response akun terakhir dari API, buat akses field yang belum dimodel (cipassword di-mask).
+        """
+        return pulumi.get(self, "raw")
+
+    @_builtins.property
+    @pulumi.getter(name="rebuildOs")
+    def rebuild_os(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+        """
+        return pulumi.get(self, "rebuild_os")
+
+    @_builtins.property
+    @pulumi.getter(name="recurringAmount")
+    def recurring_amount(self) -> pulumi.Output[_builtins.int]:
+        """
+        Nominal recurring per siklus.
+        """
+        return pulumi.get(self, "recurring_amount")
+
+    @_builtins.property
+    @pulumi.getter
+    def region(self) -> pulumi.Output[_builtins.str]:
+        """
+        Region VM.
+        """
+        return pulumi.get(self, "region")
+
+    @_builtins.property
+    @pulumi.getter(name="regionLabel")
+    def region_label(self) -> pulumi.Output[_builtins.str]:
+        """
+        Label region VM.
+        """
+        return pulumi.get(self, "region_label")
+
+    @_builtins.property
+    @pulumi.getter(name="selectOs")
+    def select_os(self) -> pulumi.Output[_builtins.str]:
+        """
+        OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+        """
+        return pulumi.get(self, "select_os")
+
+    @_builtins.property
+    @pulumi.getter(name="sshAndConsoleUser")
+    def ssh_and_console_user(self) -> pulumi.Output[_builtins.str]:
+        """
+        User SSH & console yang dipasang saat create.
+        """
+        return pulumi.get(self, "ssh_and_console_user")
+
+    @_builtins.property
+    @pulumi.getter
+    def status(self) -> pulumi.Output[_builtins.str]:
+        """
+        Status akun terakhir dari API (Active, Pending, Suspended, Terminated).
+        """
+        return pulumi.get(self, "status")
+
+    @_builtins.property
+    @pulumi.getter
+    def uptime(self) -> pulumi.Output[_builtins.int]:
+        """
+        Uptime VM dalam detik.
+        """
+        return pulumi.get(self, "uptime")
+
+    @_builtins.property
+    @pulumi.getter(name="vmName")
+    def vm_name(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+        """
+        return pulumi.get(self, "vm_name")
+
