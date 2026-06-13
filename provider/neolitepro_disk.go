@@ -124,3 +124,45 @@ func (NeoliteProDisk) Update(
 		return infer.UpdateResponse[NeoliteProDiskState]{Output: req.State}, nil
 	}
 	if newSize < oldSize {
+		return infer.UpdateResponse[NeoliteProDiskState]{},
+			fmt.Errorf("neolite pro disk cuma bisa di-upgrade: %d -> %d", oldSize, newSize)
+	}
+
+	// upgrade pakai additional_size INCREMENT, bukan target absolute.
+	if _, err := c.NeolitePro().DiskUpgrade(ctx, id, client.DiskUpgradePayload{
+		AdditionalSize:   newSize - oldSize,
+		PayInvoiceWithCC: yesNo(req.Inputs.PayWithCreditCard),
+	}); err != nil {
+		return infer.UpdateResponse[NeoliteProDiskState]{}, fmt.Errorf("upgrade neolite pro disk: %w", err)
+	}
+
+	done, err := client.WaitForStatus(ctx, 5*time.Second,
+		func(ctx context.Context) (map[string]any, error) {
+			return c.NeolitePro().DiskGet(ctx, id)
+		},
+		neoliteDiskStatus, []string{"active"}, []string{"suspended", "terminated"})
+	if err != nil {
+		if errors.Is(err, context.DeadlineExceeded) {
+			return infer.UpdateResponse[NeoliteProDiskState]{
+					Output: NeoliteProDiskState{NeoliteProDiskArgs: req.Inputs},
+				}, infer.ResourceInitFailedError{Reasons: []string{
+					fmt.Sprintf("neolite pro disk %d belum active: %s", id, err),
+				}}
+		}
+		return infer.UpdateResponse[NeoliteProDiskState]{}, fmt.Errorf("neolite pro disk %d gagal balik active: %w", id, err)
+	}
+
+	state := NeoliteProDiskState{NeoliteProDiskArgs: req.Inputs}
+	state.OrderID = req.State.OrderID
+	state.Status = neoAliasStr(done, "status", "state")
+	state.Raw = neoRawJSON(done)
+	return infer.UpdateResponse[NeoliteProDiskState]{Output: state}, nil
+}
+
+func (NeoliteProDisk) Read(
+	ctx context.Context, req infer.ReadRequest[NeoliteProDiskArgs, NeoliteProDiskState],
+) (infer.ReadResponse[NeoliteProDiskArgs, NeoliteProDiskState], error) {
+	c := GetClient(ctx)
+	id, err := parseNeoID(req.ID)
+	if err != nil {
+		return infer.ReadResponse[NeoliteProDiskArgs, NeoliteProDiskState]{}, err
