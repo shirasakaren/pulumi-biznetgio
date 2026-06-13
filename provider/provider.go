@@ -82,3 +82,43 @@ func Provider() p.Provider {
 			infer.Function(NeoliteProStorageUpgradeOptions{}),
 			infer.Function(NeoliteProIPAvailability{}),
 			// object storage jos
+			infer.Function(ObjectStorageInstances{}),
+			infer.Function(ObjectStorageBuckets{}),
+			infer.Function(ObjectStorageCredentials{}),
+		).
+		WithConfig(infer.Config(&Config{})).
+		WithModuleMap(map[tokens.ModuleName]tokens.ModuleName{
+			"provider": "index",
+		}).Build()
+	if err != nil {
+		panic(fmt.Errorf("unable to build provider: %w", err))
+	}
+	return p
+}
+
+type Config struct {
+	ApiToken *string `pulumi:"apiToken,optional" provider:"secret"`
+	BaseURL  *string `pulumi:"baseUrl,optional"`
+
+	client *client.Client
+}
+
+func (c *Config) Annotate(a infer.Annotator) {
+	a.Describe(&c.ApiToken, "BiznetGIO API token (x-token header). Falls back to BIZNETGIO_API_KEY.")
+	a.SetDefault(&c.ApiToken, nil, "BIZNETGIO_API_KEY")
+	a.Describe(&c.BaseURL, "BiznetGIO API base URL. Falls back to BIZNETGIO_BASE_URL.")
+	a.SetDefault(&c.BaseURL, "https://api.portal.biznetgio.com/v1", "BIZNETGIO_BASE_URL")
+}
+
+func (c *Config) Configure(_ context.Context) error {
+	if c.ApiToken == nil || *c.ApiToken == "" {
+		return fmt.Errorf("apiToken is required (set via `pulumi config set --secret biznetgio:apiToken <token>` " +
+			"or BIZNETGIO_API_KEY)")
+	}
+	c.client = client.New(*c.BaseURL, *c.ApiToken, 30*time.Second)
+	return nil
+}
+
+func GetClient(ctx context.Context) *client.Client {
+	return infer.GetConfig[Config](ctx).client
+}
