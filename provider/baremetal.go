@@ -78,4 +78,43 @@ func (Baremetal) Create(
 		return resp, nil
 	}
 	c := GetClient(ctx)
-// wip 409
+	a := req.Inputs
+
+	pay := "yes"
+	if a.PayWithCreditCard != nil && !*a.PayWithCreditCard {
+		pay = "no"
+	}
+	raw, err := c.Baremetal().Create(ctx, client.BaremetalCreatePayload{
+		ProductID:        a.ProductID,
+		Cycle:            a.Cycle,
+		SelectOS:         bmtStr(a.SelectOS),
+		KeypairID:        a.KeypairID,
+		Label:            a.Label,
+		PublicIP:         bmtInt64Ptr(a.PublicIP),
+		Promocode:        bmtStr(a.Promocode),
+		PayInvoiceWithCC: pay,
+	})
+	if err != nil {
+		return infer.CreateResponse[BaremetalState]{}, err
+	}
+	accountID, ok := bmtInt64(raw, "account_id", "id")
+	if !ok {
+		return infer.CreateResponse[BaremetalState]{},
+			fmt.Errorf("biznetgio: baremetal create response missing account_id: %s", bmtJSON(raw))
+	}
+	resp.ID = strconv.FormatInt(accountID, 10)
+	resp.Output = baremetalStateFromMap(ctx, a, raw)
+
+	final, err := client.WaitForStatus(ctx, 5*time.Second,
+		func(ctx context.Context) (map[string]any, error) { return c.Baremetal().AccountGet(ctx, accountID) },
+		bmtStatus, []string{"active"}, []string{"terminated", "error", "failed"})
+	if err != nil {
+		if errors.Is(err, context.DeadlineExceeded) {
+			return resp, infer.ResourceInitFailedError{Reasons: []string{
+				fmt.Sprintf("baremetal %d belum active, lanjutin via update aja: %s", accountID, err),
+			}}
+		}
+		return resp, err
+	}
+	resp.Output = baremetalStateFromMap(ctx, a, final)
+	if st, err := c.Baremetal().StateGet(ctx, accountID); err == nil {
