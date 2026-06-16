@@ -158,3 +158,78 @@ func (ObjectStorageCredential) Delete(
 	}
 	if _, err := c.ObjectStorage().CredentialDelete(ctx, accountID, accessKey); err != nil && !client.IsNotFound(err) {
 		return infer.DeleteResponse{}, err
+	}
+	return infer.DeleteResponse{}, nil
+}
+
+func osFindCredential(
+	ctx context.Context, c *client.Client, accountID int64, keyForm string,
+) (map[string]any, bool, error) {
+	items, err := c.ObjectStorage().CredentialsList(ctx, accountID)
+	if err != nil {
+		return nil, false, err
+	}
+	hashMode := osIsHex16(keyForm)
+	for _, it := range items {
+		ak, ok := osString(it, "accessKey", "access_key", "accesskey")
+		if !ok {
+			continue
+		}
+		if (hashMode && osHashKey(ak) == keyForm) || (!hashMode && ak == keyForm) {
+			return it, true, nil
+		}
+	}
+	return nil, false, nil
+}
+
+// osResolveAccessKey balikin access key plaintext dari keyForm (hash atau literal).
+// Hash mode butuh list credentials — fallback dipake kalo ga ketemu (state lama).
+func osResolveAccessKey(
+	ctx context.Context, c *client.Client, accountID int64, keyForm, fallback string,
+) (string, bool, error) {
+	if !osIsHex16(keyForm) {
+		return keyForm, keyForm != "", nil
+	}
+	items, err := c.ObjectStorage().CredentialsList(ctx, accountID)
+	if err != nil {
+		return "", false, err
+	}
+	for _, it := range items {
+		if ak, ok := osString(it, "accessKey", "access_key", "accesskey"); ok && osHashKey(ak) == keyForm {
+			return ak, true, nil
+		}
+	}
+	if fallback != "" {
+		return fallback, true, nil
+	}
+	return "", false, nil
+}
+
+func osHashKey(accessKey string) string {
+	sum := sha256.Sum256([]byte(accessKey))
+	return hex.EncodeToString(sum[:8])
+}
+
+func osIsHex16(s string) bool {
+	if len(s) != 16 {
+		return false
+	}
+	for _, r := range s {
+		if (r < '0' || r > '9') && (r < 'a' || r > 'f') {
+			return false
+		}
+	}
+	return true
+}
+
+func osIDParts(id string) (int64, string, bool) {
+	acc, k, ok := strings.Cut(id, ":")
+	if !ok || k == "" {
+		return 0, "", false
+	}
+	n, err := strconv.ParseInt(acc, 10, 64)
+	if err != nil || n == 0 {
+		return 0, "", false
+	}
+	return n, k, true
+}
