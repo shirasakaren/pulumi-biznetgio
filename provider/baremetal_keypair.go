@@ -103,3 +103,36 @@ func (BaremetalKeypair) Read(
 
 func (BaremetalKeypair) Delete(
 	ctx context.Context, req infer.DeleteRequest[BaremetalKeypairState],
+) (infer.DeleteResponse, error) {
+	c := GetClient(ctx)
+	keypairID, err := strconv.ParseInt(req.ID, 10, 64)
+	if err != nil {
+		return infer.DeleteResponse{}, fmt.Errorf("biznetgio: invalid keypair id %q: %s", req.ID, err)
+	}
+	if _, err := c.Baremetal().KeypairDelete(ctx, keypairID); err != nil && !client.IsNotFound(err) {
+		return infer.DeleteResponse{}, err
+	}
+	return infer.DeleteResponse{}, nil
+}
+
+func keypairStateFromMap(_ context.Context, args BaremetalKeypairArgs, m map[string]any) BaremetalKeypairState {
+	st := BaremetalKeypairState{BaremetalKeypairArgs: args}
+	if m == nil {
+		return st
+	}
+	if v, ok := bmtInt64(m, "keypair_id", "id"); ok {
+		st.KeypairID = v
+	}
+	if v, ok := bmtString(m, "name"); ok {
+		st.Name = v
+	}
+	if v, ok := bmtString(m, "public_key", "publickey"); ok {
+		st.PublicKey = &v
+	}
+	// private key cuma di response create — alias defensif, jangan nebak nama
+	if v, ok := bmtString(m, "private_key", "private", "secret_key", "pem"); ok {
+		st.PrivateKey = &v
+	}
+	st.Raw = string(bmtJSON(m))
+	return st
+}
