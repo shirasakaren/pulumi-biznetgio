@@ -74,3 +74,41 @@ func (NeoliteProducts) Invoke(
 				Cores:          p.Options.Cores,
 				Memory:         p.Options.Memory,
 				AllowDowngrade: p.Options.AllowDowngrade,
+			},
+		}
+		for _, b := range p.Billing {
+			bm := NeolitePlanBilling{Label: b.Label, Cycle: b.Cycle, Price: b.Price}
+			for _, c := range b.Components {
+				cm := NeolitePlanComponent{Label: c.Label, Field: c.Field}
+				for _, pr := range c.Prices {
+					cm.Prices = append(cm.Prices, NeolitePlanPrice{QtyMin: pr.QtyMin, QtyMax: pr.QtyMax, Price: pr.Price})
+				}
+				bm.Components = append(bm.Components, cm)
+			}
+			item.Billing = append(item.Billing, bm)
+		}
+		result.Products = append(result.Products, item)
+	}
+	return infer.FunctionResponse[NeoliteProductsResult]{Output: result}, nil
+}
+
+// ---------- getOsList ----------
+
+type NeoliteOsList struct{}
+
+type NeoliteOsListArgs struct {
+	ProductID int64 `pulumi:"productId"`
+}
+
+type NeoliteOsListResult struct {
+	Oss []NeoliteOsItem `pulumi:"oss"`
+}
+
+type NeoliteOsItem struct {
+	VMID   int64  `pulumi:"vmid"`
+	Node   string `pulumi:"node"`
+	Name   string `pulumi:"name"`
+	MaxMem int64  `pulumi:"maxmem"`
+	MaxCPU int64  `pulumi:"maxcpu"`
+}
+
