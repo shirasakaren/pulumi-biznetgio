@@ -29,6 +29,13 @@ linters:
           - revive
         path: pkg/
         text: "var-naming" # https://github.com/pulumi/ci-mgmt/issues/2100
+      - linters:
+          - revive
+        path: provider/
+        text: "var-naming" # nama resource = pulumi token, jangan rename
+      - linters:
+          - goconst
+        text: "string `(yes|name|select_os|active|packageName|suspended|error|cancelled|terminated|deleted|failed)` has" # wire key/value API, ga perlu konstanta
 formatters:
   enable:
     - gci
@@ -40,7 +47,7 @@ formatters:
         - blank # Blank section: contains all blank imports.
         - default # Default section: contains all imports that could not be matched to another section type.
         - prefix(github.com/pulumi/) # Custom section: groups all imports with the github.com/pulumi/ prefix.
-        - prefix(github.com/pulumi/pulumi-provider-boilerplate) # Custom section: local imports
+        - prefix(github.com/biznetgio/) # Custom section: local imports
       custom-order: true
   exclusions:
     generated: lax
@@ -51,4 +58,3 @@ formatters:
       - third_party$
       - builtin$
       - examples$
-// wip 478
