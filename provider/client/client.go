@@ -82,3 +82,128 @@ func (c *Client) once(ctx context.Context, method, path, contentType string, bod
 	req, err := http.NewRequestWithContext(ctx, method, c.baseURL+path, reader)
 	if err != nil {
 		return nil, err
+	}
+	req.Header.Set("x-token", c.apiKey)
+	if contentType != "" {
+		req.Header.Set("Content-Type", contentType)
+	}
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	raw, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode/100 != 2 {
+		code, msg := parseErrorBody(raw)
+		return nil, &APIError{StatusCode: resp.StatusCode, Code: code, Message: msg, Body: string(raw)}
+	}
+	return raw, nil
+}
+
+func (c *Client) doJSON(ctx context.Context, method, path string, body any) (json.RawMessage, error) {
+	var buf []byte
+	if body != nil {
+		b, err := json.Marshal(body)
+		if err != nil {
+			return nil, err
+		}
+		buf = b
+	}
+	raw, err := c.do(ctx, method, path, "application/json", buf)
+	if err != nil {
+		return nil, err
+	}
+	return unwrapJSON(raw)
+}
+
+// unwrapJSON pisahin payload dari envelope `{success, code, data}`.
+// Kalo body valid JSON tapi tanpa key data, balikin body utuh (list endpoint
+// kadang kirim bare array/object). Body kosong tetap error.
+func unwrapJSON(raw []byte) (json.RawMessage, error) {
+	var env struct {
+		Data json.RawMessage `json:"data"`
+	}
+	if err := json.Unmarshal(raw, &env); err == nil &&
+		len(env.Data) > 0 && string(env.Data) != "null" {
+		return env.Data, nil
+	}
+	if json.Valid(raw) {
+		return raw, nil
+	}
+	return nil, fmt.Errorf("biznetgio: empty response body")
+}
+
+// jsonInt64 toleran: terima number ATAU string numerik di wire (Rust SDK
+// pake deserialize_number_from_string buat keypair_id dkk).
+type jsonInt64 int64
+
+func (n *jsonInt64) UnmarshalJSON(b []byte) error {
+	b = bytes.TrimSpace(b)
+	if len(b) > 0 && b[0] == '"' {
+		var s string
+		if err := json.Unmarshal(b, &s); err != nil {
+			return err
+		}
+		v, err := strconv.ParseInt(s, 10, 64)
+		if err != nil {
+			return err
+		}
+		*n = jsonInt64(v)
+		return nil
+	}
+	var v int64
+	if err := json.Unmarshal(b, &v); err != nil {
+		return err
+	}
+	*n = jsonInt64(v)
+	return nil
+}
+
+func decodeJSON[T any](raw json.RawMessage) (T, error) {
+	var out T
+	if err := json.Unmarshal(raw, &out); err != nil {
+		return out, fmt.Errorf("biznetgio: decode response: %w", err)
+	}
+	return out, nil
+}
+
+func withStatus(p, status string) string {
+	if status == "" {
+		return p
+	}
+	return p + "?status=" + url.QueryEscape(status)
+}
+
+func strField(d map[string]any, key string) string {
+	v, ok := d[key]
+	if !ok {
+		return ""
+	}
+	switch x := v.(type) {
+	case string:
+		return x
+	case float64:
+		return strconv.FormatFloat(x, 'f', -1, 64)
+	case bool:
+		return strconv.FormatBool(x)
+	}
+	return ""
+}
+
+func intField(d map[string]any, key string) int64 {
+	v, ok := d[key]
+	if !ok {
+		return 0
+	}
+	switch x := v.(type) {
+	case float64:
+		return int64(x)
+	case string:
+		n, _ := strconv.ParseInt(x, 10, 64)
+		return n
+	}
+	return 0
+}
