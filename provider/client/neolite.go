@@ -538,3 +538,63 @@ type NeoliteCreatePayload struct {
 	KeypairID         int64  `json:"keypair_id"`
 	VMName            string `json:"vm_name,omitempty"`
 	Description       string `json:"description,omitempty"`
+	SSHAndConsoleUser string `json:"ssh_and_console_user"`
+	ConsolePassword   string `json:"console_password"`
+	Promocode         string `json:"promocode,omitempty"`
+	PayInvoiceWithCC  string `json:"pay_invoice_with_cc,omitempty"`
+}
+
+type ChangePackagePayload struct {
+	NewProductID     int64  `json:"new_product_id"`
+	PayInvoiceWithCC string `json:"pay_invoice_with_cc,omitempty"`
+}
+
+type UpgradePayload struct {
+	DiskSize         int64  `json:"disk_size"`
+	PayInvoiceWithCC string `json:"pay_invoice_with_cc,omitempty"`
+}
+
+type SnapshotPayload struct {
+	Cycle            string `json:"cycle"`
+	Name             string `json:"name,omitempty"`
+	Description      string `json:"description,omitempty"`
+	Promocode        string `json:"promocode,omitempty"`
+	PayInvoiceWithCC string `json:"pay_invoice_with_cc,omitempty"`
+}
+
+type NeoliteFromSnapshotPayload struct {
+	ProductID         int64  `json:"product_id"`
+	Cycle             string `json:"cycle"`
+	KeypairID         int64  `json:"keypair_id"`
+	Name              string `json:"name"`
+	Description       string `json:"description,omitempty"`
+	SSHAndConsoleUser string `json:"ssh_and_console_user"`
+	ConsolePassword   string `json:"console_password"`
+	Promocode         string `json:"promocode,omitempty"`
+	PayInvoiceWithCC  string `json:"pay_invoice_with_cc,omitempty"`
+}
+
+type MigrateToProPayload struct {
+	NeoliteproProductID int64  `json:"neolitepro_product_id"`
+	PayInvoiceWithCC    string `json:"pay_invoice_with_cc,omitempty"`
+}
+
+type NeoliteDiskCreatePayload struct {
+	ProductID        int64  `json:"product_id"`
+	Cycle            string `json:"cycle"`
+	NeoliteAccountID int64  `json:"neolite_account_id"`
+	ServiceName      string `json:"service_name,omitempty"`
+	Promocode        string `json:"promocode,omitempty"`
+	PayInvoiceWithCC string `json:"pay_invoice_with_cc,omitempty"`
+	Size             int64  `json:"size,omitempty"`
+}
+
+type DiskUpgradePayload struct {
+	AdditionalSize   int64  `json:"additional_size,omitempty"`
+	PayInvoiceWithCC string `json:"pay_invoice_with_cc,omitempty"`
+}
+
+type KeypairImportPayload struct {
+	Name      string `json:"name"`
+	PublicKey string `json:"public_key,omitempty"`
+}
