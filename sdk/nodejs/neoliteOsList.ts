@@ -36,3 +36,4 @@ export interface NeoliteOsListOutputArgs {
      */
     productId: pulumi.Input<number>;
 }
+// wip 510
