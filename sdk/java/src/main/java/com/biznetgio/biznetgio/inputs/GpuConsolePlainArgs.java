@@ -74,3 +74,4 @@ public final class GpuConsolePlainArgs extends com.pulumi.resources.InvokeArgs {
 }
 // wip 347
 // wip 422
+// wip 526
