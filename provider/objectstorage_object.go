@@ -88,3 +88,48 @@ func (ObjectStorageObject) Create(
 	return resp, nil
 }
 
+func (ObjectStorageObject) Update(
+	ctx context.Context, req infer.UpdateRequest[ObjectStorageObjectArgs, ObjectStorageObjectState],
+) (infer.UpdateResponse[ObjectStorageObjectState], error) {
+	resp := infer.UpdateResponse[ObjectStorageObjectState]{
+		Output: ObjectStorageObjectState{ObjectStorageObjectArgs: req.Inputs},
+	}
+	if req.DryRun {
+		return resp, nil
+	}
+	a := req.Inputs
+	if osStr(a.Acl) == osStr(req.State.Acl) {
+		return resp, nil
+	}
+	c := GetClient(ctx)
+	if _, err := c.ObjectStorage().ObjectSetACL(ctx, osParseID(a.AccountID), a.Bucket, a.Key, osStr(a.Acl)); err != nil {
+		return infer.UpdateResponse[ObjectStorageObjectState]{}, err
+	}
+	return resp, nil
+}
+
+func (ObjectStorageObject) Read(
+	ctx context.Context, req infer.ReadRequest[ObjectStorageObjectArgs, ObjectStorageObjectState],
+) (infer.ReadResponse[ObjectStorageObjectArgs, ObjectStorageObjectState], error) {
+	resp := infer.ReadResponse[ObjectStorageObjectArgs, ObjectStorageObjectState]{
+		ID:     req.ID,
+		Inputs: req.Inputs,
+		State:  ObjectStorageObjectState{ObjectStorageObjectArgs: req.Inputs},
+	}
+	c := GetClient(ctx)
+	m, ok, err := osFindObject(ctx, c, osParseID(req.Inputs.AccountID), req.Inputs.Bucket, req.Inputs.Key)
+	if err != nil {
+		return resp, err
+	}
+	if !ok {
+		return resp, fmt.Errorf("biznetgio: object storage object %s not found", req.ID)
+	}
+	if v, ok := osString(m, "acl"); ok {
+		resp.State.Acl = &v
+	}
+	resp.State.Raw = string(osJSON(m))
+	return resp, nil
+}
+
+func (ObjectStorageObject) Delete(
+	ctx context.Context, req infer.DeleteRequest[ObjectStorageObjectState],
