@@ -211,3 +211,215 @@ type NeoliteVmArgs struct {
 	// Product id dari function `getProducts` atau portal.
 	ProductId pulumi.IntInput
 	// Kode promo saat order.
+	Promocode pulumi.StringPtrInput
+	// Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+	RebuildOs pulumi.StringPtrInput
+	// OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+	SelectOs pulumi.StringInput
+	// User SSH & console yang dipasang saat create.
+	SshAndConsoleUser pulumi.StringInput
+	// Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+	VmName pulumi.StringPtrInput
+}
+
+func (NeoliteVmArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*neoliteVmArgs)(nil)).Elem()
+}
+
+type NeoliteVmInput interface {
+	pulumi.Input
+
+	ToNeoliteVmOutput() NeoliteVmOutput
+	ToNeoliteVmOutputWithContext(ctx context.Context) NeoliteVmOutput
+}
+
+func (*NeoliteVm) ElementType() reflect.Type {
+	return reflect.TypeOf((**NeoliteVm)(nil)).Elem()
+}
+
+func (i *NeoliteVm) ToNeoliteVmOutput() NeoliteVmOutput {
+	return i.ToNeoliteVmOutputWithContext(context.Background())
+}
+
+func (i *NeoliteVm) ToNeoliteVmOutputWithContext(ctx context.Context) NeoliteVmOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NeoliteVmOutput)
+}
+
+type NeoliteVmOutput struct{ *pulumi.OutputState }
+
+func (NeoliteVmOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**NeoliteVm)(nil)).Elem()
+}
+
+func (o NeoliteVmOutput) ToNeoliteVmOutput() NeoliteVmOutput {
+	return o
+}
+
+func (o NeoliteVmOutput) ToNeoliteVmOutputWithContext(ctx context.Context) NeoliteVmOutput {
+	return o
+}
+
+// Siklus billing aktif.
+func (o NeoliteVmOutput) Billingcycle() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.Billingcycle }).(pulumi.StringOutput)
+}
+
+// Cloud-init password VM (sensitive).
+func (o NeoliteVmOutput) CiPassword() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.CiPassword }).(pulumi.StringOutput)
+}
+
+// Cloud-init user VM.
+func (o NeoliteVmOutput) CiUser() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.CiUser }).(pulumi.StringOutput)
+}
+
+// Password console saat create. Write-only: ga pernah di-refetch dari API.
+func (o NeoliteVmOutput) ConsolePassword() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.ConsolePassword }).(pulumi.StringOutput)
+}
+
+// Jumlah CPU VM.
+func (o NeoliteVmOutput) Cpus() pulumi.IntOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.Cpus }).(pulumi.IntOutput)
+}
+
+// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+func (o NeoliteVmOutput) Cycle() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.Cycle }).(pulumi.StringOutput)
+}
+
+// Deskripsi VM.
+func (o NeoliteVmOutput) Description() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
+}
+
+// Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
+func (o NeoliteVmOutput) DiskSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.IntPtrOutput { return v.DiskSize }).(pulumi.IntPtrOutput)
+}
+
+// Id keypair dari `NeoliteKeypair`. Bisa diganti via change-keypair.
+func (o NeoliteVmOutput) KeypairId() pulumi.IntOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.KeypairId }).(pulumi.IntOutput)
+}
+
+// Invoice terakhir VM.
+func (o NeoliteVmOutput) LastInvoice() NeoliteLastInvoiceOutput {
+	return o.ApplyT(func(v *NeoliteVm) NeoliteLastInvoiceOutput { return v.LastInvoice }).(NeoliteLastInvoiceOutput)
+}
+
+// Ukuran disk maksimal VM (GB).
+func (o NeoliteVmOutput) MaxDisk() pulumi.IntOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.MaxDisk }).(pulumi.IntOutput)
+}
+
+// Memory maksimal VM (MB).
+func (o NeoliteVmOutput) MaxMem() pulumi.IntOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.MaxMem }).(pulumi.IntOutput)
+}
+
+// Memory yang dipakai VM (MB).
+func (o NeoliteVmOutput) Mem() pulumi.IntOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.Mem }).(pulumi.IntOutput)
+}
+
+// Trigger one-shot migrate ke NEO Lite Pro: isi neolitepro_product_id target. Ganti nilainya buat re-trigger.
+func (o NeoliteVmOutput) MigrateToPro() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringPtrOutput { return v.MigrateToPro }).(pulumi.StringPtrOutput)
+}
+
+// Tanggal tagihan berikutnya.
+func (o NeoliteVmOutput) NextDue() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.NextDue }).(pulumi.StringOutput)
+}
+
+// Order id dari response create.
+func (o NeoliteVmOutput) OrderId() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.OrderId }).(pulumi.StringOutput)
+}
+
+// Nama OS yang jalan di VM.
+func (o NeoliteVmOutput) OsName() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.OsName }).(pulumi.StringOutput)
+}
+
+// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+func (o NeoliteVmOutput) PayWithCreditCard() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.BoolPtrOutput { return v.PayWithCreditCard }).(pulumi.BoolPtrOutput)
+}
+
+// Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+func (o NeoliteVmOutput) PowerState() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringPtrOutput { return v.PowerState }).(pulumi.StringPtrOutput)
+}
+
+// Product id dari function `getProducts` atau portal.
+func (o NeoliteVmOutput) ProductId() pulumi.IntOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.ProductId }).(pulumi.IntOutput)
+}
+
+// Nama product aktif.
+func (o NeoliteVmOutput) ProductName() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.ProductName }).(pulumi.StringOutput)
+}
+
+// Kode promo saat order.
+func (o NeoliteVmOutput) Promocode() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringPtrOutput { return v.Promocode }).(pulumi.StringPtrOutput)
+}
+
+// Full JSON response akun terakhir dari API, buat akses field yang belum dimodel (cipassword di-mask).
+func (o NeoliteVmOutput) Raw() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.Raw }).(pulumi.StringOutput)
+}
+
+// Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+func (o NeoliteVmOutput) RebuildOs() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringPtrOutput { return v.RebuildOs }).(pulumi.StringPtrOutput)
+}
+
+// Nominal recurring per siklus.
+func (o NeoliteVmOutput) RecurringAmount() pulumi.IntOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.RecurringAmount }).(pulumi.IntOutput)
+}
+
+// Region VM.
+func (o NeoliteVmOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
+}
+
+// Label region VM.
+func (o NeoliteVmOutput) RegionLabel() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.RegionLabel }).(pulumi.StringOutput)
+}
+
+// OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+func (o NeoliteVmOutput) SelectOs() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.SelectOs }).(pulumi.StringOutput)
+}
+
+// User SSH & console yang dipasang saat create.
+func (o NeoliteVmOutput) SshAndConsoleUser() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.SshAndConsoleUser }).(pulumi.StringOutput)
+}
+
+// Status akun terakhir dari API (Active, Pending, Suspended, Terminated).
+func (o NeoliteVmOutput) Status() pulumi.StringOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
+}
+
+// Uptime VM dalam detik.
+func (o NeoliteVmOutput) Uptime() pulumi.IntOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.Uptime }).(pulumi.IntOutput)
+}
+
+// Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+func (o NeoliteVmOutput) VmName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *NeoliteVm) pulumi.StringPtrOutput { return v.VmName }).(pulumi.StringPtrOutput)
+}
+
+func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*NeoliteVmInput)(nil)).Elem(), &NeoliteVm{})
+	pulumi.RegisterOutputType(NeoliteVmOutput{})
+}
