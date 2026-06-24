@@ -6,7 +6,5 @@ package examples
 import "testing"
 
 func TestJava(t *testing.T) {
-	// TODO
+	t.Skip("java sdk not generated yet; re-enable once resources land")
 }
-// wip 29
-// wip 449
