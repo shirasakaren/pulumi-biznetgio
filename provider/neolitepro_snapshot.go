@@ -106,3 +106,4 @@ func (NeoliteProSnapshot) Read(
 	if err != nil {
 		return infer.ReadResponse[NeoliteProSnapshotArgs, NeoliteProSnapshotState]{}, err
 	}
+// wip 538
