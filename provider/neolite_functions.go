@@ -112,3 +112,41 @@ type NeoliteOsItem struct {
 	MaxCPU int64  `pulumi:"maxcpu"`
 }
 
+func (a *NeoliteOsListArgs) Annotate(ann infer.Annotator) {
+	ann.Describe(&a.ProductID, "Product id NEO Lite.")
+}
+
+func (NeoliteOsList) Invoke(
+	ctx context.Context, req infer.FunctionRequest[NeoliteOsListArgs],
+) (infer.FunctionResponse[NeoliteOsListResult], error) {
+	c := GetClient(ctx)
+	oss, err := c.Neolite().ProductOSList(ctx, req.Input.ProductID)
+	if err != nil {
+		return infer.FunctionResponse[NeoliteOsListResult]{}, err
+	}
+
+	result := NeoliteOsListResult{}
+	for _, os := range oss {
+		result.Oss = append(result.Oss, NeoliteOsItem{
+			VMID:   os.VMID,
+			Node:   os.Node,
+			Name:   os.Name,
+			MaxMem: os.MaxMem,
+			MaxCPU: os.MaxCPU,
+		})
+	}
+	return infer.FunctionResponse[NeoliteOsListResult]{Output: result}, nil
+}
+
+// ---------- getChangePackageOptions ----------
+
+type NeoliteChangePackageOptions struct{}
+
+type NeoliteChangePackageOptionsArgs struct {
+	AccountID int64 `pulumi:"accountId"`
+}
+
+type NeoliteChangePackageOptionsResult struct {
+	Raw string `pulumi:"raw" provider:"secret"`
+}
+
