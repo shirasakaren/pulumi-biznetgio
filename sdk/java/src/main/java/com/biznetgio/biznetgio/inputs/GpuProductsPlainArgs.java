@@ -26,3 +26,4 @@ public final class GpuProductsPlainArgs extends com.pulumi.resources.InvokeArgs 
     }
 
 }
+// wip 544
