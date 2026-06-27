@@ -74,3 +74,4 @@ def object_storage_instances_output(status: pulumi.Input[Optional[Optional[_buil
     __ret__ = pulumi.runtime.invoke_output('biznetgio:index:objectStorageInstances', __args__, opts=opts, typ=ObjectStorageInstancesResult)
     return __ret__.apply(lambda __response__: ObjectStorageInstancesResult(
         instances=pulumi.get(__response__, 'instances')))
+// wip 558
