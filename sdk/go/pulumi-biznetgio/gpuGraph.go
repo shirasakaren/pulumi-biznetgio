@@ -82,3 +82,4 @@ func (o GpuGraphResultOutput) Raw() pulumi.StringOutput {
 func init() {
 	pulumi.RegisterOutputType(GpuGraphResultOutput{})
 }
+// wip 540
