@@ -238,3 +238,243 @@ func (s *NeoliteService) SnapshotCreate(
 	return decodeJSON[*BillingResource](raw)
 }
 
+func (s *NeoliteService) SnapshotRestore(ctx context.Context, accountID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPut,
+		fmt.Sprintf("/neolites/snapshots/accounts/%d/restore", accountID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *NeoliteService) SnapshotRestoreWith(
+	ctx context.Context, accountID int64, req NeoliteFromSnapshotPayload,
+) (*BillingResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost,
+		fmt.Sprintf("/neolites/snapshots/accounts/%d/create", accountID), req)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[*BillingResource](raw)
+}
+
+func (s *NeoliteService) SnapshotDelete(ctx context.Context, accountID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodDelete, fmt.Sprintf("/neolites/snapshots/%d", accountID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *NeoliteService) SnapshotProductsList(ctx context.Context) ([]PlanResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, "/neolites/snapshots/products", nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]PlanResource](raw)
+}
+
+func (s *NeoliteService) SnapshotProductGet(ctx context.Context, productID int64) (*PlanResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, fmt.Sprintf("/neolites/snapshots/products/%d", productID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[*PlanResource](raw)
+}
+
+func (s *NeoliteService) KeypairList(ctx context.Context) ([]KeypairResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, "/neolites/keypairs/", nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]KeypairResource](raw)
+}
+
+func (s *NeoliteService) KeypairCreate(ctx context.Context, name string) (*KeypairResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost, "/neolites/keypairs/", map[string]string{"name": name})
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[*KeypairResource](raw)
+}
+
+// KeypairCreateRaw create keypair, return raw response map — private key cuma
+// keluar di response ini dan field-nya undocumented, jadi jangan di-decode typed.
+func (s *NeoliteService) KeypairCreateRaw(ctx context.Context, name string) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost, "/neolites/keypairs/", map[string]string{"name": name})
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *NeoliteService) KeypairImport(ctx context.Context, req KeypairImportPayload) (*KeypairResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost, "/neolites/keypairs/import", req)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[*KeypairResource](raw)
+}
+
+func (s *NeoliteService) KeypairDelete(ctx context.Context, keypairID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodDelete, fmt.Sprintf("/neolites/keypairs/%d", keypairID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *NeoliteService) ProductList(ctx context.Context) ([]PlanResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, "/neolites/products", nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]PlanResource](raw)
+}
+
+func (s *NeoliteService) ProductGet(ctx context.Context, productID int64) (*PlanResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, fmt.Sprintf("/neolites/products/%d", productID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[*PlanResource](raw)
+}
+
+func (s *NeoliteService) ProductOSList(ctx context.Context, productID int64) ([]OsResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, fmt.Sprintf("/neolites/products/%d/oss", productID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]OsResource](raw)
+}
+
+func (s *NeoliteService) ProductIPAvailability(ctx context.Context, productID int64) (*IPAvailability, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet,
+		fmt.Sprintf("/neolites/products/%d/ip-availability", productID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[*IPAvailability](raw)
+}
+
+type BillingResource struct {
+	OrderID   string `json:"order_id"`
+	AccountID string `json:"account_id"`
+}
+
+type AccountResource struct {
+	AccountID       string       `json:"account_id"`
+	Domain          string       `json:"domain"`
+	Status          string       `json:"status"`
+	Billingcycle    string       `json:"billingcycle"`
+	DateCreated     string       `json:"date_created"`
+	NextDue         string       `json:"next_due"`
+	RecurringAmount int64        `json:"recurring_amount"`
+	ExtraDetails    ExtraDetails `json:"extra_details"`
+	ProductID       int64        `json:"product_id"`
+	ProductName     string       `json:"product_name"`
+	Description     string       `json:"description"`
+	CategoryID      int64        `json:"category_id"`
+	CategoryName    string       `json:"category_name"`
+	LastInvoice     LastInvoice  `json:"last_invoice"`
+}
+
+type LastInvoice struct {
+	ID          int64  `json:"id"`
+	PaidID      int64  `json:"paid_id"`
+	Status      string `json:"status"`
+	Date        string `json:"date"`
+	Duedate     string `json:"duedate"`
+	Paybefore   string `json:"paybefore"`
+	Datepaid    string `json:"datepaid"`
+	InvoiceType string `json:"invoice_type"`
+}
+
+type ExtraDetails struct {
+	Region      string  `json:"region"`
+	RegionLabel string  `json:"region_label"`
+	Description string  `json:"description"`
+	Name        string  `json:"name"`
+	TenantID    *string `json:"tenant_id"`
+	CIUser      string  `json:"ciuser"`
+	CIPassword  string  `json:"cipassword"`
+	KeypairID   int64   `json:"neosshkey_id"`
+	SSHKeys     string  `json:"sshkeys"`
+	OSName      string  `json:"osname"`
+	DiskSize    string  `json:"disk_size"`
+}
+
+type VirtualMachineResource struct {
+	VMID    int64  `json:"vmid"`
+	Name    string `json:"name"`
+	Status  string `json:"status"`
+	Uptime  int64  `json:"uptime"`
+	MaxDisk int64  `json:"maxdisk"`
+	MaxMem  int64  `json:"maxmem"`
+	Mem     int64  `json:"mem"`
+	CPUs    int64  `json:"cpus"`
+}
+
+type KeypairResource struct {
+	KeypairID int64  `json:"keypair_id"`
+	Name      string `json:"name"`
+	PublicKey string `json:"public_key"`
+}
+
+// UnmarshalJSON toleran: keypair_id bisa number, string numerik, atau malah
+// ke-rename jadi neosshkey_id (wire field beda-beda per endpoint).
+func (k *KeypairResource) UnmarshalJSON(b []byte) error {
+	var a struct {
+		KeypairID   jsonInt64 `json:"keypair_id"`
+		NeoSSHKeyID jsonInt64 `json:"neosshkey_id"`
+		Name        string    `json:"name"`
+		PublicKey   string    `json:"public_key"`
+	}
+	if err := json.Unmarshal(b, &a); err != nil {
+		return err
+	}
+	k.KeypairID = int64(a.KeypairID)
+	if k.KeypairID == 0 {
+		k.KeypairID = int64(a.NeoSSHKeyID)
+	}
+	k.Name = a.Name
+	k.PublicKey = a.PublicKey
+	return nil
+}
+
+type PlanResource struct {
+	ProductID    int64     `json:"product_id"`
+	Name         string    `json:"name"`
+	Description  string    `json:"description"`
+	CategoryID   int64     `json:"category_id"`
+	CategoryName string    `json:"category_name"`
+	Options      Options   `json:"options"`
+	Billing      []Billing `json:"billing"`
+}
+
+// UnmarshalJSON toleran: product_id juga bisa string numerik di wire.
+func (p *PlanResource) UnmarshalJSON(b []byte) error {
+	var a struct {
+		ProductID    jsonInt64 `json:"product_id"`
+		Name         string    `json:"name"`
+		Description  string    `json:"description"`
+		CategoryID   jsonInt64 `json:"category_id"`
+		CategoryName string    `json:"category_name"`
+		Options      Options   `json:"options"`
+		Billing      []Billing `json:"billing"`
+	}
+	if err := json.Unmarshal(b, &a); err != nil {
+		return err
+	}
+	p.ProductID = int64(a.ProductID)
+	p.Name = a.Name
+	p.Description = a.Description
+	p.CategoryID = int64(a.CategoryID)
+	p.CategoryName = a.CategoryName
+	p.Options = a.Options
+	p.Billing = a.Billing
+	return nil
+}
+
+type Options struct {
+	Type           string `json:"type"`
