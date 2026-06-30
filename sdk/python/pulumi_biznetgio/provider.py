@@ -144,3 +144,4 @@ class Provider(pulumi.ProviderResource):
         return pulumi.get(self, "base_url")
 
 // wip 340
+// wip 572
