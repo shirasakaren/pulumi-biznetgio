@@ -74,3 +74,4 @@ func (o BaremetalOpenvpnResultOutput) Raw() pulumi.StringOutput {
 func init() {
 	pulumi.RegisterOutputType(BaremetalOpenvpnResultOutput{})
 }
+// wip 587
