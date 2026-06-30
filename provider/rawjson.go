@@ -24,3 +24,28 @@ func isSecretJSONKey(k string) bool {
 // redactMap salin map, mask key rahasia (case-insensitive), rekursif ke nested map.
 func redactMap(m map[string]any) map[string]any {
 	if m == nil {
+		return nil
+	}
+	out := make(map[string]any, len(m))
+	for k, v := range m {
+		if isSecretJSONKey(k) {
+			out[k] = "***"
+			continue
+		}
+		if nested, ok := v.(map[string]any); ok {
+			out[k] = redactMap(nested)
+			continue
+		}
+		out[k] = v
+	}
+	return out
+}
+
+// RedactJSON marshal map dengan nilai rahasia di-mask, fallback nil.
+func RedactJSON(m map[string]any) []byte {
+	b, err := json.Marshal(redactMap(m))
+	if err != nil {
+		return nil
+	}
+	return b
+}
