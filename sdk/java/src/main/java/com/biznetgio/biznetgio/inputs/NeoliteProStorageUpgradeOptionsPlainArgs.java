@@ -72,3 +72,4 @@ public final class NeoliteProStorageUpgradeOptionsPlainArgs extends com.pulumi.r
     }
 
 }
+// wip 611
