@@ -84,3 +84,89 @@ func (s *ObjectStorageService) CredentialsList(ctx context.Context, accountID in
 	if err != nil {
 		return nil, err
 	}
+	return decodeJSON[[]map[string]any](raw)
+}
+
+func (s *ObjectStorageService) CredentialCreate(ctx context.Context, accountID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost,
+		fmt.Sprintf("/object-storages/accounts/%d/credentials", accountID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *ObjectStorageService) CredentialUpdateStatus(
+	ctx context.Context, accountID int64, accessKey string, active bool,
+) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPut,
+		fmt.Sprintf("/object-storages/accounts/%d/credentials/%s", accountID, accessKey),
+		map[string]bool{"active": active})
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *ObjectStorageService) CredentialDelete(
+	ctx context.Context, accountID int64, accessKey string,
+) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodDelete,
+		fmt.Sprintf("/object-storages/accounts/%d/credentials/%s", accountID, accessKey), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *ObjectStorageService) BucketsList(ctx context.Context, accountID int64) ([]map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet,
+		fmt.Sprintf("/object-storages/accounts/%d/buckets", accountID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]map[string]any](raw)
+}
+
+func (s *ObjectStorageService) BucketCreate(
+	ctx context.Context, accountID int64, req NOSCreateBucketPayload,
+) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost,
+		fmt.Sprintf("/object-storages/accounts/%d/buckets", accountID), req)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *ObjectStorageService) BucketSetACL(
+	ctx context.Context, accountID int64, bucketName, acl string,
+) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPut,
+		s.bucketPath(accountID, bucketName, ""), map[string]string{"acl": acl})
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *ObjectStorageService) BucketDelete(
+	ctx context.Context, accountID int64, bucketName string,
+) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodDelete, s.bucketPath(accountID, bucketName, ""), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *ObjectStorageService) BucketUsage(
+	ctx context.Context, accountID int64, bucketName string,
+) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, s.bucketPath(accountID, bucketName, "/usage"), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
