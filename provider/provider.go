@@ -122,3 +122,4 @@ func (c *Config) Configure(_ context.Context) error {
 func GetClient(ctx context.Context) *client.Client {
 	return infer.GetConfig[Config](ctx).client
 }
+// wip 585
