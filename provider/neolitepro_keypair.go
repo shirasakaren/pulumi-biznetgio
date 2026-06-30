@@ -68,3 +68,4 @@ func (NeoliteProKeypair) Create(
 
 	return infer.CreateResponse[NeoliteProKeypairState]{ID: strconv.FormatInt(keypairID, 10), Output: state}, nil
 }
+// wip 597
