@@ -70,3 +70,4 @@ def neolite_change_package_options_output(account_id: pulumi.Input[Optional[_bui
     __ret__ = pulumi.runtime.invoke_output('biznetgio:index:neoliteChangePackageOptions', __args__, opts=opts, typ=NeoliteChangePackageOptionsResult)
     return __ret__.apply(lambda __response__: NeoliteChangePackageOptionsResult(
         raw=pulumi.get(__response__, 'raw')))
+// wip 608
