@@ -111,3 +111,4 @@ namespace Biznetgio.Biznetgio
         public static new BaremetalKeypairArgs Empty => new BaremetalKeypairArgs();
     }
 }
+// wip 607
