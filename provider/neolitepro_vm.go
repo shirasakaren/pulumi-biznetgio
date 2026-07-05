@@ -174,3 +174,91 @@ func (NeoliteProVm) Update(
 	if err != nil {
 		return infer.UpdateResponse[NeoliteProVmState]{}, err
 	}
+	in := req.Inputs
+	old := req.State
+
+	if !eqStrPtr(in.VMName, old.VMName) {
+		if _, err := c.NeolitePro().VMChangeName(ctx, id, strPtr(in.VMName)); err != nil {
+			return infer.UpdateResponse[NeoliteProVmState]{}, fmt.Errorf("change neolite pro vm name: %w", err)
+		}
+	}
+	if in.KeypairID != old.KeypairID {
+		if _, err := c.NeolitePro().VMChangeKeypair(ctx, id, in.KeypairID); err != nil {
+			return infer.UpdateResponse[NeoliteProVmState]{}, fmt.Errorf("change neolite pro vm keypair: %w", err)
+		}
+	}
+
+	needsPoll := false
+	if in.ProductID != old.ProductID {
+		if _, err := c.NeolitePro().VMChangePackage(ctx, id, client.ChangePackagePayload{
+			NewProductID:     in.ProductID,
+			PayInvoiceWithCC: yesNo(in.PayWithCreditCard),
+		}); err != nil {
+			return infer.UpdateResponse[NeoliteProVmState]{}, fmt.Errorf("change neolite pro vm package: %w", err)
+		}
+		needsPoll = true
+	}
+	if !eqI64Ptr(in.DiskSize, old.DiskSize) {
+		newSize := i64Val(in.DiskSize)
+		oldSize := i64Val(old.DiskSize)
+		if newSize < oldSize {
+			return infer.UpdateResponse[NeoliteProVmState]{},
+				fmt.Errorf("neolite pro vm storage cuma bisa di-upgrade: %d -> %d", oldSize, newSize)
+		}
+		if _, err := c.NeolitePro().VMChangeStorage(ctx, id, client.UpgradePayload{
+			DiskSize:         newSize,
+			PayInvoiceWithCC: yesNo(in.PayWithCreditCard),
+		}); err != nil {
+			return infer.UpdateResponse[NeoliteProVmState]{}, fmt.Errorf("change neolite pro vm storage: %w", err)
+		}
+		needsPoll = true
+	}
+	if !eqStrPtr(in.PowerState, old.PowerState) {
+		if _, err := c.NeolitePro().VMState(ctx, id, strPtr(in.PowerState)); err != nil {
+			return infer.UpdateResponse[NeoliteProVmState]{},
+				fmt.Errorf("set neolite pro vm power state %q: %w", strPtr(in.PowerState), err)
+		}
+	}
+	if !eqStrPtr(in.RebuildOS, old.RebuildOS) {
+		if _, err := c.NeolitePro().VMRebuild(ctx, id, strPtr(in.RebuildOS)); err != nil {
+			return infer.UpdateResponse[NeoliteProVmState]{}, fmt.Errorf("rebuild neolite pro vm: %w", err)
+		}
+		needsPoll = true
+	}
+
+	if needsPoll {
+		_, err := client.WaitForStatus(ctx, 5*time.Second,
+			func(ctx context.Context) (*client.AccountResource, error) {
+				return c.NeolitePro().AccountGet(ctx, id)
+			},
+			neoliteStatus, []string{"active"}, []string{"suspended", "terminated"})
+		if err != nil {
+			if errors.Is(err, context.DeadlineExceeded) {
+				return infer.UpdateResponse[NeoliteProVmState]{
+						Output: NeoliteProVmState{NeoliteProVmArgs: in},
+					}, infer.ResourceInitFailedError{Reasons: []string{
+						fmt.Sprintf("neolite pro vm %d belum active: %s", id, err),
+					}}
+			}
+			return infer.UpdateResponse[NeoliteProVmState]{}, fmt.Errorf("neolite pro vm %d gagal balik active: %w", id, err)
+		}
+	}
+
+	state, err := readNeoliteProVm(ctx, c, req.ID, in, old)
+	if err != nil {
+		return infer.UpdateResponse[NeoliteProVmState]{}, err
+	}
+	return infer.UpdateResponse[NeoliteProVmState]{Output: state}, nil
+}
+
+func (NeoliteProVm) Read(
+	ctx context.Context, req infer.ReadRequest[NeoliteProVmArgs, NeoliteProVmState],
+) (infer.ReadResponse[NeoliteProVmArgs, NeoliteProVmState], error) {
+	c := GetClient(ctx)
+	state, err := readNeoliteProVm(ctx, c, req.ID, req.State.NeoliteProVmArgs, req.State)
+	if err != nil {
+		return infer.ReadResponse[NeoliteProVmArgs, NeoliteProVmState]{}, err
+	}
+	return infer.ReadResponse[NeoliteProVmArgs, NeoliteProVmState]{State: state}, nil
+}
+
