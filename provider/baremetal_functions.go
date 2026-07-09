@@ -37,3 +37,81 @@ func (a *BaremetalProductsArgs) Annotate(_ infer.Annotator) {}
 func (r *BaremetalProductsResult) Annotate(ann infer.Annotator) {
 	ann.Describe(&r.Products, "Available baremetal products from `GET /baremetals/products`.")
 	ann.Describe(&r.Raw, "Raw JSON of the full list response.")
+}
+
+func (BaremetalProducts) Invoke(
+	ctx context.Context, _ infer.FunctionRequest[BaremetalProductsArgs],
+) (infer.FunctionResponse[BaremetalProductsResult], error) {
+	c := GetClient(ctx)
+	items, err := c.Baremetal().ProductList(ctx)
+	if err != nil {
+		return infer.FunctionResponse[BaremetalProductsResult]{}, err
+	}
+	out := BaremetalProductsResult{Products: make([]BaremetalProduct, 0, len(items))}
+	for _, it := range items {
+		out.Products = append(out.Products, BaremetalProduct{
+			ProductID:   bmtStringDefaultInt64(it, "product_id", "id"),
+			Name:        bmtStringDefault(it, "name", "product_name", "label"),
+			Description: bmtStringDefault(it, "description"),
+			Raw:         string(bmtJSON(it)),
+		})
+	}
+	out.Raw = string(bmtJSONList(items))
+	return infer.FunctionResponse[BaremetalProductsResult]{Output: out}, nil
+}
+
+type BaremetalRebuildOsList struct{}
+
+type BaremetalRebuildOsListArgs struct {
+	AccountID int64 `pulumi:"accountId"`
+}
+
+type BaremetalRebuildOsListResult struct {
+	Oss []string `pulumi:"oss"`
+	Raw string   `pulumi:"raw" provider:"secret"`
+}
+
+func (a *BaremetalRebuildOsListArgs) Annotate(ann infer.Annotator) {
+	ann.Describe(&a.AccountID, "Account id of the baremetal to list rebuild OS options for.")
+}
+
+func (r *BaremetalRebuildOsListResult) Annotate(ann infer.Annotator) {
+	ann.Describe(&r.Oss, "Valid OS values for the `rebuildOs` input of Baremetal, "+
+		"from `GET /baremetals/{account_id}/rebuild/oss`.")
+	ann.Describe(&r.Raw, "Raw JSON of the full list response.")
+}
+
+func (BaremetalRebuildOsList) Invoke(
+	ctx context.Context, req infer.FunctionRequest[BaremetalRebuildOsListArgs],
+) (infer.FunctionResponse[BaremetalRebuildOsListResult], error) {
+	c := GetClient(ctx)
+	items, err := c.Baremetal().RebuildOSList(ctx, req.Input.AccountID)
+	if err != nil {
+		return infer.FunctionResponse[BaremetalRebuildOsListResult]{}, err
+	}
+	out := BaremetalRebuildOsListResult{Oss: make([]string, 0, len(items))}
+	for _, it := range items {
+		if s, ok := it.(string); ok {
+			out.Oss = append(out.Oss, s)
+		}
+	}
+	out.Raw = string(bmtJSONList(items))
+	return infer.FunctionResponse[BaremetalRebuildOsListResult]{Output: out}, nil
+}
+
+type BaremetalOpenvpn struct{}
+
+type BaremetalOpenvpnArgs struct{}
+
+type BaremetalOpenvpnResult struct {
+	Config string `pulumi:"config" provider:"secret"`
+	Raw    string `pulumi:"raw" provider:"secret"`
+}
+
+func (a *BaremetalOpenvpnArgs) Annotate(_ infer.Annotator) {}
+
+func (r *BaremetalOpenvpnResult) Annotate(ann infer.Annotator) {
+	ann.Describe(&r.Config, "OpenVPN client config from `GET /baremetals/openvpn`.")
+	ann.Describe(&r.Raw, "Raw JSON of the full response.")
+}
+
