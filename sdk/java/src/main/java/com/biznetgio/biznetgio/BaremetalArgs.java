@@ -234,3 +234,239 @@ public final class BaremetalArgs extends com.pulumi.resources.ResourceArgs {
          * 
          * @return builder
          * 
+         */
+        public Builder cycle(String cycle) {
+            return cycle(Output.of(cycle));
+        }
+
+        /**
+         * @param keypairId Baremetal keypair id, from BaremetalKeypair. The baremetal keypair pool is separate from neolite/gpu.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder keypairId(Output<Integer> keypairId) {
+            $.keypairId = keypairId;
+            return this;
+        }
+
+        /**
+         * @param keypairId Baremetal keypair id, from BaremetalKeypair. The baremetal keypair pool is separate from neolite/gpu.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder keypairId(Integer keypairId) {
+            return keypairId(Output.of(keypairId));
+        }
+
+        /**
+         * @param label Display name of the server. The only field updatable in place.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder label(Output<String> label) {
+            $.label = label;
+            return this;
+        }
+
+        /**
+         * @param label Display name of the server. The only field updatable in place.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder label(String label) {
+            return label(Output.of(label));
+        }
+
+        /**
+         * @param payWithCreditCard Pay the invoice with the registered credit card. Defaults to true. Set false to leave the invoice unpaid in the portal; the resource stays Pending until paid.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder payWithCreditCard(@Nullable Output<Boolean> payWithCreditCard) {
+            $.payWithCreditCard = payWithCreditCard;
+            return this;
+        }
+
+        /**
+         * @param payWithCreditCard Pay the invoice with the registered credit card. Defaults to true. Set false to leave the invoice unpaid in the portal; the resource stays Pending until paid.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder payWithCreditCard(Boolean payWithCreditCard) {
+            return payWithCreditCard(Output.of(payWithCreditCard));
+        }
+
+        /**
+         * @param powerState Power state of the server: `on` or `off`. Only fires an API call when the value changes.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder powerState(@Nullable Output<String> powerState) {
+            $.powerState = powerState;
+            return this;
+        }
+
+        /**
+         * @param powerState Power state of the server: `on` or `off`. Only fires an API call when the value changes.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder powerState(String powerState) {
+            return powerState(Output.of(powerState));
+        }
+
+        /**
+         * @param productId Product id from the baremetal products function.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder productId(Output<Integer> productId) {
+            $.productId = productId;
+            return this;
+        }
+
+        /**
+         * @param productId Product id from the baremetal products function.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder productId(Integer productId) {
+            return productId(Output.of(productId));
+        }
+
+        /**
+         * @param promocode Promo code to apply at creation.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder promocode(@Nullable Output<String> promocode) {
+            $.promocode = promocode;
+            return this;
+        }
+
+        /**
+         * @param promocode Promo code to apply at creation.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder promocode(String promocode) {
+            return promocode(Output.of(promocode));
+        }
+
+        /**
+         * @param publicIp Number of public IPs to request (1 = with public IP). Defaults to 1. Create-only, changing it replaces the instance.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder publicIp(@Nullable Output<Integer> publicIp) {
+            $.publicIp = publicIp;
+            return this;
+        }
+
+        /**
+         * @param publicIp Number of public IPs to request (1 = with public IP). Defaults to 1. Create-only, changing it replaces the instance.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder publicIp(Integer publicIp) {
+            return publicIp(Output.of(publicIp));
+        }
+
+        /**
+         * @param rebuildOs Change this value to rebuild the instance (destructive, wipes the OS) via `PUT /baremetals/{account_id}/rebuild`. Valid OS list comes from the rebuildOsList function.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder rebuildOs(@Nullable Output<String> rebuildOs) {
+            $.rebuildOs = rebuildOs;
+            return this;
+        }
+
+        /**
+         * @param rebuildOs Change this value to rebuild the instance (destructive, wipes the OS) via `PUT /baremetals/{account_id}/rebuild`. Valid OS list comes from the rebuildOsList function.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder rebuildOs(String rebuildOs) {
+            return rebuildOs(Output.of(rebuildOs));
+        }
+
+        /**
+         * @param resetTrigger Change this value to trigger a one-shot reset/reboot. The reset is an action, not a stable state.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder resetTrigger(@Nullable Output<String> resetTrigger) {
+            $.resetTrigger = resetTrigger;
+            return this;
+        }
+
+        /**
+         * @param resetTrigger Change this value to trigger a one-shot reset/reboot. The reset is an action, not a stable state.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder resetTrigger(String resetTrigger) {
+            return resetTrigger(Output.of(resetTrigger));
+        }
+
+        /**
+         * @param selectOs OS to install at creation, from `GET /baremetals/products/{product_id}/oss`. Defaults to `ubuntu-22`. Create-only, changing it replaces the instance.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder selectOs(@Nullable Output<String> selectOs) {
+            $.selectOs = selectOs;
+            return this;
+        }
+
+        /**
+         * @param selectOs OS to install at creation, from `GET /baremetals/products/{product_id}/oss`. Defaults to `ubuntu-22`. Create-only, changing it replaces the instance.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder selectOs(String selectOs) {
+            return selectOs(Output.of(selectOs));
+        }
+
+        public BaremetalArgs build() {
+            if ($.cycle == null) {
+                throw new MissingRequiredPropertyException("BaremetalArgs", "cycle");
+            }
+            if ($.keypairId == null) {
+                throw new MissingRequiredPropertyException("BaremetalArgs", "keypairId");
+            }
+            if ($.label == null) {
+                throw new MissingRequiredPropertyException("BaremetalArgs", "label");
+            }
+            $.payWithCreditCard = Codegen.booleanProp("payWithCreditCard").output().arg($.payWithCreditCard).def(true).getNullable();
+            if ($.productId == null) {
+                throw new MissingRequiredPropertyException("BaremetalArgs", "productId");
+            }
+            $.publicIp = Codegen.integerProp("publicIp").output().arg($.publicIp).def(1).getNullable();
+            $.selectOs = Codegen.stringProp("selectOs").output().arg($.selectOs).def("ubuntu-22").getNullable();
+            return $;
+        }
+    }
+
+}
