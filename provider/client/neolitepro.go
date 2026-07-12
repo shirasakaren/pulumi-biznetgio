@@ -213,3 +213,89 @@ func (s *NeoliteProService) SnapshotCreate(
 		fmt.Sprintf("/neolite-pros/accounts/%d/snapshot", accountID), req)
 	if err != nil {
 		return nil, err
+	}
+	return decodeJSON[*BillingResource](raw)
+}
+
+func (s *NeoliteProService) SnapshotRestore(ctx context.Context, accountID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPut,
+		fmt.Sprintf("/neolite-pros/snapshots/accounts/%d/restore", accountID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *NeoliteProService) SnapshotRestoreWith(
+	ctx context.Context, accountID int64, req NeoliteFromSnapshotPayload,
+) (*BillingResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost,
+		fmt.Sprintf("/neolite-pros/snapshots/accounts/%d/create", accountID), req)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[*BillingResource](raw)
+}
+
+func (s *NeoliteProService) SnapshotDelete(ctx context.Context, accountID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodDelete, fmt.Sprintf("/neolite-pros/snapshots/%d", accountID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *NeoliteProService) SnapshotProductsList(ctx context.Context) ([]PlanResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, "/neolite-pros/snapshots/products", nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]PlanResource](raw)
+}
+
+func (s *NeoliteProService) SnapshotProductGet(ctx context.Context, productID int64) (*PlanResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, fmt.Sprintf("/neolite-pros/snapshots/products/%d", productID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[*PlanResource](raw)
+}
+
+func (s *NeoliteProService) KeypairList(ctx context.Context) ([]KeypairResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, "/neolite-pros/keypairs/", nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]KeypairResource](raw)
+}
+
+func (s *NeoliteProService) KeypairCreate(ctx context.Context, name string) (*KeypairResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost, "/neolite-pros/keypairs/", map[string]string{"name": name})
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[*KeypairResource](raw)
+}
+
+// KeypairCreateRaw create keypair, return raw response map — private_key cuma
+// keluar di response ini dan field-nya undocumented, jadi jangan di-decode typed.
+func (s *NeoliteProService) KeypairCreateRaw(ctx context.Context, name string) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost, "/neolite-pros/keypairs/", map[string]string{"name": name})
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *NeoliteProService) KeypairImport(ctx context.Context, req KeypairImportPayload) (*KeypairResource, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost, "/neolite-pros/keypairs/import", req)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[*KeypairResource](raw)
+}
+
+func (s *NeoliteProService) KeypairDelete(ctx context.Context, keypairID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodDelete, fmt.Sprintf("/neolite-pros/keypairs/%d", keypairID), nil)
+	if err != nil {
+		return nil, err
