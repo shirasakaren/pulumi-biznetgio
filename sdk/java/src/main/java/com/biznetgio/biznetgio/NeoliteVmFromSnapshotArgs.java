@@ -220,3 +220,225 @@ public final class NeoliteVmFromSnapshotArgs extends com.pulumi.resources.Resour
          * 
          */
         public Builder consolePassword(String consolePassword) {
+            return consolePassword(Output.of(consolePassword));
+        }
+
+        /**
+         * @param cycle Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder cycle(Output<String> cycle) {
+            $.cycle = cycle;
+            return this;
+        }
+
+        /**
+         * @param cycle Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder cycle(String cycle) {
+            return cycle(Output.of(cycle));
+        }
+
+        /**
+         * @param description Deskripsi VM.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder description(@Nullable Output<String> description) {
+            $.description = description;
+            return this;
+        }
+
+        /**
+         * @param description Deskripsi VM.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder description(String description) {
+            return description(Output.of(description));
+        }
+
+        /**
+         * @param keypairId Id keypair dari `NeoliteKeypair`.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder keypairId(Output<Integer> keypairId) {
+            $.keypairId = keypairId;
+            return this;
+        }
+
+        /**
+         * @param keypairId Id keypair dari `NeoliteKeypair`.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder keypairId(Integer keypairId) {
+            return keypairId(Output.of(keypairId));
+        }
+
+        /**
+         * @param name Nama VM hasil restore.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder name(Output<String> name) {
+            $.name = name;
+            return this;
+        }
+
+        /**
+         * @param name Nama VM hasil restore.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder name(String name) {
+            return name(Output.of(name));
+        }
+
+        /**
+         * @param payWithCreditCard Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder payWithCreditCard(@Nullable Output<Boolean> payWithCreditCard) {
+            $.payWithCreditCard = payWithCreditCard;
+            return this;
+        }
+
+        /**
+         * @param payWithCreditCard Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder payWithCreditCard(Boolean payWithCreditCard) {
+            return payWithCreditCard(Output.of(payWithCreditCard));
+        }
+
+        /**
+         * @param productId Product id dari function `getProducts` atau portal.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder productId(Output<Integer> productId) {
+            $.productId = productId;
+            return this;
+        }
+
+        /**
+         * @param productId Product id dari function `getProducts` atau portal.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder productId(Integer productId) {
+            return productId(Output.of(productId));
+        }
+
+        /**
+         * @param promocode Kode promo saat order.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder promocode(@Nullable Output<String> promocode) {
+            $.promocode = promocode;
+            return this;
+        }
+
+        /**
+         * @param promocode Kode promo saat order.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder promocode(String promocode) {
+            return promocode(Output.of(promocode));
+        }
+
+        /**
+         * @param snapshotId Account id snapshot sumber, dari `NeoliteSnapshot`.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder snapshotId(Output<Integer> snapshotId) {
+            $.snapshotId = snapshotId;
+            return this;
+        }
+
+        /**
+         * @param snapshotId Account id snapshot sumber, dari `NeoliteSnapshot`.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder snapshotId(Integer snapshotId) {
+            return snapshotId(Output.of(snapshotId));
+        }
+
+        /**
+         * @param sshAndConsoleUser User SSH &amp; console yang dipasang saat create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder sshAndConsoleUser(Output<String> sshAndConsoleUser) {
+            $.sshAndConsoleUser = sshAndConsoleUser;
+            return this;
+        }
+
+        /**
+         * @param sshAndConsoleUser User SSH &amp; console yang dipasang saat create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder sshAndConsoleUser(String sshAndConsoleUser) {
+            return sshAndConsoleUser(Output.of(sshAndConsoleUser));
+        }
+
+        public NeoliteVmFromSnapshotArgs build() {
+            if ($.consolePassword == null) {
+                throw new MissingRequiredPropertyException("NeoliteVmFromSnapshotArgs", "consolePassword");
+            }
+            if ($.cycle == null) {
+                throw new MissingRequiredPropertyException("NeoliteVmFromSnapshotArgs", "cycle");
+            }
+            $.description = Codegen.stringProp("description").output().arg($.description).def("").getNullable();
+            if ($.keypairId == null) {
+                throw new MissingRequiredPropertyException("NeoliteVmFromSnapshotArgs", "keypairId");
+            }
+            if ($.name == null) {
+                throw new MissingRequiredPropertyException("NeoliteVmFromSnapshotArgs", "name");
+            }
+            $.payWithCreditCard = Codegen.booleanProp("payWithCreditCard").output().arg($.payWithCreditCard).def(true).getNullable();
+            if ($.productId == null) {
+                throw new MissingRequiredPropertyException("NeoliteVmFromSnapshotArgs", "productId");
+            }
+            $.promocode = Codegen.stringProp("promocode").output().arg($.promocode).def("").getNullable();
+            if ($.snapshotId == null) {
+                throw new MissingRequiredPropertyException("NeoliteVmFromSnapshotArgs", "snapshotId");
+            }
+            if ($.sshAndConsoleUser == null) {
+                throw new MissingRequiredPropertyException("NeoliteVmFromSnapshotArgs", "sshAndConsoleUser");
+            }
+            return $;
+        }
+    }
+
+}
