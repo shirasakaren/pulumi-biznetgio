@@ -205,3 +205,4 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*ObjectStorageObjectInput)(nil)).Elem(), &ObjectStorageObject{})
 	pulumi.RegisterOutputType(ObjectStorageObjectOutput{})
 }
+// wip 691
