@@ -1,11 +1,11 @@
-module github.com/pulumi/pulumi-provider-boilerplate/examples/go
+module github.com/biznetgio/pulumi-biznetgio/examples/go
 
 go 1.25.11
 
-replace github.com/pulumi/pulumi-provider-boilerplate/sdk/go/pulumi-provider-boilerplate => ../../sdk/go/pulumi-provider-boilerplate
+replace github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio => ../../sdk/go/pulumi-biznetgio
 
 require (
-	github.com/pulumi/pulumi-provider-boilerplate/sdk/go/pulumi-provider-boilerplate v0.0.99
+	github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio v0.0.99
 	github.com/pulumi/pulumi/sdk/v3 v3.256.0
 )
 
@@ -75,6 +75,7 @@ require (
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/santhosh-tekuri/jsonschema/v5 v5.3.1 // indirect
 	github.com/sergi/go-diff v1.4.0 // indirect
+	github.com/spf13/cast v1.4.1 // indirect
 	github.com/spf13/cobra v1.10.2 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/texttheater/golang-levenshtein v1.0.1 // indirect
