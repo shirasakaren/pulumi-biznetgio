@@ -104,3 +104,4 @@ namespace Biznetgio.Biznetgio
         public static new BaremetalAdditionalIpAssignmentArgs Empty => new BaremetalAdditionalIpAssignmentArgs();
     }
 }
+// wip 676
