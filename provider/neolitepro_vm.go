@@ -262,3 +262,47 @@ func (NeoliteProVm) Read(
 	return infer.ReadResponse[NeoliteProVmArgs, NeoliteProVmState]{State: state}, nil
 }
 
+func (NeoliteProVm) Delete(
+	ctx context.Context, req infer.DeleteRequest[NeoliteProVmState],
+) (infer.DeleteResponse, error) {
+	c := GetClient(ctx)
+	id, err := parseNeoID(req.ID)
+	if err != nil {
+		return infer.DeleteResponse{}, err
+	}
+	if _, err := c.NeolitePro().VMDelete(ctx, id); err != nil {
+		if client.IsNotFound(err) {
+			return infer.DeleteResponse{}, nil
+		}
+		return infer.DeleteResponse{}, err
+	}
+	return infer.DeleteResponse{}, nil
+}
+
+func readNeoliteProVm(
+	ctx context.Context, c *client.Client, id string, in NeoliteProVmArgs, prev NeoliteProVmState,
+) (NeoliteProVmState, error) {
+	n, err := parseNeoID(id)
+	if err != nil {
+		return prev, fmt.Errorf("neolite pro vm %s invalid id: %w", id, err)
+	}
+	acc, err := c.NeolitePro().AccountGet(ctx, n)
+	if err != nil {
+		if client.IsNotFound(err) {
+			return prev, fmt.Errorf("neolite pro vm %s not found", id)
+		}
+		return prev, err
+	}
+
+	st := NeoliteProVmState{NeoliteProVmArgs: in}
+	st.OrderID = prev.OrderID
+	st.Status = acc.Status
+	st.Billingcycle = acc.Billingcycle
+	st.NextDue = acc.NextDue
+	st.RecurringAmount = acc.RecurringAmount
+	st.ProductID = acc.ProductID
+	st.ProductName = acc.ProductName
+	st.Description = &acc.Description
+	st.Region = acc.ExtraDetails.Region
+	st.RegionLabel = acc.ExtraDetails.RegionLabel
+	st.CIUser = acc.ExtraDetails.CIUser
