@@ -342,3 +342,46 @@ func readNeoliteVm(
 		if n, err := strconv.ParseInt(v, 10, 64); err == nil {
 			st.DiskSize = &n
 		}
+	}
+	if v := acc.ExtraDetails.Name; v != "" {
+		st.VMName = &v
+	}
+	st.LastInvoice = NeoliteLastInvoice{
+		ID:          acc.LastInvoice.ID,
+		PaidID:      acc.LastInvoice.PaidID,
+		Status:      acc.LastInvoice.Status,
+		Date:        acc.LastInvoice.Date,
+		Duedate:     acc.LastInvoice.Duedate,
+		Paybefore:   acc.LastInvoice.Paybefore,
+		Datepaid:    acc.LastInvoice.Datepaid,
+		InvoiceType: acc.LastInvoice.InvoiceType,
+	}
+
+	if n, err := parseNeoID(id); err == nil {
+		if vm, err := c.Neolite().VMDetails(ctx, n); err == nil {
+			st.Uptime = vm.Uptime
+			st.MaxDisk = vm.MaxDisk
+			st.MaxMem = vm.MaxMem
+			st.Mem = vm.Mem
+			st.CPUs = vm.CPUs
+		}
+	}
+
+	if b, err := json.Marshal(acc); err == nil {
+		var m map[string]any
+		if json.Unmarshal(b, &m) == nil {
+			st.Raw = string(RedactJSON(m))
+		}
+	}
+	return st, nil
+}
+
+func neoliteStatus(a *client.AccountResource) string {
+	return strings.ToLower(a.Status)
+}
+
+func parseNeoID(id string) (int64, error) {
+	n, err := strconv.ParseInt(id, 10, 64)
+	if err != nil || n == 0 {
+		return 0, fmt.Errorf("invalid neolite id %q", id)
+	}
