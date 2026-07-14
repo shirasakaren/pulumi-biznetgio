@@ -43,3 +43,93 @@ func (s *BaremetalService) UpdateLabel(ctx context.Context, accountID int64, lab
 	if err != nil {
 		return nil, err
 	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *BaremetalService) Delete(ctx context.Context, accountID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodDelete, fmt.Sprintf("/baremetals/%d", accountID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *BaremetalService) StateGet(ctx context.Context, accountID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet,
+		fmt.Sprintf("/baremetals/accounts/%d/state", accountID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *BaremetalService) StateSet(ctx context.Context, accountID int64, state string) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPut,
+		fmt.Sprintf("/baremetals/accounts/%d/state/%s", accountID, url.PathEscape(state)), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *BaremetalService) Rebuild(ctx context.Context, accountID int64, os string) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPut, fmt.Sprintf("/baremetals/%d/rebuild", accountID),
+		map[string]string{"os": os})
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *BaremetalService) RebuildOSList(ctx context.Context, accountID int64) ([]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, fmt.Sprintf("/baremetals/%d/rebuild/oss", accountID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]any](raw)
+}
+
+func (s *BaremetalService) KeypairList(ctx context.Context) ([]map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, "/baremetals/keypairs/", nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]map[string]any](raw)
+}
+
+func (s *BaremetalService) KeypairCreate(ctx context.Context, name string) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost, "/baremetals/keypairs/",
+		map[string]string{"name": name})
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *BaremetalService) KeypairImport(ctx context.Context, req KeypairImportPayload) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost, "/baremetals/keypairs/import", req)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *BaremetalService) KeypairDelete(ctx context.Context, keypairID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodDelete, fmt.Sprintf("/baremetals/keypairs/%d", keypairID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *BaremetalService) OpenVPN(ctx context.Context) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, "/baremetals/openvpn", nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *BaremetalService) ProductList(ctx context.Context) ([]map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, "/baremetals/products", nil)
+	if err != nil {
