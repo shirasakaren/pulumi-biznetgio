@@ -68,4 +68,38 @@ func (NeoliteProKeypair) Create(
 
 	return infer.CreateResponse[NeoliteProKeypairState]{ID: strconv.FormatInt(keypairID, 10), Output: state}, nil
 }
-// wip 597
+
+func (NeoliteProKeypair) Read(
+	ctx context.Context, req infer.ReadRequest[NeoliteProKeypairArgs, NeoliteProKeypairState],
+) (infer.ReadResponse[NeoliteProKeypairArgs, NeoliteProKeypairState], error) {
+	c := GetClient(ctx)
+	list, err := c.NeolitePro().KeypairList(ctx)
+	if err != nil {
+		return infer.ReadResponse[NeoliteProKeypairArgs, NeoliteProKeypairState]{}, err
+	}
+	for _, kp := range list {
+		if strconv.FormatInt(kp.KeypairID, 10) == req.ID {
+			state := req.State
+			state.KeypairID = kp.KeypairID
+			state.Name = kp.Name
+			state.PublicKey = kp.PublicKey
+			// private key write-only: keep value lama dari state.
+			return infer.ReadResponse[NeoliteProKeypairArgs, NeoliteProKeypairState]{State: state}, nil
+		}
+	}
+	return infer.ReadResponse[NeoliteProKeypairArgs, NeoliteProKeypairState]{},
+		fmt.Errorf("neolite pro keypair %s not found", req.ID)
+}
+
+func (NeoliteProKeypair) Delete(
+	ctx context.Context, req infer.DeleteRequest[NeoliteProKeypairState],
+) (infer.DeleteResponse, error) {
+	c := GetClient(ctx)
+	if _, err := c.NeolitePro().KeypairDelete(ctx, req.State.KeypairID); err != nil {
+		if client.IsNotFound(err) {
+			return infer.DeleteResponse{}, nil
+		}
+		return infer.DeleteResponse{}, err
+	}
+	return infer.DeleteResponse{}, nil
+}
