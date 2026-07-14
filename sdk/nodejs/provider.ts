@@ -6,7 +6,7 @@ import * as utilities from "./utilities";
 
 export class Provider extends pulumi.ProviderResource {
     /** @internal */
-    public static readonly __pulumiType = 'provider-boilerplate';
+    public static readonly __pulumiType = 'biznetgio';
 
     /**
      * Returns true if the given object is an instance of Provider.  This is designed to work even
@@ -19,6 +19,14 @@ export class Provider extends pulumi.ProviderResource {
         return obj['__pulumiType'] === "pulumi:providers:" + Provider.__pulumiType;
     }
 
+    /**
+     * BiznetGIO API token (x-token header). Falls back to BIZNETGIO_API_KEY.
+     */
+    declare public readonly apiToken: pulumi.Output<string | undefined>;
+    /**
+     * BiznetGIO API base URL. Falls back to BIZNETGIO_BASE_URL.
+     */
+    declare public readonly baseUrl: pulumi.Output<string | undefined>;
 
     /**
      * Create a Provider resource with the given unique name, arguments, and options.
@@ -31,9 +39,12 @@ export class Provider extends pulumi.ProviderResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         {
-            resourceInputs["itsasecret"] = pulumi.output(args?.itsasecret).apply(JSON.stringify);
+            resourceInputs["apiToken"] = (args?.apiToken ? pulumi.secret(args.apiToken) : undefined) ?? utilities.getEnv("BIZNETGIO_API_KEY");
+            resourceInputs["baseUrl"] = (args?.baseUrl) ?? (utilities.getEnv("BIZNETGIO_BASE_URL") || "https://api.portal.biznetgio.com/v1");
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["apiToken"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(Provider.__pulumiType, name, resourceInputs, opts);
     }
 }
@@ -42,6 +53,12 @@ export class Provider extends pulumi.ProviderResource {
  * The set of arguments for constructing a Provider resource.
  */
 export interface ProviderArgs {
-    itsasecret?: pulumi.Input<boolean | undefined>;
+    /**
+     * BiznetGIO API token (x-token header). Falls back to BIZNETGIO_API_KEY.
+     */
+    apiToken?: pulumi.Input<string | undefined>;
+    /**
+     * BiznetGIO API base URL. Falls back to BIZNETGIO_BASE_URL.
+     */
+    baseUrl?: pulumi.Input<string | undefined>;
 }
-// wip 426
