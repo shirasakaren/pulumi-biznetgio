@@ -72,3 +72,4 @@ public final class ObjectStorageCredentialsPlainArgs extends com.pulumi.resource
     }
 
 }
+// wip 690
