@@ -1,16 +1,32 @@
-name: provider-boilerplate
+name: biznetgio
 runtime: yaml
-
+description: "Kitchen-sink: keypair + VM NEO Lite pake function products & osList."
+# token: `pulumi config set biznetgio:apiToken <token> --secret` atau env BIZNETGIO_API_KEY
+variables:
+  products:
+    fn::invoke:
+      function: biznetgio:index:neoliteProducts
+      return: products
+  osList:
+    fn::invoke:
+      function: biznetgio:index:neoliteOsList
+      arguments:
+        productId: ${products[0].productId}
+      return: oss
 resources:
-  myRandomResource:
-    type: provider-boilerplate:Random
+  keypair:
+    type: biznetgio:index:NeoliteKeypair
     properties:
-      length: 24
-  myRandomComponent:
-    type: provider-boilerplate:RandomComponent
+      name: neo-lite-key
+  vm:
+    type: biznetgio:index:NeoliteVm
     properties:
-      length: 24
-
+      vmName: neo-lite-1
+      productId: ${products[0].productId}
+      selectOs: ${osList[0].name}
+      keypairId: ${keypair.keypairId}
+      cycle: m
+      sshAndConsoleUser: admin
+      consolePassword: s3cretP4ssw0rd
 outputs:
-  output:
-    value: ${myRandomResource.result}
+  vmStatus: ${vm.status}
