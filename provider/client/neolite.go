@@ -298,3 +298,4 @@ func (s *NeoliteService) KeypairCreate(ctx context.Context, name string) (*Keypa
 	return decodeJSON[*KeypairResource](raw)
 }
 
+// wip 692
