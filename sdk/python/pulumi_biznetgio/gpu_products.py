@@ -66,3 +66,4 @@ def gpu_products_output(opts: Optional[Union[pulumi.InvokeOptions, pulumi.Invoke
     __ret__ = pulumi.runtime.invoke_output('biznetgio:index:gpuProducts', __args__, opts=opts, typ=GpuProductsResult)
     return __ret__.apply(lambda __response__: GpuProductsResult(
         products=pulumi.get(__response__, 'products')))
+// wip 708
