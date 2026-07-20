@@ -144,3 +144,4 @@ func init() {
 	pulumi.RegisterOutputType(NeoliteKeypairOutput{})
 }
 // wip 621
+// wip 706
