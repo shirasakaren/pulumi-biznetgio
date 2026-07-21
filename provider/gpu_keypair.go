@@ -74,39 +74,3 @@ func (GpuKeypair) Read(
 	list, err := c.GPU().KeypairList(ctx)
 	if err != nil {
 		return resp, err
-	}
-	for _, m := range list {
-		id, ok := gpuInt64(m, "keypair_id", "id")
-		if ok && id == keypairID {
-			resp.State = gpuKeypairStateFromMap(req.Inputs, m)
-			return resp, nil
-		}
-	}
-	return resp, fmt.Errorf("biznetgio: keypair %s not found", req.ID)
-}
-
-func (GpuKeypair) Delete(ctx context.Context, req infer.DeleteRequest[GpuKeypairState]) (infer.DeleteResponse, error) {
-	keypairID, err := strconv.ParseInt(req.ID, 10, 64)
-	if err != nil {
-		return infer.DeleteResponse{}, fmt.Errorf("biznetgio: invalid keypair id %q: %s", req.ID, err)
-	}
-	if _, err := GetClient(ctx).GPU().KeypairDelete(ctx, keypairID); err != nil && !client.IsNotFound(err) {
-		return infer.DeleteResponse{}, err
-	}
-	return infer.DeleteResponse{}, nil
-}
-
-func gpuKeypairStateFromMap(args GpuKeypairArgs, m map[string]any) GpuKeypairState {
-	st := GpuKeypairState{GpuKeypairArgs: args}
-	if v, ok := gpuString(m, "name"); ok {
-		st.Name = v
-	}
-	if v, ok := gpuString(m, "public_key", "pubkey"); ok {
-		st.PublicKey = &v
-	}
-	if v, ok := gpuString(m, "private_key", "private", "secret_key", "pem"); ok {
-		st.PrivateKey = &v
-	}
-	st.Raw = string(gpuJSON(m))
-	return st
-}
