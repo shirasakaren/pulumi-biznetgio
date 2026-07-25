@@ -158,3 +158,159 @@ func (Baremetal) Update(ctx context.Context,
 	if t := bmtStr(a.RebuildOS); t != "" && t != bmtStr(req.State.RebuildOS) {
 		if _, err := c.Baremetal().Rebuild(ctx, accountID, t); err != nil {
 			return infer.UpdateResponse[BaremetalState]{}, fmt.Errorf("biznetgio: rebuild baremetal %d: %w", accountID, err)
+		}
+		final, err := client.WaitForStatus(ctx, 5*time.Second,
+			func(ctx context.Context) (map[string]any, error) { return c.Baremetal().AccountGet(ctx, accountID) },
+			bmtStatus, []string{"active"}, []string{"terminated", "error", "failed"})
+		if err != nil {
+			if errors.Is(err, context.DeadlineExceeded) {
+				return infer.UpdateResponse[BaremetalState]{Output: baremetalStateFromMap(ctx, a, nil)},
+					infer.ResourceInitFailedError{Reasons: []string{err.Error()}}
+			}
+			return infer.UpdateResponse[BaremetalState]{}, err
+		}
+		resp.Output = baremetalStateFromMap(ctx, a, final)
+	}
+	return resp, nil
+}
+
+func (Baremetal) Read(ctx context.Context,
+	req infer.ReadRequest[BaremetalArgs, BaremetalState],
+) (infer.ReadResponse[BaremetalArgs, BaremetalState], error) {
+	resp := infer.ReadResponse[BaremetalArgs, BaremetalState]{
+		ID:     req.ID,
+		Inputs: req.Inputs,
+		State:  baremetalStateFromMap(ctx, req.Inputs, nil),
+	}
+	c := GetClient(ctx)
+	accountID, err := strconv.ParseInt(req.ID, 10, 64)
+	if err != nil {
+		return resp, fmt.Errorf("biznetgio: invalid baremetal id %q: %s", req.ID, err)
+	}
+	m, err := c.Baremetal().AccountGet(ctx, accountID)
+	if err != nil {
+		if client.IsNotFound(err) {
+			return resp, fmt.Errorf("biznetgio: baremetal %s not found", req.ID)
+		}
+		return resp, err
+	}
+	resp.State = baremetalStateFromMap(ctx, req.Inputs, m)
+	if st, err := c.Baremetal().StateGet(ctx, accountID); err == nil {
+		if v, ok := bmtString(st, "state", "status"); ok {
+			resp.State.PowerState = &v
+		}
+	}
+	return resp, nil
+}
+
+func (Baremetal) Delete(ctx context.Context, req infer.DeleteRequest[BaremetalState]) (infer.DeleteResponse, error) {
+	c := GetClient(ctx)
+	accountID, err := strconv.ParseInt(req.ID, 10, 64)
+	if err != nil {
+		return infer.DeleteResponse{}, fmt.Errorf("biznetgio: invalid baremetal id %q: %s", req.ID, err)
+	}
+	if _, err := c.Baremetal().Delete(ctx, accountID); err != nil && !client.IsNotFound(err) {
+		return infer.DeleteResponse{}, err
+	}
+	return infer.DeleteResponse{}, nil
+}
+
+func baremetalStateFromMap(_ context.Context, args BaremetalArgs, m map[string]any) BaremetalState {
+	st := BaremetalState{BaremetalArgs: args}
+	if m == nil {
+		return st
+	}
+	if v, ok := bmtInt64(m, "product_id"); ok {
+		st.ProductID = v
+	}
+	if v, ok := bmtInt64(m, "keypair_id", "neosshkey_id"); ok {
+		st.KeypairID = v
+	}
+	if v, ok := bmtString(m, "select_os", "os"); ok {
+		st.SelectOS = &v
+	}
+	if v, ok := bmtString(m, "label", "name"); ok {
+		st.Label = v
+	}
+	if v, ok := bmtString(m, "order_id"); ok {
+		st.OrderID = &v
+	}
+	if v, ok := bmtString(m, "ip", "public_ip", "ip_address", "ipv4"); ok {
+		st.IPAddress = &v
+	}
+	if v, ok := bmtString(m, "created_at", "date_created"); ok {
+		st.CreatedAt = &v
+	}
+	st.Status = bmtStringDefault(m, "status", "state")
+	st.Raw = string(bmtJSON(m))
+	return st
+}
+
+func bmtStatus(m map[string]any) string {
+	return strings.ToLower(bmtStringDefault(m, "status", "state"))
+}
+
+func bmtStr(s *string) string {
+	if s == nil {
+		return ""
+	}
+	return *s
+}
+
+func bmtInt64Ptr(p *int64) int64 {
+	if p == nil {
+		return 0
+	}
+	return *p
+}
+
+func bmtInt64(m map[string]any, keys ...string) (int64, bool) {
+	for _, k := range keys {
+		v, ok := m[k]
+		if !ok {
+			continue
+		}
+		switch n := v.(type) {
+		case float64:
+			return int64(n), true
+		case json.Number:
+			if i, err := n.Int64(); err == nil {
+				return i, true
+			}
+		case string:
+			if i, err := strconv.ParseInt(n, 10, 64); err == nil {
+				return i, true
+			}
+		}
+	}
+	return 0, false
+}
+
+func bmtString(m map[string]any, keys ...string) (string, bool) {
+	for _, k := range keys {
+		v, ok := m[k]
+		if !ok {
+			continue
+		}
+		switch s := v.(type) {
+		case string:
+			return s, true
+		case json.Number:
+			return s.String(), true
+		case float64:
+			return strconv.FormatFloat(s, 'f', -1, 64), true
+		case bool:
+			return strconv.FormatBool(s), true
+		}
+	}
+	return "", false
+}
+
+func bmtStringDefault(m map[string]any, keys ...string) string {
+	s, _ := bmtString(m, keys...)
+	return s
+}
+
+func bmtJSON(m map[string]any) []byte {
+	return RedactJSON(m)
+}
