@@ -122,3 +122,4 @@ public final class GpuGraphArgs extends com.pulumi.resources.InvokeArgs {
     }
 
 }
+// wip 723
