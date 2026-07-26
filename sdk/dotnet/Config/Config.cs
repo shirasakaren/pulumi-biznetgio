@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Immutable;
 
-namespace Pulumi.ProviderBoilerplate
+namespace Biznetgio.Biznetgio
 {
     public static class Config
     {
@@ -30,13 +30,26 @@ namespace Pulumi.ProviderBoilerplate
             }
         }
 
-        private static readonly global::Pulumi.Config __config = new global::Pulumi.Config("provider-boilerplate");
+        private static readonly global::Pulumi.Config __config = new global::Pulumi.Config("biznetgio");
 
-        private static readonly __Value<bool?> _itsasecret = new __Value<bool?>(() => __config.GetBoolean("itsasecret"));
-        public static bool? Itsasecret
+        private static readonly __Value<string?> _apiToken = new __Value<string?>(() => __config.Get("apiToken") ?? Utilities.GetEnv("BIZNETGIO_API_KEY"));
+        /// <summary>
+        /// BiznetGIO API token (x-token header). Falls back to BIZNETGIO_API_KEY.
+        /// </summary>
+        public static string? ApiToken
         {
-            get => _itsasecret.Get();
-            set => _itsasecret.Set(value);
+            get => _apiToken.Get();
+            set => _apiToken.Set(value);
+        }
+
+        private static readonly __Value<string?> _baseUrl = new __Value<string?>(() => __config.Get("baseUrl") ?? Utilities.GetEnv("BIZNETGIO_BASE_URL") ?? "https://api.portal.biznetgio.com/v1");
+        /// <summary>
+        /// BiznetGIO API base URL. Falls back to BIZNETGIO_BASE_URL.
+        /// </summary>
+        public static string? BaseUrl
+        {
+            get => _baseUrl.Get();
+            set => _baseUrl.Set(value);
         }
 
     }
