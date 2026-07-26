@@ -313,3 +313,4 @@ func gpuInt64(m map[string]any, keys ...string) (int64, bool) {
 			return int64(n), true
 		case json.Number:
 			if i, err := n.Int64(); err == nil {
+// wip 749
