@@ -275,3 +275,4 @@ public final class NeoliteProVmArgs extends com.pulumi.resources.ResourceArgs {
          * @param cycle Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
          * 
          * @return builder
+// wip 763
