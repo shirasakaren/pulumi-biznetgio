@@ -70,3 +70,4 @@ func (s *BaremetalElasticStorageService) Delete(ctx context.Context, accountID i
 	return decodeJSON[map[string]any](raw)
 }
 
+// wip 768
