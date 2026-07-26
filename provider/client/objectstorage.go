@@ -170,3 +170,46 @@ func (s *ObjectStorageService) BucketUsage(
 	return decodeJSON[map[string]any](raw)
 }
 
+func (s *ObjectStorageService) Info(
+	ctx context.Context, accountID int64, bucketName, objectOrDirectory string,
+) (map[string]any, error) {
+	p := s.bucketPath(accountID, bucketName, "/info")
+	if objectOrDirectory != "" {
+		p += "?object_or_directory=" + url.QueryEscape(objectOrDirectory)
+	}
+	raw, err := s.client.doJSON(ctx, http.MethodGet, p, nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *ObjectStorageService) ObjectsList(
+	ctx context.Context, accountID int64, bucketName string,
+) ([]map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, s.bucketPath(accountID, bucketName, "/objects"), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]map[string]any](raw)
+}
+
+func (s *ObjectStorageService) ObjectsListInDirectory(
+	ctx context.Context, accountID int64, bucketName, directory string,
+) ([]map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet,
+		s.bucketPath(accountID, bucketName, "/objects/"+url.PathEscape(directory)+"/"), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]map[string]any](raw)
+}
+
+func (s *ObjectStorageService) DirectoryCreate(
+	ctx context.Context, accountID int64, bucketName, directory string,
+) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodPost,
+		s.bucketPath(accountID, bucketName, "/objects/"+url.PathEscape(directory)+"/"), nil)
+	if err != nil {
+		return nil, err
+	}
