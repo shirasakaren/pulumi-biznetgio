@@ -268,3 +268,48 @@ func gpuStateFromMap(_ context.Context, args GpuInstanceArgs, m map[string]any) 
 	if v, ok := gpuInt64(m, "keypair_id", "neosshkey_id"); ok {
 		st.KeypairID = v
 	}
+	if v, ok := gpuString(m, "select_os", "os"); ok {
+		st.SelectOS = v
+	}
+	if v, ok := gpuString(m, "ssh_and_console_user", "ciuser", "user"); ok {
+		st.SSHAndConsoleUser = v
+	}
+	if v, ok := gpuString(m, "console_password", "cipassword"); ok {
+		st.ConsolePassword = v
+	}
+	if v, ok := gpuString(m, "cycle", "billingcycle"); ok {
+		st.Subscription = &GpuSubscriptionArgs{Cycle: v}
+	}
+	if v, ok := gpuInt64(m, "additional_hours"); ok {
+		st.OnDemand = &GpuOnDemandArgs{AdditionalHours: &v}
+	}
+	if v, ok := gpuString(m, "order_id"); ok {
+		st.OrderID = &v
+	}
+	st.Status = gpuStringDefault(m, "status", "state")
+	st.Raw = string(gpuJSON(m))
+	return st
+}
+
+func gpuStatus(m map[string]any) string {
+	return strings.ToLower(gpuStringDefault(m, "status", "state"))
+}
+
+func gpuStr(s *string) string {
+	if s == nil {
+		return ""
+	}
+	return *s
+}
+
+func gpuInt64(m map[string]any, keys ...string) (int64, bool) {
+	for _, k := range keys {
+		v, ok := m[k]
+		if !ok {
+			continue
+		}
+		switch n := v.(type) {
+		case float64:
+			return int64(n), true
+		case json.Number:
+			if i, err := n.Int64(); err == nil {
