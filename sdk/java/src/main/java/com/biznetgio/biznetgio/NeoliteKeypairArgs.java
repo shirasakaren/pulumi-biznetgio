@@ -83,3 +83,4 @@ public final class NeoliteKeypairArgs extends com.pulumi.resources.ResourceArgs 
     }
 
 }
+// wip 740
