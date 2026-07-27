@@ -243,3 +243,248 @@ class GpuInstance(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] console_password: Console password. Create-only, changing it replaces the instance.
         :param pulumi.Input[_builtins.int] keypair_id: GPU keypair id, from GpuKeypair.
         :param pulumi.Input[Union['GpuOnDemandArgsArgs', 'GpuOnDemandArgsArgsDict']] on_demand: On-demand billing mode (hourly). Exactly one of `subscription` or `onDemand` must be set.
+        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Pay the invoice with the registered credit card. Defaults to true. Set false to leave the invoice unpaid in the portal; the resource stays Pending until paid.
+        :param pulumi.Input[_builtins.int] product_id: GPU product id from the gpu products function.
+        :param pulumi.Input[_builtins.str] promocode: Promo code to apply at creation.
+        :param pulumi.Input[_builtins.str] rebuild_trigger: Change this value to rebuild the instance (destructive, reinstalls the OS).
+        :param pulumi.Input[_builtins.str] reserve_additional_hours_trigger: Change this value to reserve 1 additional hour on an on-demand instance.
+        :param pulumi.Input[_builtins.str] select_os: OS to install, from the product's select-os catalog.
+        :param pulumi.Input[_builtins.str] service_name: Display name of the instance. Create-only, changing it replaces the instance.
+        :param pulumi.Input[_builtins.str] ssh_and_console_user: SSH and console user for the instance.
+        :param pulumi.Input[Union['GpuSubscriptionArgsArgs', 'GpuSubscriptionArgsArgsDict']] subscription: Subscription billing mode (cycle-based). Exactly one of `subscription` or `onDemand` must be set.
+        """
+        ...
+    @overload
+    def __init__(__self__,
+                 resource_name: str,
+                 args: GpuInstanceArgs,
+                 opts: Optional[pulumi.ResourceOptions] = None):
+        """
+        Create a GpuInstance resource with the given unique name, props, and options.
+
+        :param str resource_name: The name of the resource.
+        :param GpuInstanceArgs args: The arguments to use to populate this resource's properties.
+        :param pulumi.ResourceOptions opts: Options for the resource.
+        """
+        ...
+    def __init__(__self__, resource_name: str, *args, **kwargs):
+        resource_args, opts = _utilities.get_resource_args_opts(GpuInstanceArgs, pulumi.ResourceOptions, *args, **kwargs)
+        if resource_args is not None:
+            __self__._internal_init(resource_name, opts, **resource_args.__dict__)
+        else:
+            __self__._internal_init(resource_name, *args, **kwargs)
+
+    def _internal_init(__self__,
+                 resource_name: str,
+                 opts: Optional[pulumi.ResourceOptions] = None,
+                 console_password: pulumi.Input[Optional[_builtins.str]] = None,
+                 keypair_id: pulumi.Input[Optional[_builtins.int]] = None,
+                 on_demand: pulumi.Input[Optional[Union['GpuOnDemandArgsArgs', 'GpuOnDemandArgsArgsDict']]] = None,
+                 pay_with_credit_card: pulumi.Input[Optional[_builtins.bool]] = None,
+                 product_id: pulumi.Input[Optional[_builtins.int]] = None,
+                 promocode: pulumi.Input[Optional[_builtins.str]] = None,
+                 rebuild_trigger: pulumi.Input[Optional[_builtins.str]] = None,
+                 reserve_additional_hours_trigger: pulumi.Input[Optional[_builtins.str]] = None,
+                 select_os: pulumi.Input[Optional[_builtins.str]] = None,
+                 service_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 ssh_and_console_user: pulumi.Input[Optional[_builtins.str]] = None,
+                 subscription: pulumi.Input[Optional[Union['GpuSubscriptionArgsArgs', 'GpuSubscriptionArgsArgsDict']]] = None,
+                 __props__=None):
+        opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
+        if not isinstance(opts, pulumi.ResourceOptions):
+            raise TypeError('Expected resource options to be a ResourceOptions instance')
+        if opts.id is None:
+            if __props__ is not None:
+                raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
+            __props__ = GpuInstanceArgs.__new__(GpuInstanceArgs)
+
+            if console_password is None and not opts.urn:
+                raise TypeError("Missing required property 'console_password'")
+            __props__.__dict__["console_password"] = None if console_password is None else pulumi.Output.secret(console_password)
+            if keypair_id is None and not opts.urn:
+                raise TypeError("Missing required property 'keypair_id'")
+            __props__.__dict__["keypair_id"] = keypair_id
+            __props__.__dict__["on_demand"] = on_demand
+            if pay_with_credit_card is None:
+                pay_with_credit_card = True
+            __props__.__dict__["pay_with_credit_card"] = pay_with_credit_card
+            if product_id is None and not opts.urn:
+                raise TypeError("Missing required property 'product_id'")
+            __props__.__dict__["product_id"] = product_id
+            __props__.__dict__["promocode"] = promocode
+            __props__.__dict__["rebuild_trigger"] = rebuild_trigger
+            __props__.__dict__["reserve_additional_hours_trigger"] = reserve_additional_hours_trigger
+            if select_os is None and not opts.urn:
+                raise TypeError("Missing required property 'select_os'")
+            __props__.__dict__["select_os"] = select_os
+            __props__.__dict__["service_name"] = service_name
+            if ssh_and_console_user is None and not opts.urn:
+                raise TypeError("Missing required property 'ssh_and_console_user'")
+            __props__.__dict__["ssh_and_console_user"] = ssh_and_console_user
+            __props__.__dict__["subscription"] = subscription
+            __props__.__dict__["order_id"] = None
+            __props__.__dict__["raw"] = None
+            __props__.__dict__["status"] = None
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["consolePassword", "raw"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
+        replace_on_changes = pulumi.ResourceOptions(replace_on_changes=["consolePassword", "keypairId", "onDemand", "payWithCreditCard", "productId", "promocode", "selectOs", "serviceName", "sshAndConsoleUser", "subscription"])
+        opts = pulumi.ResourceOptions.merge(opts, replace_on_changes)
+        super(GpuInstance, __self__).__init__(
+            'biznetgio:index:GpuInstance',
+            resource_name,
+            __props__,
+            opts)
+
+    @staticmethod
+    def get(resource_name: str,
+            id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None) -> 'GpuInstance':
+        """
+        Get an existing GpuInstance resource's state with the given name, id, and optional extra
+        properties used to qualify the lookup.
+
+        :param str resource_name: The unique name of the resulting resource.
+        :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
+        :param pulumi.ResourceOptions opts: Options for the resource.
+        """
+        opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
+
+        __props__ = GpuInstanceArgs.__new__(GpuInstanceArgs)
+
+        __props__.__dict__["console_password"] = None
+        __props__.__dict__["keypair_id"] = None
+        __props__.__dict__["on_demand"] = None
+        __props__.__dict__["order_id"] = None
+        __props__.__dict__["pay_with_credit_card"] = None
+        __props__.__dict__["product_id"] = None
+        __props__.__dict__["promocode"] = None
+        __props__.__dict__["raw"] = None
+        __props__.__dict__["rebuild_trigger"] = None
+        __props__.__dict__["reserve_additional_hours_trigger"] = None
+        __props__.__dict__["select_os"] = None
+        __props__.__dict__["service_name"] = None
+        __props__.__dict__["ssh_and_console_user"] = None
+        __props__.__dict__["status"] = None
+        __props__.__dict__["subscription"] = None
+        return GpuInstance(resource_name, opts=opts, __props__=__props__)
+
+    @_builtins.property
+    @pulumi.getter(name="consolePassword")
+    def console_password(self) -> pulumi.Output[_builtins.str]:
+        """
+        Console password. Create-only, changing it replaces the instance.
+        """
+        return pulumi.get(self, "console_password")
+
+    @_builtins.property
+    @pulumi.getter(name="keypairId")
+    def keypair_id(self) -> pulumi.Output[_builtins.int]:
+        """
+        GPU keypair id, from GpuKeypair.
+        """
+        return pulumi.get(self, "keypair_id")
+
+    @_builtins.property
+    @pulumi.getter(name="onDemand")
+    def on_demand(self) -> pulumi.Output[Optional['outputs.GpuOnDemandArgs']]:
+        """
+        On-demand billing mode (hourly). Exactly one of `subscription` or `onDemand` must be set.
+        """
+        return pulumi.get(self, "on_demand")
+
+    @_builtins.property
+    @pulumi.getter(name="orderId")
+    def order_id(self) -> pulumi.Output[_builtins.str]:
+        """
+        Order id from the creation response.
+        """
+        return pulumi.get(self, "order_id")
+
+    @_builtins.property
+    @pulumi.getter(name="payWithCreditCard")
+    def pay_with_credit_card(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        Pay the invoice with the registered credit card. Defaults to true. Set false to leave the invoice unpaid in the portal; the resource stays Pending until paid.
+        """
+        return pulumi.get(self, "pay_with_credit_card")
+
+    @_builtins.property
+    @pulumi.getter(name="productId")
+    def product_id(self) -> pulumi.Output[_builtins.int]:
+        """
+        GPU product id from the gpu products function.
+        """
+        return pulumi.get(self, "product_id")
+
+    @_builtins.property
+    @pulumi.getter
+    def promocode(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Promo code to apply at creation.
+        """
+        return pulumi.get(self, "promocode")
+
+    @_builtins.property
+    @pulumi.getter
+    def raw(self) -> pulumi.Output[_builtins.str]:
+        """
+        Raw JSON of the last read response, for anything not modeled yet.
+        """
+        return pulumi.get(self, "raw")
+
+    @_builtins.property
+    @pulumi.getter(name="rebuildTrigger")
+    def rebuild_trigger(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Change this value to rebuild the instance (destructive, reinstalls the OS).
+        """
+        return pulumi.get(self, "rebuild_trigger")
+
+    @_builtins.property
+    @pulumi.getter(name="reserveAdditionalHoursTrigger")
+    def reserve_additional_hours_trigger(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Change this value to reserve 1 additional hour on an on-demand instance.
+        """
+        return pulumi.get(self, "reserve_additional_hours_trigger")
+
+    @_builtins.property
+    @pulumi.getter(name="selectOs")
+    def select_os(self) -> pulumi.Output[_builtins.str]:
+        """
+        OS to install, from the product's select-os catalog.
+        """
+        return pulumi.get(self, "select_os")
+
+    @_builtins.property
+    @pulumi.getter(name="serviceName")
+    def service_name(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Display name of the instance. Create-only, changing it replaces the instance.
+        """
+        return pulumi.get(self, "service_name")
+
+    @_builtins.property
+    @pulumi.getter(name="sshAndConsoleUser")
+    def ssh_and_console_user(self) -> pulumi.Output[_builtins.str]:
+        """
+        SSH and console user for the instance.
+        """
+        return pulumi.get(self, "ssh_and_console_user")
+
+    @_builtins.property
+    @pulumi.getter
+    def status(self) -> pulumi.Output[_builtins.str]:
+        """
+        Current status of the instance.
+        """
+        return pulumi.get(self, "status")
+
+    @_builtins.property
+    @pulumi.getter
+    def subscription(self) -> pulumi.Output[Optional['outputs.GpuSubscriptionArgs']]:
+        """
+        Subscription billing mode (cycle-based). Exactly one of `subscription` or `onDemand` must be set.
+        """
+        return pulumi.get(self, "subscription")
+
