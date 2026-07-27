@@ -150,3 +150,4 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*BaremetalAdditionalIpAssignmentInput)(nil)).Elem(), &BaremetalAdditionalIpAssignment{})
 	pulumi.RegisterOutputType(BaremetalAdditionalIpAssignmentOutput{})
 }
+// wip 801
