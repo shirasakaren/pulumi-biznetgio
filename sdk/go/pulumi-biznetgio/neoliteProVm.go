@@ -413,3 +413,4 @@ func init() {
 	pulumi.RegisterOutputType(NeoliteProVmOutput{})
 }
 // wip 700
+// wip 790
