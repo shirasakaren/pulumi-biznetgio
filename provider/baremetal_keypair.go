@@ -33,3 +33,4 @@ func (a *BaremetalKeypairArgs) Annotate(ann infer.Annotator) {
 func (s *BaremetalKeypairState) Annotate(ann infer.Annotator) {
 	ann.Describe(&s.KeypairID, "Keypair id in BiznetGIO.")
 	ann.Describe(&s.PrivateKey, "Private key from the creation response, when the API returns one. "+
+// wip 808
