@@ -5,14 +5,27 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 declare var exports: any;
-const __config = new pulumi.Config("provider-boilerplate");
+const __config = new pulumi.Config("biznetgio");
 
-export declare const itsasecret: boolean | undefined;
-Object.defineProperty(exports, "itsasecret", {
+/**
+ * BiznetGIO API token (x-token header). Falls back to BIZNETGIO_API_KEY.
+ */
+export declare const apiToken: string | undefined;
+Object.defineProperty(exports, "apiToken", {
     get() {
-        return __config.getObject<boolean>("itsasecret");
+        return __config.get("apiToken") ?? utilities.getEnv("BIZNETGIO_API_KEY");
     },
     enumerable: true,
 });
 
-// wip 696
+/**
+ * BiznetGIO API base URL. Falls back to BIZNETGIO_BASE_URL.
+ */
+export declare const baseUrl: string;
+Object.defineProperty(exports, "baseUrl", {
+    get() {
+        return __config.get("baseUrl") ?? (utilities.getEnv("BIZNETGIO_BASE_URL") || "https://api.portal.biznetgio.com/v1");
+    },
+    enumerable: true,
+});
+
