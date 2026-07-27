@@ -275,4 +275,279 @@ public final class NeoliteProVmArgs extends com.pulumi.resources.ResourceArgs {
          * @param cycle Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
          * 
          * @return builder
-// wip 763
+         * 
+         */
+        public Builder cycle(Output<String> cycle) {
+            $.cycle = cycle;
+            return this;
+        }
+
+        /**
+         * @param cycle Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder cycle(String cycle) {
+            return cycle(Output.of(cycle));
+        }
+
+        /**
+         * @param description Deskripsi VM.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder description(@Nullable Output<String> description) {
+            $.description = description;
+            return this;
+        }
+
+        /**
+         * @param description Deskripsi VM.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder description(String description) {
+            return description(Output.of(description));
+        }
+
+        /**
+         * @param diskSize Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder diskSize(@Nullable Output<Integer> diskSize) {
+            $.diskSize = diskSize;
+            return this;
+        }
+
+        /**
+         * @param diskSize Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder diskSize(Integer diskSize) {
+            return diskSize(Output.of(diskSize));
+        }
+
+        /**
+         * @param keypairId Id keypair dari `NeoliteProKeypair`. Bisa diganti via change-keypair.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder keypairId(Output<Integer> keypairId) {
+            $.keypairId = keypairId;
+            return this;
+        }
+
+        /**
+         * @param keypairId Id keypair dari `NeoliteProKeypair`. Bisa diganti via change-keypair.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder keypairId(Integer keypairId) {
+            return keypairId(Output.of(keypairId));
+        }
+
+        /**
+         * @param payWithCreditCard Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder payWithCreditCard(@Nullable Output<Boolean> payWithCreditCard) {
+            $.payWithCreditCard = payWithCreditCard;
+            return this;
+        }
+
+        /**
+         * @param payWithCreditCard Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder payWithCreditCard(Boolean payWithCreditCard) {
+            return payWithCreditCard(Output.of(payWithCreditCard));
+        }
+
+        /**
+         * @param powerState Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder powerState(@Nullable Output<String> powerState) {
+            $.powerState = powerState;
+            return this;
+        }
+
+        /**
+         * @param powerState Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder powerState(String powerState) {
+            return powerState(Output.of(powerState));
+        }
+
+        /**
+         * @param productId Product id dari function `getProducts` atau portal.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder productId(Output<Integer> productId) {
+            $.productId = productId;
+            return this;
+        }
+
+        /**
+         * @param productId Product id dari function `getProducts` atau portal.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder productId(Integer productId) {
+            return productId(Output.of(productId));
+        }
+
+        /**
+         * @param promocode Kode promo saat order.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder promocode(@Nullable Output<String> promocode) {
+            $.promocode = promocode;
+            return this;
+        }
+
+        /**
+         * @param promocode Kode promo saat order.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder promocode(String promocode) {
+            return promocode(Output.of(promocode));
+        }
+
+        /**
+         * @param rebuildOs Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder rebuildOs(@Nullable Output<String> rebuildOs) {
+            $.rebuildOs = rebuildOs;
+            return this;
+        }
+
+        /**
+         * @param rebuildOs Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder rebuildOs(String rebuildOs) {
+            return rebuildOs(Output.of(rebuildOs));
+        }
+
+        /**
+         * @param selectOs OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder selectOs(Output<String> selectOs) {
+            $.selectOs = selectOs;
+            return this;
+        }
+
+        /**
+         * @param selectOs OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder selectOs(String selectOs) {
+            return selectOs(Output.of(selectOs));
+        }
+
+        /**
+         * @param sshAndConsoleUser User SSH &amp; console yang dipasang saat create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder sshAndConsoleUser(Output<String> sshAndConsoleUser) {
+            $.sshAndConsoleUser = sshAndConsoleUser;
+            return this;
+        }
+
+        /**
+         * @param sshAndConsoleUser User SSH &amp; console yang dipasang saat create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder sshAndConsoleUser(String sshAndConsoleUser) {
+            return sshAndConsoleUser(Output.of(sshAndConsoleUser));
+        }
+
+        /**
+         * @param vmName Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder vmName(@Nullable Output<String> vmName) {
+            $.vmName = vmName;
+            return this;
+        }
+
+        /**
+         * @param vmName Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder vmName(String vmName) {
+            return vmName(Output.of(vmName));
+        }
+
+        public NeoliteProVmArgs build() {
+            if ($.consolePassword == null) {
+                throw new MissingRequiredPropertyException("NeoliteProVmArgs", "consolePassword");
+            }
+            if ($.cycle == null) {
+                throw new MissingRequiredPropertyException("NeoliteProVmArgs", "cycle");
+            }
+            $.description = Codegen.stringProp("description").output().arg($.description).def("").getNullable();
+            if ($.keypairId == null) {
+                throw new MissingRequiredPropertyException("NeoliteProVmArgs", "keypairId");
+            }
+            $.payWithCreditCard = Codegen.booleanProp("payWithCreditCard").output().arg($.payWithCreditCard).def(true).getNullable();
+            if ($.productId == null) {
+                throw new MissingRequiredPropertyException("NeoliteProVmArgs", "productId");
+            }
+            $.promocode = Codegen.stringProp("promocode").output().arg($.promocode).def("").getNullable();
+            if ($.selectOs == null) {
+                throw new MissingRequiredPropertyException("NeoliteProVmArgs", "selectOs");
+            }
+            if ($.sshAndConsoleUser == null) {
+                throw new MissingRequiredPropertyException("NeoliteProVmArgs", "sshAndConsoleUser");
+            }
+            $.vmName = Codegen.stringProp("vmName").output().arg($.vmName).def("server-name").getNullable();
+            return $;
+        }
+    }
+
+}
