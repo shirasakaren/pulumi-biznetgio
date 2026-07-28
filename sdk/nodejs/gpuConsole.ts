@@ -41,3 +41,4 @@ export interface GpuConsoleOutputArgs {
      */
     accountId: pulumi.Input<string>;
 }
+// wip 847
