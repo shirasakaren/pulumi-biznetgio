@@ -60,3 +60,4 @@ public final class GpuProductsResult {
         }
     }
 }
+// wip 830
