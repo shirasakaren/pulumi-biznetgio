@@ -133,3 +133,48 @@ func (GpuInstance) Create(
 	return resp, nil
 }
 
+func (GpuInstance) Update(
+	ctx context.Context, req infer.UpdateRequest[GpuInstanceArgs, GpuInstanceState],
+) (infer.UpdateResponse[GpuInstanceState], error) {
+	resp := infer.UpdateResponse[GpuInstanceState]{Output: gpuStateFromMap(ctx, req.Inputs, nil)}
+	if req.DryRun {
+		return resp, nil
+	}
+	c := GetClient(ctx)
+	a := req.Inputs
+	accountID, err := strconv.ParseInt(req.ID, 10, 64)
+	if err != nil {
+		return infer.UpdateResponse[GpuInstanceState]{}, fmt.Errorf("biznetgio: invalid gpu instance id %q: %s", req.ID, err)
+	}
+
+	if t := gpuStr(a.RebuildTrigger); t != "" && t != gpuStr(req.State.RebuildTrigger) {
+		if _, err := c.GPU().Rebuild(ctx, accountID, a.SelectOS); err != nil {
+			return infer.UpdateResponse[GpuInstanceState]{}, fmt.Errorf("biznetgio: rebuild gpu instance %d: %w", accountID, err)
+		}
+	}
+	if t := gpuStr(a.ReserveAdditionalHoursTrigger); t != "" && t != gpuStr(req.State.ReserveAdditionalHoursTrigger) {
+		hours := int64(1)
+		if a.OnDemand != nil && a.OnDemand.AdditionalHours != nil && *a.OnDemand.AdditionalHours > 0 {
+			hours = *a.OnDemand.AdditionalHours
+		}
+		if _, err := c.GPU().ReserveAdditionalHours(ctx, accountID, hours); err != nil {
+			return infer.UpdateResponse[GpuInstanceState]{},
+				fmt.Errorf("biznetgio: reserve additional hours for gpu instance %d: %w", accountID, err)
+		}
+	}
+
+	final, err := client.WaitForStatus(ctx, 5*time.Second,
+		func(ctx context.Context) (map[string]any, error) { return c.GPU().AccountGet(ctx, accountID) },
+		gpuStatus, []string{"active"}, []string{"terminated", "failed", "error", "deleted", "cancelled"})
+	if err != nil {
+		if errors.Is(err, context.DeadlineExceeded) {
+			return infer.UpdateResponse[GpuInstanceState]{
+				Output: gpuStateFromMap(ctx, a, nil),
+			}, infer.ResourceInitFailedError{Reasons: []string{err.Error()}}
+		}
+		return infer.UpdateResponse[GpuInstanceState]{}, err
+	}
+	resp.Output = gpuStateFromMap(ctx, a, final)
+	return resp, nil
+}
+
