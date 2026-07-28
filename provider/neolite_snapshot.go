@@ -72,3 +72,40 @@ func (NeoliteSnapshot) Create(
 	}
 	if billing.AccountID == "" {
 		return infer.CreateResponse[NeoliteSnapshotState]{},
+			fmt.Errorf("create neolite snapshot response tidak ada account_id: order_id=%s", billing.OrderID)
+	}
+	id := billing.AccountID
+	partial := NeoliteSnapshotState{NeoliteSnapshotArgs: in, OrderID: billing.OrderID}
+
+	acc, err := client.WaitForStatus(ctx, 5*time.Second,
+		func(ctx context.Context) (*client.SnapshotAccountResource, error) {
+			n, err := parseNeoID(id)
+			if err != nil {
+				return nil, err
+			}
+			return c.Neolite().AccountSnapshotGet(ctx, n)
+		},
+		neoliteSnapshotStatus, []string{"active"}, []string{"suspended", "terminated"})
+	if err != nil {
+		if ctx.Err() == context.DeadlineExceeded {
+			return infer.CreateResponse[NeoliteSnapshotState]{ID: id, Output: partial},
+				infer.ResourceInitFailedError{Reasons: []string{fmt.Sprintf("neolite snapshot %s belum active: %s", id, err)}}
+		}
+		return infer.CreateResponse[NeoliteSnapshotState]{}, err
+	}
+
+	state := partial
+	state.Status = acc.Status
+	return infer.CreateResponse[NeoliteSnapshotState]{ID: id, Output: state}, nil
+}
+
+func (NeoliteSnapshot) Read(
+	ctx context.Context, req infer.ReadRequest[NeoliteSnapshotArgs, NeoliteSnapshotState],
+) (infer.ReadResponse[NeoliteSnapshotArgs, NeoliteSnapshotState], error) {
+	c := GetClient(ctx)
+	list, err := c.Neolite().AccountSnapshotList(ctx, "")
+	if err != nil {
+		return infer.ReadResponse[NeoliteSnapshotArgs, NeoliteSnapshotState]{}, err
+	}
+	for _, sn := range list {
+		if sn.AccountID == req.ID {
