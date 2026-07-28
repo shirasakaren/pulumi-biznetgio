@@ -133,3 +133,4 @@ export interface NeoliteProSnapshotArgs {
      */
     promocode?: pulumi.Input<string | undefined>;
 }
+// wip 831
