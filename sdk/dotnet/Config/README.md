@@ -1,3 +1,1 @@
-An example built with pulumi-go-provider.
-<!-- wip 653 -->
-<!-- wip 793 -->
+Pulumi provider for BiznetGIO cloud — NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.
