@@ -98,3 +98,4 @@ namespace Biznetgio.Biznetgio
         public static new NeoliteKeypairArgs Empty => new NeoliteKeypairArgs();
     }
 }
+// wip 881
