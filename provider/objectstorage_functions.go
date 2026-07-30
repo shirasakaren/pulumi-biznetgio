@@ -78,3 +78,43 @@ type ObjectStorageBucketsBucket struct {
 	Raw  string `pulumi:"raw" provider:"secret"`
 }
 
+func (a *ObjectStorageBucketsArgs) Annotate(ann infer.Annotator) {
+	ann.Describe(&a.AccountID, "Object storage instance account id.")
+}
+
+func (r *ObjectStorageBucketsResult) Annotate(ann infer.Annotator) {
+	ann.Describe(&r.Buckets, "List of buckets inside the instance.")
+}
+
+func (ObjectStorageBuckets) Invoke(
+	ctx context.Context, req infer.FunctionRequest[ObjectStorageBucketsArgs],
+) (infer.FunctionResponse[ObjectStorageBucketsResult], error) {
+	c := GetClient(ctx)
+	items, err := c.ObjectStorage().BucketsList(ctx, osParseID(req.Input.AccountID))
+	if err != nil {
+		return infer.FunctionResponse[ObjectStorageBucketsResult]{}, err
+	}
+	out := make([]ObjectStorageBucketsBucket, 0, len(items))
+	for _, it := range items {
+		out = append(out, ObjectStorageBucketsBucket{
+			Name: osStringDefault(it, "name", "bucket_name"),
+			ACL:  osStringDefault(it, "acl"),
+			Raw:  string(osJSON(it)),
+		})
+	}
+	return infer.FunctionResponse[ObjectStorageBucketsResult]{Output: ObjectStorageBucketsResult{Buckets: out}}, nil
+}
+
+type ObjectStorageCredentials struct{}
+
+type ObjectStorageCredentialsArgs struct {
+	AccountID string `pulumi:"accountId"`
+}
+
+type ObjectStorageCredentialsResult struct {
+	Credentials []ObjectStorageCredentialsCredential `pulumi:"credentials"`
+}
+
+type ObjectStorageCredentialsCredential struct {
+	AccessKey string `pulumi:"accessKey" provider:"secret"`
+	Active    bool   `pulumi:"active"`
