@@ -75,3 +75,4 @@ def object_storage_instances_output(status: pulumi.Input[Optional[Optional[_buil
     return __ret__.apply(lambda __response__: ObjectStorageInstancesResult(
         instances=pulumi.get(__response__, 'instances')))
 // wip 558
+// wip 856
