@@ -33,4 +33,38 @@ func (a *BaremetalKeypairArgs) Annotate(ann infer.Annotator) {
 func (s *BaremetalKeypairState) Annotate(ann infer.Annotator) {
 	ann.Describe(&s.KeypairID, "Keypair id in BiznetGIO.")
 	ann.Describe(&s.PrivateKey, "Private key from the creation response, when the API returns one. "+
-// wip 808
+		"Only appears once; preserved across refreshes.")
+	ann.Describe(&s.Raw, "Raw JSON of the keypair item from the list API.")
+}
+
+func (BaremetalKeypair) WireDependencies(
+	f infer.FieldSelector, _ *BaremetalKeypairArgs, state *BaremetalKeypairState,
+) {
+	f.OutputField(&state.PrivateKey).AlwaysSecret()
+}
+
+func (BaremetalKeypair) Create(
+	ctx context.Context, req infer.CreateRequest[BaremetalKeypairArgs],
+) (infer.CreateResponse[BaremetalKeypairState], error) {
+	resp := infer.CreateResponse[BaremetalKeypairState]{Output: keypairStateFromMap(ctx, req.Inputs, nil)}
+	if req.DryRun {
+		return resp, nil
+	}
+	c := GetClient(ctx)
+	a := req.Inputs
+
+	var raw map[string]any
+	var err error
+	if bmtStr(a.PublicKey) == "" {
+		raw, err = c.Baremetal().KeypairCreate(ctx, a.Name)
+	} else {
+		raw, err = c.Baremetal().KeypairImport(ctx, client.KeypairImportPayload{Name: a.Name, PublicKey: *a.PublicKey})
+	}
+	if err != nil {
+		return infer.CreateResponse[BaremetalKeypairState]{}, err
+	}
+	keypairID, ok := bmtInt64(raw, "keypair_id", "id")
+	if !ok {
+		return infer.CreateResponse[BaremetalKeypairState]{},
+			fmt.Errorf("biznetgio: keypair create response missing id: %s", bmtJSON(raw))
+	}
