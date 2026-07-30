@@ -25,3 +25,4 @@ const vm = new biznetgio.NeoliteVm("demo-vm", {
 });
 
 export const vmStatus = vm.status;
+// wip 863
