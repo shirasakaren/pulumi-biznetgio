@@ -95,3 +95,4 @@ export interface BaremetalAdditionalIpAssignmentArgs {
      */
     metalAccountId: pulumi.Input<number>;
 }
+// wip 890
