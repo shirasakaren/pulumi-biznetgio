@@ -213,3 +213,88 @@ func osStateFromMap(
 	st.Status = osStringDefault(m, "status", "state")
 	st.Raw = string(osJSON(m))
 	return st
+}
+
+func osStatus(m map[string]any) string {
+	return strings.ToLower(osStringDefault(m, "status", "state"))
+}
+
+func osStr(s *string) string {
+	if s == nil {
+		return ""
+	}
+	return *s
+}
+
+func osString(m map[string]any, keys ...string) (string, bool) {
+	for _, k := range keys {
+		v, ok := m[k]
+		if !ok {
+			continue
+		}
+		switch s := v.(type) {
+		case string:
+			return s, true
+		case json.Number:
+			return s.String(), true
+		case float64:
+			return strconv.FormatFloat(s, 'f', -1, 64), true
+		case bool:
+			return strconv.FormatBool(s), true
+		}
+	}
+	return "", false
+}
+
+func osStringDefault(m map[string]any, keys ...string) string {
+	s, _ := osString(m, keys...)
+	return s
+}
+
+func osInt(m map[string]any, keys ...string) (int64, bool) {
+	for _, k := range keys {
+		v, ok := m[k]
+		if !ok {
+			continue
+		}
+		switch n := v.(type) {
+		case float64:
+			return int64(n), true
+		case json.Number:
+			if i, err := n.Int64(); err == nil {
+				return i, true
+			}
+		case string:
+			if i, err := strconv.ParseInt(n, 10, 64); err == nil {
+				return i, true
+			}
+		}
+	}
+	return 0, false
+}
+
+func osBool(m map[string]any, keys ...string) (bool, bool) {
+	for _, k := range keys {
+		v, ok := m[k]
+		if !ok {
+			continue
+		}
+		switch b := v.(type) {
+		case bool:
+			return b, true
+		case string:
+			if bb, err := strconv.ParseBool(b); err == nil {
+				return bb, true
+			}
+		case json.Number:
+			if bb, err := b.Int64(); err == nil {
+				return bb != 0, true
+			}
+		}
+	}
+	return false, false
+}
+
+func osJSON(m map[string]any) []byte {
+	return RedactJSON(m)
+}
