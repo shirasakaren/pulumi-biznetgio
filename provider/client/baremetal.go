@@ -133,3 +133,4 @@ func (s *BaremetalService) OpenVPN(ctx context.Context) (map[string]any, error) 
 func (s *BaremetalService) ProductList(ctx context.Context) ([]map[string]any, error) {
 	raw, err := s.client.doJSON(ctx, http.MethodGet, "/baremetals/products", nil)
 	if err != nil {
+// wip 2
