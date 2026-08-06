@@ -41,3 +41,4 @@ func (s *ObjectStorageService) AccountGet(ctx context.Context, accountID int64) 
 		return nil, err
 	}
 	return decodeJSON[map[string]any](raw)
+// wip 3
