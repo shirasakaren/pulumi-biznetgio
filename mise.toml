@@ -1,4 +1,0 @@
-# Root-level override: supplies the template vars used by .config/mise.toml
-[env]
-GO_VERSION_MISE = "1.25.11"
-PULUMI_VERSION_MISE = "3.256.0"
