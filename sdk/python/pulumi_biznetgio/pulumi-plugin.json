@@ -1,5 +1,0 @@
-{
-  "resource": true,
-  "name": "biznetgio",
-  "server": "github://api.github.com/shirasakaren/pulumi-biznetgio"
-}
