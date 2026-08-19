@@ -448,15 +448,27 @@ jobs:
       uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
       with:
         gradle-version: "8.5"
-    - name: Publish Java SDK
-      run: gradle -p ./sdk/java publishToCentralPortal
+    - name: Assemble Java SDK artifacts
+      run: gradle -p ./sdk/java --no-daemon assemblePortal
       env:
         PACKAGE_VERSION: ${{ env.PROVIDER_VERSION }}
-        JAVA_SIGNING_KEY_ID: ${{ secrets.JAVA_SIGNING_KEY_ID }}
+    - name: Publish Java SDK to Central Portal
+      run: |
+        cd sdk/java/build/portal
+        printf '%s' "$JAVA_SIGNING_KEY" | gpg --batch --import
+        for f in *.jar pom-default.xml; do
+          gpg --batch --yes --pinentry-mode loopback --passphrase "$JAVA_SIGNING_PASSWORD" --armor --detach-sign "$f"
+        done
+        zip -q -r bundle.zip .
+        curl -sSf -u "$OSSRH_USERNAME:$OSSRH_PASSWORD" \
+          -F "bundle=@bundle.zip" \
+          -F "publishingType=AUTOMATIC" \
+          https://central.sonatype.com/api/v1/publisher/upload
+      env:
         JAVA_SIGNING_KEY: ${{ secrets.JAVA_SIGNING_KEY }}
         JAVA_SIGNING_PASSWORD: ${{ secrets.JAVA_SIGNING_PASSWORD }}
-        PUBLISH_REPO_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-        PUBLISH_REPO_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
   publish_go_sdk:
     runs-on: ubuntu-latest
     name: publish-go-sdk
