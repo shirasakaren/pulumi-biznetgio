@@ -7,12 +7,12 @@ consume it. Maintained by Shirasaka Ren under the `shirasakaren` namespace.
 
 | Target | Status |
 | --- | --- |
-| npm (`@shirasakaren/biznetgio`) | ✅ **LIVE** — latest `0.1.1` (`npm install @shirasakaren/biznetgio`) |
-| GitHub Releases (plugin binaries) | ⬜ not yet — tag `v0.1.0` to trigger |
+| npm (`@shirasakaren/biznetgio`) | ✅ **LIVE** — latest `0.1.2` (`npm install @shirasakaren/biznetgio`) |
+| GitHub Releases (plugin binaries) | ✅ **LIVE** — `v0.1.2` (plugin auto-downloads) |
 | PyPI (`pulumi-biznetgio`) | ⬜ not yet |
 | NuGet (`Shirasakaren.Biznetgio`) | ⬜ not yet |
-| Maven Central (`com.shirasakaren.biznetgio`) | ⬜ not yet |
-| Go module | ⬜ resolved from GitHub automatically; tags needed per release |
+| Maven Central (`ren.shirasaka:biznetgio`) | ⬜ publishing via the Central Portal plugin |
+| Go module | ✅ resolved from GitHub automatically |
 | Pulumi Registry listing | ⬜ optional discovery layer — submit after everything else |
 
 ## Architecture
