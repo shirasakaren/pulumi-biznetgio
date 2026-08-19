@@ -10,5 +10,7 @@ version = sys.argv[2] if len(sys.argv) > 2 else "0.0.0"
 p = root / "setup.py"
 t = p.read_text()
 t = t.replace('VERSION = "0.0.0"', f'VERSION = "{version}"', 1)
+t = t.replace("'Repository': 'github.com/shirasakaren/pulumi-biznetgio'",
+              "'Repository': 'https://github.com/shirasakaren/pulumi-biznetgio'")
 p.write_text(t)
 print(f"patched python setup.py -> {version}")

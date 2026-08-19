@@ -109,8 +109,10 @@ publishing {
 // collect every artifact the Central Portal bundle needs into build/portal
 tasks.register('assemblePortal', Copy) {
     dependsOn jar, sourcesJar, javadocJar, 'generatePomFileForMainPublication'
-    from(jar.archiveFile, sourcesJar.archiveFile, javadocJar.archiveFile,
-         layout.buildDirectory.file('publications/mainPublication/pom-default.xml'))
+    from(jar, sourcesJar, javadocJar)
+    from(tasks.named('generatePomFileForMainPublication')) {
+        rename { 'pom-default.xml' }
+    }
     into layout.buildDirectory.dir('portal')
 }
 """)
