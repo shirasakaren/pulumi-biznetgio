@@ -70,4 +70,39 @@ func (s *BaremetalElasticStorageService) Delete(ctx context.Context, accountID i
 	return decodeJSON[map[string]any](raw)
 }
 
-// wip 768
+func (s *BaremetalElasticStorageService) ProductList(ctx context.Context) ([]map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, "/baremetal-neo-elastic-storages/products", nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]map[string]any](raw)
+}
+
+func (s *BaremetalElasticStorageService) ProductGet(ctx context.Context, productID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet,
+		fmt.Sprintf("/baremetal-neo-elastic-storages/products/%d", productID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+type NeoElasticStorageCreatePayload struct {
+	ProductID        int64  `json:"product_id"`
+	Cycle            string `json:"cycle"`
+	StorageName      string `json:"storage_name"`
+	MetalAccountID   int64  `json:"metal_account_id"`
+	Size             int64  `json:"size,omitempty"`
+	Promocode        string `json:"promocode,omitempty"`
+	PayInvoiceWithCC string `json:"pay_invoice_with_cc,omitempty"`
+}
+
+type UpgradeNeoElasticStorage struct {
+	Size             int64  `json:"size"`
+	PayInvoiceWithCC string `json:"pay_invoice_with_cc,omitempty"`
+}
+
+type ChangePackageNeoElasticStorage struct {
+	NewProductID     int64  `json:"new_product_id"`
+	PayInvoiceWithCC string `json:"pay_invoice_with_cc,omitempty"`
+}

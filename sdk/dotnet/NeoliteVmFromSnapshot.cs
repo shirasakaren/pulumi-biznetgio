@@ -213,4 +213,3 @@ namespace Biznetgio.Biznetgio
         public static new NeoliteVmFromSnapshotArgs Empty => new NeoliteVmFromSnapshotArgs();
     }
 }
-// wip 767

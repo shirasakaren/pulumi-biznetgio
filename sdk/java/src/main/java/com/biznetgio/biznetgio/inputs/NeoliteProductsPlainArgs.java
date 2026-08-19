@@ -26,4 +26,3 @@ public final class NeoliteProductsPlainArgs extends com.pulumi.resources.InvokeA
     }
 
 }
-// wip 812

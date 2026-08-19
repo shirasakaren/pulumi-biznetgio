@@ -71,4 +71,3 @@ func (o ObjectStorageInstancesResultOutput) Instances() ObjectStorageInstancesIn
 func init() {
 	pulumi.RegisterOutputType(ObjectStorageInstancesResultOutput{})
 }
-// wip 290

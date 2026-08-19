@@ -317,3 +317,321 @@ class NeoliteLastInvoice(dict):
 
     @_builtins.property
     @pulumi.getter(name="paidId")
+    def paid_id(self) -> _builtins.int:
+        return pulumi.get(self, "paid_id")
+
+    @_builtins.property
+    @pulumi.getter
+    def paybefore(self) -> _builtins.str:
+        return pulumi.get(self, "paybefore")
+
+    @_builtins.property
+    @pulumi.getter
+    def status(self) -> _builtins.str:
+        return pulumi.get(self, "status")
+
+
+@pulumi.output_type
+class NeoliteOsItem(dict):
+    def __init__(__self__, *,
+                 maxcpu: _builtins.int,
+                 maxmem: _builtins.int,
+                 name: _builtins.str,
+                 node: _builtins.str,
+                 vmid: _builtins.int):
+        pulumi.set(__self__, "maxcpu", maxcpu)
+        pulumi.set(__self__, "maxmem", maxmem)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "node", node)
+        pulumi.set(__self__, "vmid", vmid)
+
+    @_builtins.property
+    @pulumi.getter
+    def maxcpu(self) -> _builtins.int:
+        return pulumi.get(self, "maxcpu")
+
+    @_builtins.property
+    @pulumi.getter
+    def maxmem(self) -> _builtins.int:
+        return pulumi.get(self, "maxmem")
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def node(self) -> _builtins.str:
+        return pulumi.get(self, "node")
+
+    @_builtins.property
+    @pulumi.getter
+    def vmid(self) -> _builtins.int:
+        return pulumi.get(self, "vmid")
+
+
+@pulumi.output_type
+class NeolitePlanBilling(dict):
+    def __init__(__self__, *,
+                 components: Sequence['outputs.NeolitePlanComponent'],
+                 cycle: _builtins.str,
+                 label: _builtins.str,
+                 price: _builtins.int):
+        pulumi.set(__self__, "components", components)
+        pulumi.set(__self__, "cycle", cycle)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "price", price)
+
+    @_builtins.property
+    @pulumi.getter
+    def components(self) -> Sequence['outputs.NeolitePlanComponent']:
+        return pulumi.get(self, "components")
+
+    @_builtins.property
+    @pulumi.getter
+    def cycle(self) -> _builtins.str:
+        return pulumi.get(self, "cycle")
+
+    @_builtins.property
+    @pulumi.getter
+    def label(self) -> _builtins.str:
+        return pulumi.get(self, "label")
+
+    @_builtins.property
+    @pulumi.getter
+    def price(self) -> _builtins.int:
+        return pulumi.get(self, "price")
+
+
+@pulumi.output_type
+class NeolitePlanComponent(dict):
+    def __init__(__self__, *,
+                 field: _builtins.str,
+                 label: _builtins.str,
+                 prices: Sequence['outputs.NeolitePlanPrice']):
+        pulumi.set(__self__, "field", field)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "prices", prices)
+
+    @_builtins.property
+    @pulumi.getter
+    def field(self) -> _builtins.str:
+        return pulumi.get(self, "field")
+
+    @_builtins.property
+    @pulumi.getter
+    def label(self) -> _builtins.str:
+        return pulumi.get(self, "label")
+
+    @_builtins.property
+    @pulumi.getter
+    def prices(self) -> Sequence['outputs.NeolitePlanPrice']:
+        return pulumi.get(self, "prices")
+
+
+@pulumi.output_type
+class NeolitePlanItem(dict):
+    def __init__(__self__, *,
+                 billing: Sequence['outputs.NeolitePlanBilling'],
+                 category_id: _builtins.int,
+                 category_name: _builtins.str,
+                 description: _builtins.str,
+                 name: _builtins.str,
+                 options: 'outputs.NeolitePlanOptions',
+                 product_id: _builtins.int):
+        pulumi.set(__self__, "billing", billing)
+        pulumi.set(__self__, "category_id", category_id)
+        pulumi.set(__self__, "category_name", category_name)
+        pulumi.set(__self__, "description", description)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "options", options)
+        pulumi.set(__self__, "product_id", product_id)
+
+    @_builtins.property
+    @pulumi.getter
+    def billing(self) -> Sequence['outputs.NeolitePlanBilling']:
+        return pulumi.get(self, "billing")
+
+    @_builtins.property
+    @pulumi.getter(name="categoryId")
+    def category_id(self) -> _builtins.int:
+        return pulumi.get(self, "category_id")
+
+    @_builtins.property
+    @pulumi.getter(name="categoryName")
+    def category_name(self) -> _builtins.str:
+        return pulumi.get(self, "category_name")
+
+    @_builtins.property
+    @pulumi.getter
+    def description(self) -> _builtins.str:
+        return pulumi.get(self, "description")
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def options(self) -> 'outputs.NeolitePlanOptions':
+        return pulumi.get(self, "options")
+
+    @_builtins.property
+    @pulumi.getter(name="productId")
+    def product_id(self) -> _builtins.int:
+        return pulumi.get(self, "product_id")
+
+
+@pulumi.output_type
+class NeolitePlanOptions(dict):
+    def __init__(__self__, *,
+                 allow_downgrade: _builtins.int,
+                 cores: _builtins.int,
+                 memory: _builtins.int,
+                 type: _builtins.str):
+        pulumi.set(__self__, "allow_downgrade", allow_downgrade)
+        pulumi.set(__self__, "cores", cores)
+        pulumi.set(__self__, "memory", memory)
+        pulumi.set(__self__, "type", type)
+
+    @_builtins.property
+    @pulumi.getter(name="allowDowngrade")
+    def allow_downgrade(self) -> _builtins.int:
+        return pulumi.get(self, "allow_downgrade")
+
+    @_builtins.property
+    @pulumi.getter
+    def cores(self) -> _builtins.int:
+        return pulumi.get(self, "cores")
+
+    @_builtins.property
+    @pulumi.getter
+    def memory(self) -> _builtins.int:
+        return pulumi.get(self, "memory")
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> _builtins.str:
+        return pulumi.get(self, "type")
+
+
+@pulumi.output_type
+class NeolitePlanPrice(dict):
+    def __init__(__self__, *,
+                 price: _builtins.int,
+                 qty_max: _builtins.int,
+                 qty_min: _builtins.int):
+        pulumi.set(__self__, "price", price)
+        pulumi.set(__self__, "qty_max", qty_max)
+        pulumi.set(__self__, "qty_min", qty_min)
+
+    @_builtins.property
+    @pulumi.getter
+    def price(self) -> _builtins.int:
+        return pulumi.get(self, "price")
+
+    @_builtins.property
+    @pulumi.getter(name="qtyMax")
+    def qty_max(self) -> _builtins.int:
+        return pulumi.get(self, "qty_max")
+
+    @_builtins.property
+    @pulumi.getter(name="qtyMin")
+    def qty_min(self) -> _builtins.int:
+        return pulumi.get(self, "qty_min")
+
+
+@pulumi.output_type
+class ObjectStorageBucketsBucket(dict):
+    def __init__(__self__, *,
+                 acl: _builtins.str,
+                 name: _builtins.str,
+                 raw: _builtins.str):
+        pulumi.set(__self__, "acl", acl)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "raw", raw)
+
+    @_builtins.property
+    @pulumi.getter
+    def acl(self) -> _builtins.str:
+        return pulumi.get(self, "acl")
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def raw(self) -> _builtins.str:
+        return pulumi.get(self, "raw")
+
+
+@pulumi.output_type
+class ObjectStorageCredentialsCredential(dict):
+    def __init__(__self__, *,
+                 access_key: _builtins.str,
+                 active: _builtins.bool):
+        pulumi.set(__self__, "access_key", access_key)
+        pulumi.set(__self__, "active", active)
+
+    @_builtins.property
+    @pulumi.getter(name="accessKey")
+    def access_key(self) -> _builtins.str:
+        return pulumi.get(self, "access_key")
+
+    @_builtins.property
+    @pulumi.getter
+    def active(self) -> _builtins.bool:
+        return pulumi.get(self, "active")
+
+
+@pulumi.output_type
+class ObjectStorageInstancesInstance(dict):
+    def __init__(__self__, *,
+                 id: _builtins.str,
+                 label: _builtins.str,
+                 product_id: _builtins.int,
+                 quota: _builtins.int,
+                 raw: _builtins.str,
+                 status: _builtins.str):
+        pulumi.set(__self__, "id", id)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "product_id", product_id)
+        pulumi.set(__self__, "quota", quota)
+        pulumi.set(__self__, "raw", raw)
+        pulumi.set(__self__, "status", status)
+
+    @_builtins.property
+    @pulumi.getter
+    def id(self) -> _builtins.str:
+        return pulumi.get(self, "id")
+
+    @_builtins.property
+    @pulumi.getter
+    def label(self) -> _builtins.str:
+        return pulumi.get(self, "label")
+
+    @_builtins.property
+    @pulumi.getter(name="productId")
+    def product_id(self) -> _builtins.int:
+        return pulumi.get(self, "product_id")
+
+    @_builtins.property
+    @pulumi.getter
+    def quota(self) -> _builtins.int:
+        return pulumi.get(self, "quota")
+
+    @_builtins.property
+    @pulumi.getter
+    def raw(self) -> _builtins.str:
+        return pulumi.get(self, "raw")
+
+    @_builtins.property
+    @pulumi.getter
+    def status(self) -> _builtins.str:
+        return pulumi.get(self, "status")
+
+

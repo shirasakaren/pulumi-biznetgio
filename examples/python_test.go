@@ -8,4 +8,3 @@ import "testing"
 func TestPython(t *testing.T) {
 	t.Skip("requires pulumi CLI and generated SDKs; re-enable once resources land")
 }
-// wip 1

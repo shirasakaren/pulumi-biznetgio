@@ -98,4 +98,3 @@ export interface BaremetalKeypairArgs {
      */
     publicKey?: pulumi.Input<string | undefined>;
 }
-// wip 535

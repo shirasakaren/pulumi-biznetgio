@@ -80,3 +80,42 @@ func (BaremetalAdditionalIpAssignment) Read(
 	return resp, nil
 }
 
+func (BaremetalAdditionalIpAssignment) Delete(
+	ctx context.Context, req infer.DeleteRequest[BaremetalAdditionalIpAssignmentState],
+) (infer.DeleteResponse, error) {
+	c := GetClient(ctx)
+	ipID, metalID, err := parseAssignmentID(req.ID)
+	if err != nil {
+		return infer.DeleteResponse{}, err
+	}
+	if _, err := c.BaremetalAdditionalIP().Unassign(ctx, ipID, metalID); err != nil && !client.IsNotFound(err) {
+		return infer.DeleteResponse{}, err
+	}
+	return infer.DeleteResponse{}, nil
+}
+
+func assignmentStateFromMap(
+	_ context.Context, args BaremetalAdditionalIpAssignmentArgs, m map[string]any,
+) BaremetalAdditionalIpAssignmentState {
+	st := BaremetalAdditionalIpAssignmentState{BaremetalAdditionalIpAssignmentArgs: args}
+	if m == nil {
+		return st
+	}
+	st.Status = bmtStringDefault(m, "status", "state")
+	st.Raw = string(bmtJSON(m))
+	return st
+}
+
+// parseAssignmentID splits the composite id `<metal_account_id>:<additional_ip_id>`.
+func parseAssignmentID(id string) (ipID, metalID int64, err error) {
+	parts := strings.Split(id, ":")
+	if len(parts) != 2 {
+		return 0, 0, fmt.Errorf("biznetgio: invalid assignment id %q, want `<metal_account_id>:<additional_ip_id>`", id)
+	}
+	metal, err1 := strconv.ParseInt(parts[0], 10, 64)
+	ip, err2 := strconv.ParseInt(parts[1], 10, 64)
+	if err1 != nil || err2 != nil {
+		return 0, 0, fmt.Errorf("biznetgio: invalid assignment id %q", id)
+	}
+	return ip, metal, nil
+}

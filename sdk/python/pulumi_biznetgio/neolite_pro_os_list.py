@@ -71,4 +71,3 @@ def neolite_pro_os_list_output(product_id: pulumi.Input[Optional[_builtins.int]]
     __ret__ = pulumi.runtime.invoke_output('biznetgio:index:neoliteProOsList', __args__, opts=opts, typ=NeoliteProOsListResult)
     return __ret__.apply(lambda __response__: NeoliteProOsListResult(
         oss=pulumi.get(__response__, 'oss')))
-// wip 758

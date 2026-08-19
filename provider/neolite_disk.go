@@ -166,3 +166,45 @@ func (NeoliteDisk) Read(
 	c := GetClient(ctx)
 	id, err := parseNeoID(req.ID)
 	if err != nil {
+		return infer.ReadResponse[NeoliteDiskArgs, NeoliteDiskState]{}, err
+	}
+	out, err := c.Neolite().DiskGet(ctx, id)
+	if err != nil {
+		if client.IsNotFound(err) {
+			return infer.ReadResponse[NeoliteDiskArgs, NeoliteDiskState]{}, fmt.Errorf("neolite disk %s not found", req.ID)
+		}
+		return infer.ReadResponse[NeoliteDiskArgs, NeoliteDiskState]{}, err
+	}
+
+	state := req.State
+	state.Status = neoAliasStr(out, "status", "state")
+	if v := neoAliasStr(out, "service_name", "name", "label"); v != "" {
+		state.ServiceName = &v
+	}
+	if v := neoAliasInt(out, "size", "disk_size"); v > 0 {
+		state.Size = &v
+	}
+	state.Raw = neoRawJSON(out)
+	return infer.ReadResponse[NeoliteDiskArgs, NeoliteDiskState]{State: state}, nil
+}
+
+func (NeoliteDisk) Delete(
+	ctx context.Context, req infer.DeleteRequest[NeoliteDiskState],
+) (infer.DeleteResponse, error) {
+	c := GetClient(ctx)
+	id, err := parseNeoID(req.ID)
+	if err != nil {
+		return infer.DeleteResponse{}, err
+	}
+	if _, err := c.Neolite().DiskDelete(ctx, id); err != nil {
+		if client.IsNotFound(err) {
+			return infer.DeleteResponse{}, nil
+		}
+		return infer.DeleteResponse{}, err
+	}
+	return infer.DeleteResponse{}, nil
+}
+
+func neoliteDiskStatus(v map[string]any) string {
+	return strings.ToLower(neoAliasStr(v, "status", "state"))
+}

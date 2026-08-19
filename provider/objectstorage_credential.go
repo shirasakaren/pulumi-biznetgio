@@ -78,3 +78,158 @@ func (ObjectStorageCredential) Create(
 
 func (ObjectStorageCredential) Update(
 	ctx context.Context, req infer.UpdateRequest[ObjectStorageCredentialArgs, ObjectStorageCredentialState],
+) (infer.UpdateResponse[ObjectStorageCredentialState], error) {
+	resp := infer.UpdateResponse[ObjectStorageCredentialState]{Output: req.State}
+	if req.DryRun {
+		return resp, nil
+	}
+	a := req.Inputs
+	if a.Active != nil && req.State.Active != nil && *a.Active != *req.State.Active {
+		c := GetClient(ctx)
+		accountID, keyForm, ok := osIDParts(req.ID)
+		if !ok {
+			return infer.UpdateResponse[ObjectStorageCredentialState]{},
+				fmt.Errorf("biznetgio: invalid credential id %q", req.ID)
+		}
+		accessKey, ok, err := osResolveAccessKey(ctx, c, accountID, keyForm, req.State.AccessKey)
+		if err != nil {
+			return infer.UpdateResponse[ObjectStorageCredentialState]{}, err
+		}
+		if !ok {
+			return infer.UpdateResponse[ObjectStorageCredentialState]{},
+				fmt.Errorf("biznetgio: credential access key tidak ada di state, tidak bisa update")
+		}
+		if _, err := c.ObjectStorage().CredentialUpdateStatus(ctx, accountID, accessKey, *a.Active); err != nil {
+			return infer.UpdateResponse[ObjectStorageCredentialState]{}, err
+		}
+	}
+	st := req.State
+	st.ObjectStorageCredentialArgs = a
+	resp.Output = st
+	return resp, nil
+}
+
+func (ObjectStorageCredential) Read(
+	ctx context.Context, req infer.ReadRequest[ObjectStorageCredentialArgs, ObjectStorageCredentialState],
+) (infer.ReadResponse[ObjectStorageCredentialArgs, ObjectStorageCredentialState], error) {
+	resp := infer.ReadResponse[ObjectStorageCredentialArgs, ObjectStorageCredentialState]{
+		ID:     req.ID,
+		Inputs: req.Inputs,
+		State:  ObjectStorageCredentialState{ObjectStorageCredentialArgs: req.Inputs},
+	}
+	c := GetClient(ctx)
+	accountID, keyForm, ok := osIDParts(req.ID)
+	if !ok {
+		return resp, fmt.Errorf("biznetgio: invalid credential id %q", req.ID)
+	}
+	m, ok, err := osFindCredential(ctx, c, accountID, keyForm)
+	if err != nil {
+		return resp, err
+	}
+	if !ok {
+		return resp, fmt.Errorf("biznetgio: object storage credential %s not found", req.ID)
+	}
+	accessKey, _ := osString(m, "accessKey", "access_key", "accesskey")
+	resp.State.AccessKey = accessKey
+	if v, ok := osString(m, "secretKey", "secret_key", "secretkey"); ok {
+		resp.State.SecretKey = v
+	}
+	if v, ok := osBool(m, "active"); ok {
+		resp.State.Active = &v
+	}
+	resp.State.Raw = string(osJSON(m))
+	return resp, nil
+}
+
+func (ObjectStorageCredential) Delete(
+	ctx context.Context, req infer.DeleteRequest[ObjectStorageCredentialState],
+) (infer.DeleteResponse, error) {
+	c := GetClient(ctx)
+	accountID, keyForm, ok := osIDParts(req.ID)
+	if !ok {
+		return infer.DeleteResponse{}, fmt.Errorf("biznetgio: invalid credential id %q", req.ID)
+	}
+	accessKey, ok, err := osResolveAccessKey(ctx, c, accountID, keyForm, req.State.AccessKey)
+	if err != nil {
+		return infer.DeleteResponse{}, err
+	}
+	if !ok {
+		return infer.DeleteResponse{}, fmt.Errorf("biznetgio: credential access key tidak ada di state")
+	}
+	if _, err := c.ObjectStorage().CredentialDelete(ctx, accountID, accessKey); err != nil && !client.IsNotFound(err) {
+		return infer.DeleteResponse{}, err
+	}
+	return infer.DeleteResponse{}, nil
+}
+
+func osFindCredential(
+	ctx context.Context, c *client.Client, accountID int64, keyForm string,
+) (map[string]any, bool, error) {
+	items, err := c.ObjectStorage().CredentialsList(ctx, accountID)
+	if err != nil {
+		return nil, false, err
+	}
+	hashMode := osIsHex16(keyForm)
+	for _, it := range items {
+		ak, ok := osString(it, "accessKey", "access_key", "accesskey")
+		if !ok {
+			continue
+		}
+		if (hashMode && osHashKey(ak) == keyForm) || (!hashMode && ak == keyForm) {
+			return it, true, nil
+		}
+	}
+	return nil, false, nil
+}
+
+// osResolveAccessKey balikin access key plaintext dari keyForm (hash atau literal).
+// Hash mode butuh list credentials — fallback dipake kalo ga ketemu (state lama).
+func osResolveAccessKey(
+	ctx context.Context, c *client.Client, accountID int64, keyForm, fallback string,
+) (string, bool, error) {
+	if !osIsHex16(keyForm) {
+		return keyForm, keyForm != "", nil
+	}
+	items, err := c.ObjectStorage().CredentialsList(ctx, accountID)
+	if err != nil {
+		return "", false, err
+	}
+	for _, it := range items {
+		if ak, ok := osString(it, "accessKey", "access_key", "accesskey"); ok && osHashKey(ak) == keyForm {
+			return ak, true, nil
+		}
+	}
+	if fallback != "" {
+		return fallback, true, nil
+	}
+	return "", false, nil
+}
+
+func osHashKey(accessKey string) string {
+	sum := sha256.Sum256([]byte(accessKey))
+	return hex.EncodeToString(sum[:8])
+}
+
+func osIsHex16(s string) bool {
+	if len(s) != 16 {
+		return false
+	}
+	for _, r := range s {
+		if (r < '0' || r > '9') && (r < 'a' || r > 'f') {
+			return false
+		}
+	}
+	return true
+}
+
+func osIDParts(id string) (int64, string, bool) {
+	acc, k, ok := strings.Cut(id, ":")
+	if !ok || k == "" {
+		return 0, "", false
+	}
+	n, err := strconv.ParseInt(acc, 10, 64)
+	if err != nil || n == 0 {
+		return 0, "", false
+	}
+	return n, k, true
+}

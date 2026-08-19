@@ -163,4 +163,3 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*ObjectStorageCredentialInput)(nil)).Elem(), &ObjectStorageCredential{})
 	pulumi.RegisterOutputType(ObjectStorageCredentialOutput{})
 }
-// wip 781

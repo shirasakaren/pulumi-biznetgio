@@ -146,4 +146,3 @@ export interface ObjectStorageArgs {
      */
     quota?: pulumi.Input<number | undefined>;
 }
-// wip 889

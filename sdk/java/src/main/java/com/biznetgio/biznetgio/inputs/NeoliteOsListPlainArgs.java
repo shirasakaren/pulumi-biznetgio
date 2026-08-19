@@ -72,4 +72,3 @@ public final class NeoliteOsListPlainArgs extends com.pulumi.resources.InvokeArg
     }
 
 }
-// wip 322

@@ -87,4 +87,3 @@ def baremetal_rebuild_os_list_output(account_id: pulumi.Input[Optional[_builtins
     return __ret__.apply(lambda __response__: BaremetalRebuildOsListResult(
         oss=pulumi.get(__response__, 'oss'),
         raw=pulumi.get(__response__, 'raw')))
-// wip 769

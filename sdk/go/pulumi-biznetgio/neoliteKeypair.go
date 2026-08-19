@@ -143,6 +143,3 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*NeoliteKeypairInput)(nil)).Elem(), &NeoliteKeypair{})
 	pulumi.RegisterOutputType(NeoliteKeypairOutput{})
 }
-// wip 621
-// wip 706
-// wip 748

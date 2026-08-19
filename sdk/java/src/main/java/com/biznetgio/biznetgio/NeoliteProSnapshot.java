@@ -185,5 +185,3 @@ public class NeoliteProSnapshot extends com.pulumi.resources.CustomResource {
         return new NeoliteProSnapshot(name, id, options);
     }
 }
-// wip 294
-// wip 541

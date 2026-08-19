@@ -178,3 +178,177 @@ func (GpuInstance) Update(
 	return resp, nil
 }
 
+func (GpuInstance) Read(
+	ctx context.Context, req infer.ReadRequest[GpuInstanceArgs, GpuInstanceState],
+) (infer.ReadResponse[GpuInstanceArgs, GpuInstanceState], error) {
+	resp := infer.ReadResponse[GpuInstanceArgs, GpuInstanceState]{
+		ID:     req.ID,
+		Inputs: req.Inputs,
+		State:  gpuStateFromMap(ctx, req.Inputs, nil),
+	}
+	c := GetClient(ctx)
+	accountID, err := strconv.ParseInt(req.ID, 10, 64)
+	if err != nil {
+		return resp, fmt.Errorf("biznetgio: invalid gpu instance id %q: %s", req.ID, err)
+	}
+	m, err := c.GPU().AccountGet(ctx, accountID)
+	if err != nil {
+		if client.IsNotFound(err) {
+			return resp, fmt.Errorf("biznetgio: gpu instance %s not found", req.ID)
+		}
+		return resp, err
+	}
+	resp.State = gpuStateFromMap(ctx, req.Inputs, m)
+	return resp, nil
+}
+
+func (GpuInstance) Delete(
+	ctx context.Context, req infer.DeleteRequest[GpuInstanceState],
+) (infer.DeleteResponse, error) {
+	c := GetClient(ctx)
+	accountID, err := strconv.ParseInt(req.ID, 10, 64)
+	if err != nil {
+		return infer.DeleteResponse{}, fmt.Errorf("biznetgio: invalid gpu instance id %q: %s", req.ID, err)
+	}
+	if _, err := c.GPU().Delete(ctx, accountID); err != nil && !client.IsNotFound(err) {
+		return infer.DeleteResponse{}, err
+	}
+	return infer.DeleteResponse{}, nil
+}
+
+func gpuCreate(ctx context.Context, c *client.Client, a GpuInstanceArgs) (map[string]any, error) {
+	pay := "yes"
+	if a.PayWithCreditCard != nil && !*a.PayWithCreditCard {
+		pay = "no"
+	}
+	if a.Subscription != nil {
+		return c.GPU().Create(ctx, client.NEOGPUCreatePayload{
+			ProductID:         a.ProductID,
+			SelectOS:          a.SelectOS,
+			KeypairID:         a.KeypairID,
+			ServiceName:       gpuStr(a.ServiceName),
+			SSHAndConsoleUser: a.SSHAndConsoleUser,
+			ConsolePassword:   a.ConsolePassword,
+			Promocode:         gpuStr(a.Promocode),
+			PayInvoiceWithCC:  pay,
+			Cycle:             a.Subscription.Cycle,
+		})
+	}
+	if a.OnDemand != nil {
+		hours := int64(0)
+		if a.OnDemand.AdditionalHours != nil {
+			hours = *a.OnDemand.AdditionalHours
+		}
+		return c.GPU().CreateOneTime(ctx, client.NEOGPUOneTimeCreatePayload{
+			ProductID:         a.ProductID,
+			SelectOS:          a.SelectOS,
+			KeypairID:         a.KeypairID,
+			ServiceName:       gpuStr(a.ServiceName),
+			SSHAndConsoleUser: a.SSHAndConsoleUser,
+			ConsolePassword:   a.ConsolePassword,
+			Promocode:         gpuStr(a.Promocode),
+			PayInvoiceWithCC:  pay,
+			AdditionalHours:   hours,
+		})
+	}
+	return nil, fmt.Errorf("exactly one of subscription or onDemand must be set")
+}
+
+func gpuStateFromMap(_ context.Context, args GpuInstanceArgs, m map[string]any) GpuInstanceState {
+	st := GpuInstanceState{GpuInstanceArgs: args}
+	if m == nil {
+		return st
+	}
+	if v, ok := gpuString(m, "service_name", "name", "label"); ok {
+		st.ServiceName = &v
+	}
+	if v, ok := gpuInt64(m, "product_id"); ok {
+		st.ProductID = v
+	}
+	if v, ok := gpuInt64(m, "keypair_id", "neosshkey_id"); ok {
+		st.KeypairID = v
+	}
+	if v, ok := gpuString(m, "select_os", "os"); ok {
+		st.SelectOS = v
+	}
+	if v, ok := gpuString(m, "ssh_and_console_user", "ciuser", "user"); ok {
+		st.SSHAndConsoleUser = v
+	}
+	if v, ok := gpuString(m, "console_password", "cipassword"); ok {
+		st.ConsolePassword = v
+	}
+	if v, ok := gpuString(m, "cycle", "billingcycle"); ok {
+		st.Subscription = &GpuSubscriptionArgs{Cycle: v}
+	}
+	if v, ok := gpuInt64(m, "additional_hours"); ok {
+		st.OnDemand = &GpuOnDemandArgs{AdditionalHours: &v}
+	}
+	if v, ok := gpuString(m, "order_id"); ok {
+		st.OrderID = &v
+	}
+	st.Status = gpuStringDefault(m, "status", "state")
+	st.Raw = string(gpuJSON(m))
+	return st
+}
+
+func gpuStatus(m map[string]any) string {
+	return strings.ToLower(gpuStringDefault(m, "status", "state"))
+}
+
+func gpuStr(s *string) string {
+	if s == nil {
+		return ""
+	}
+	return *s
+}
+
+func gpuInt64(m map[string]any, keys ...string) (int64, bool) {
+	for _, k := range keys {
+		v, ok := m[k]
+		if !ok {
+			continue
+		}
+		switch n := v.(type) {
+		case float64:
+			return int64(n), true
+		case json.Number:
+			if i, err := n.Int64(); err == nil {
+				return i, true
+			}
+		case string:
+			if i, err := strconv.ParseInt(n, 10, 64); err == nil {
+				return i, true
+			}
+		}
+	}
+	return 0, false
+}
+
+func gpuString(m map[string]any, keys ...string) (string, bool) {
+	for _, k := range keys {
+		v, ok := m[k]
+		if !ok {
+			continue
+		}
+		switch s := v.(type) {
+		case string:
+			return s, true
+		case json.Number:
+			return s.String(), true
+		case float64:
+			return strconv.FormatFloat(s, 'f', -1, 64), true
+		case bool:
+			return strconv.FormatBool(s), true
+		}
+	}
+	return "", false
+}
+
+func gpuStringDefault(m map[string]any, keys ...string) string {
+	s, _ := gpuString(m, keys...)
+	return s
+}
+
+func gpuJSON(m map[string]any) []byte {
+	return RedactJSON(m)
+}

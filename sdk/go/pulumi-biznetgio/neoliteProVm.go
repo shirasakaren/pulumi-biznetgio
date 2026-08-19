@@ -412,6 +412,3 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*NeoliteProVmInput)(nil)).Elem(), &NeoliteProVm{})
 	pulumi.RegisterOutputType(NeoliteProVmOutput{})
 }
-// wip 700
-// wip 790
-// wip 908

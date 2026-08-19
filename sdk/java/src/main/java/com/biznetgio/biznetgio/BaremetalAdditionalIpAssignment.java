@@ -131,5 +131,3 @@ public class BaremetalAdditionalIpAssignment extends com.pulumi.resources.Custom
         return new BaremetalAdditionalIpAssignment(name, id, options);
     }
 }
-// wip 235
-// wip 524

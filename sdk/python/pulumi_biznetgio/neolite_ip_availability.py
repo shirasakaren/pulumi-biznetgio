@@ -70,4 +70,3 @@ def neolite_ip_availability_output(product_id: pulumi.Input[Optional[_builtins.i
     __ret__ = pulumi.runtime.invoke_output('biznetgio:index:neoliteIPAvailability', __args__, opts=opts, typ=NeoliteIPAvailabilityResult)
     return __ret__.apply(lambda __response__: NeoliteIPAvailabilityResult(
         available=pulumi.get(__response__, 'available')))
-// wip 840

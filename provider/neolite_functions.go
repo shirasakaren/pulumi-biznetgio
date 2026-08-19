@@ -150,3 +150,77 @@ type NeoliteChangePackageOptionsResult struct {
 	Raw string `pulumi:"raw" provider:"secret"`
 }
 
+func (a *NeoliteChangePackageOptionsArgs) Annotate(ann infer.Annotator) {
+	ann.Describe(&a.AccountID, "Account id VM NEO Lite.")
+}
+
+func (NeoliteChangePackageOptions) Invoke(
+	ctx context.Context, req infer.FunctionRequest[NeoliteChangePackageOptionsArgs],
+) (infer.FunctionResponse[NeoliteChangePackageOptionsResult], error) {
+	c := GetClient(ctx)
+	out, err := c.Neolite().ChangePackageOptions(ctx, req.Input.AccountID)
+	if err != nil {
+		return infer.FunctionResponse[NeoliteChangePackageOptionsResult]{}, err
+	}
+	return infer.FunctionResponse[NeoliteChangePackageOptionsResult]{
+		Output: NeoliteChangePackageOptionsResult{Raw: neoRawJSON(out)},
+	}, nil
+}
+
+// ---------- getStorageUpgradeOptions ----------
+
+type NeoliteStorageUpgradeOptions struct{}
+
+type NeoliteStorageUpgradeOptionsArgs struct {
+	AccountID int64 `pulumi:"accountId"`
+}
+
+type NeoliteStorageUpgradeOptionsResult struct {
+	Raw string `pulumi:"raw" provider:"secret"`
+}
+
+func (a *NeoliteStorageUpgradeOptionsArgs) Annotate(ann infer.Annotator) {
+	ann.Describe(&a.AccountID, "Account id VM NEO Lite.")
+}
+
+func (NeoliteStorageUpgradeOptions) Invoke(
+	ctx context.Context, req infer.FunctionRequest[NeoliteStorageUpgradeOptionsArgs],
+) (infer.FunctionResponse[NeoliteStorageUpgradeOptionsResult], error) {
+	c := GetClient(ctx)
+	out, err := c.Neolite().StorageOptions(ctx, req.Input.AccountID)
+	if err != nil {
+		return infer.FunctionResponse[NeoliteStorageUpgradeOptionsResult]{}, err
+	}
+	return infer.FunctionResponse[NeoliteStorageUpgradeOptionsResult]{
+		Output: NeoliteStorageUpgradeOptionsResult{Raw: neoRawJSON(out)},
+	}, nil
+}
+
+// ---------- getIPAvailability ----------
+
+type NeoliteIPAvailability struct{}
+
+type NeoliteIPAvailabilityArgs struct {
+	ProductID int64 `pulumi:"productId"`
+}
+
+type NeoliteIPAvailabilityResult struct {
+	Available bool `pulumi:"available"`
+}
+
+func (a *NeoliteIPAvailabilityArgs) Annotate(ann infer.Annotator) {
+	ann.Describe(&a.ProductID, "Product id NEO Lite.")
+}
+
+func (NeoliteIPAvailability) Invoke(
+	ctx context.Context, req infer.FunctionRequest[NeoliteIPAvailabilityArgs],
+) (infer.FunctionResponse[NeoliteIPAvailabilityResult], error) {
+	c := GetClient(ctx)
+	out, err := c.Neolite().ProductIPAvailability(ctx, req.Input.ProductID)
+	if err != nil {
+		return infer.FunctionResponse[NeoliteIPAvailabilityResult]{}, err
+	}
+	return infer.FunctionResponse[NeoliteIPAvailabilityResult]{
+		Output: NeoliteIPAvailabilityResult{Available: out.Available},
+	}, nil
+}

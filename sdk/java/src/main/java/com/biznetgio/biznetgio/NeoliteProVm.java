@@ -256,3 +256,261 @@ public class NeoliteProVm extends com.pulumi.resources.CustomResource {
      */
     public Output<Optional<Boolean>> payWithCreditCard() {
         return Codegen.optional(this.payWithCreditCard);
+    }
+    /**
+     * Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+     * 
+     */
+    @Export(name="powerState", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> powerState;
+
+    /**
+     * @return Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+     * 
+     */
+    public Output<Optional<String>> powerState() {
+        return Codegen.optional(this.powerState);
+    }
+    /**
+     * Product id dari function `getProducts` atau portal.
+     * 
+     */
+    @Export(name="productId", refs={Integer.class}, tree="[0]")
+    private Output<Integer> productId;
+
+    /**
+     * @return Product id dari function `getProducts` atau portal.
+     * 
+     */
+    public Output<Integer> productId() {
+        return this.productId;
+    }
+    /**
+     * Nama product aktif.
+     * 
+     */
+    @Export(name="productName", refs={String.class}, tree="[0]")
+    private Output<String> productName;
+
+    /**
+     * @return Nama product aktif.
+     * 
+     */
+    public Output<String> productName() {
+        return this.productName;
+    }
+    /**
+     * Kode promo saat order.
+     * 
+     */
+    @Export(name="promocode", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> promocode;
+
+    /**
+     * @return Kode promo saat order.
+     * 
+     */
+    public Output<Optional<String>> promocode() {
+        return Codegen.optional(this.promocode);
+    }
+    /**
+     * Full JSON response akun terakhir dari API, buat akses field yang belum dimodel (cipassword di-mask).
+     * 
+     */
+    @Export(name="raw", refs={String.class}, tree="[0]")
+    private Output<String> raw;
+
+    /**
+     * @return Full JSON response akun terakhir dari API, buat akses field yang belum dimodel (cipassword di-mask).
+     * 
+     */
+    public Output<String> raw() {
+        return this.raw;
+    }
+    /**
+     * Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+     * 
+     */
+    @Export(name="rebuildOs", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> rebuildOs;
+
+    /**
+     * @return Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+     * 
+     */
+    public Output<Optional<String>> rebuildOs() {
+        return Codegen.optional(this.rebuildOs);
+    }
+    /**
+     * Nominal recurring per siklus.
+     * 
+     */
+    @Export(name="recurringAmount", refs={Integer.class}, tree="[0]")
+    private Output<Integer> recurringAmount;
+
+    /**
+     * @return Nominal recurring per siklus.
+     * 
+     */
+    public Output<Integer> recurringAmount() {
+        return this.recurringAmount;
+    }
+    /**
+     * Region VM.
+     * 
+     */
+    @Export(name="region", refs={String.class}, tree="[0]")
+    private Output<String> region;
+
+    /**
+     * @return Region VM.
+     * 
+     */
+    public Output<String> region() {
+        return this.region;
+    }
+    /**
+     * Label region VM.
+     * 
+     */
+    @Export(name="regionLabel", refs={String.class}, tree="[0]")
+    private Output<String> regionLabel;
+
+    /**
+     * @return Label region VM.
+     * 
+     */
+    public Output<String> regionLabel() {
+        return this.regionLabel;
+    }
+    /**
+     * OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+     * 
+     */
+    @Export(name="selectOs", refs={String.class}, tree="[0]")
+    private Output<String> selectOs;
+
+    /**
+     * @return OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+     * 
+     */
+    public Output<String> selectOs() {
+        return this.selectOs;
+    }
+    /**
+     * User SSH &amp; console yang dipasang saat create.
+     * 
+     */
+    @Export(name="sshAndConsoleUser", refs={String.class}, tree="[0]")
+    private Output<String> sshAndConsoleUser;
+
+    /**
+     * @return User SSH &amp; console yang dipasang saat create.
+     * 
+     */
+    public Output<String> sshAndConsoleUser() {
+        return this.sshAndConsoleUser;
+    }
+    /**
+     * Status akun terakhir dari API (Active, Pending, Suspended, Terminated).
+     * 
+     */
+    @Export(name="status", refs={String.class}, tree="[0]")
+    private Output<String> status;
+
+    /**
+     * @return Status akun terakhir dari API (Active, Pending, Suspended, Terminated).
+     * 
+     */
+    public Output<String> status() {
+        return this.status;
+    }
+    /**
+     * Uptime VM dalam detik.
+     * 
+     */
+    @Export(name="uptime", refs={Integer.class}, tree="[0]")
+    private Output<Integer> uptime;
+
+    /**
+     * @return Uptime VM dalam detik.
+     * 
+     */
+    public Output<Integer> uptime() {
+        return this.uptime;
+    }
+    /**
+     * Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+     * 
+     */
+    @Export(name="vmName", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> vmName;
+
+    /**
+     * @return Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+     * 
+     */
+    public Output<Optional<String>> vmName() {
+        return Codegen.optional(this.vmName);
+    }
+
+    /**
+     *
+     * @param name The _unique_ name of the resulting resource.
+     */
+    public NeoliteProVm(java.lang.String name) {
+        this(name, NeoliteProVmArgs.Empty);
+    }
+    /**
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param args The arguments to use to populate this resource's properties.
+     */
+    public NeoliteProVm(java.lang.String name, NeoliteProVmArgs args) {
+        this(name, args, null);
+    }
+    /**
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param args The arguments to use to populate this resource's properties.
+     * @param options A bag of options that control this resource's behavior.
+     */
+    public NeoliteProVm(java.lang.String name, NeoliteProVmArgs args, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("biznetgio:index:NeoliteProVm", name, makeArgs(args, options), makeResourceOptions(options, Codegen.empty()), false);
+    }
+
+    private NeoliteProVm(java.lang.String name, Output<java.lang.String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("biznetgio:index:NeoliteProVm", name, null, makeResourceOptions(options, id), false);
+    }
+
+    private static NeoliteProVmArgs makeArgs(NeoliteProVmArgs args, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        if (options != null && options.getUrn().isPresent()) {
+            return null;
+        }
+        return args == null ? NeoliteProVmArgs.Empty : args;
+    }
+
+    private static com.pulumi.resources.CustomResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.CustomResourceOptions options, @Nullable Output<java.lang.String> id) {
+        var defaultOptions = com.pulumi.resources.CustomResourceOptions.builder()
+            .version(Utilities.getVersion())
+            .additionalSecretOutputs(List.of(
+                "ciPassword",
+                "consolePassword",
+                "raw"
+            ))
+            .build();
+        return com.pulumi.resources.CustomResourceOptions.merge(defaultOptions, options, id);
+    }
+
+    /**
+     * Get an existing Host resource's state with the given name, ID, and optional extra
+     * properties used to qualify the lookup.
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param id The _unique_ provider ID of the resource to lookup.
+     * @param options Optional settings to control the behavior of the CustomResource.
+     */
+    public static NeoliteProVm get(java.lang.String name, Output<java.lang.String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        return new NeoliteProVm(name, id, options);
+    }
+}

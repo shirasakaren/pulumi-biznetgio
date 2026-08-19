@@ -48,5 +48,3 @@ public final class NeoliteIPAvailabilityResult {
         }
     }
 }
-// wip 273
-// wip 709

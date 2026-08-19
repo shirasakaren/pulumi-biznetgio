@@ -157,4 +157,3 @@ class NeoliteProKeypair(pulumi.CustomResource):
         """
         return pulumi.get(self, "public_key")
 
-// wip 903

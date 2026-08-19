@@ -133,4 +133,45 @@ func (s *BaremetalService) OpenVPN(ctx context.Context) (map[string]any, error) 
 func (s *BaremetalService) ProductList(ctx context.Context) ([]map[string]any, error) {
 	raw, err := s.client.doJSON(ctx, http.MethodGet, "/baremetals/products", nil)
 	if err != nil {
-// wip 2
+		return nil, err
+	}
+	return decodeJSON[[]map[string]any](raw)
+}
+
+func (s *BaremetalService) ProductGet(ctx context.Context, productID int64) (map[string]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, fmt.Sprintf("/baremetals/products/%d", productID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[map[string]any](raw)
+}
+
+func (s *BaremetalService) ProductOSList(ctx context.Context, productID int64) ([]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, fmt.Sprintf("/baremetals/products/%d/oss", productID), nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]any](raw)
+}
+
+func (s *BaremetalService) States(ctx context.Context) ([]any, error) {
+	raw, err := s.client.doJSON(ctx, http.MethodGet, "/baremetals/states", nil)
+	if err != nil {
+		return nil, err
+	}
+	return decodeJSON[[]any](raw)
+}
+
+func (s *BaremetalService) AccountID(d map[string]any) string { return strField(d, "account_id") }
+func (s *BaremetalService) ProductID(d map[string]any) int64  { return intField(d, "product_id") }
+
+type BaremetalCreatePayload struct {
+	ProductID        int64  `json:"product_id"`
+	Cycle            string `json:"cycle"`
+	SelectOS         string `json:"select_os,omitempty"`
+	KeypairID        int64  `json:"keypair_id"`
+	Label            string `json:"label"`
+	PublicIP         int64  `json:"public_ip"`
+	Promocode        string `json:"promocode,omitempty"`
+	PayInvoiceWithCC string `json:"pay_invoice_with_cc,omitempty"`
+}

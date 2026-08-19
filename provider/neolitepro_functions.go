@@ -112,3 +112,79 @@ func (a *NeoliteProChangePackageOptionsArgs) Annotate(ann infer.Annotator) {
 
 func (NeoliteProChangePackageOptions) Invoke(
 	ctx context.Context, req infer.FunctionRequest[NeoliteProChangePackageOptionsArgs],
+) (infer.FunctionResponse[NeoliteProChangePackageOptionsResult], error) {
+	c := GetClient(ctx)
+	out, err := c.NeolitePro().ChangePackageOptions(ctx, req.Input.AccountID)
+	if err != nil {
+		return infer.FunctionResponse[NeoliteProChangePackageOptionsResult]{}, err
+	}
+	return infer.FunctionResponse[NeoliteProChangePackageOptionsResult]{
+		Output: NeoliteProChangePackageOptionsResult{Raw: neoRawJSON(out)},
+	}, nil
+}
+
+// ---------- getNeoliteProStorageUpgradeOptions ----------
+
+type NeoliteProStorageUpgradeOptions struct{}
+
+type NeoliteProStorageUpgradeOptionsArgs struct {
+	AccountID int64 `pulumi:"accountId"`
+}
+
+type NeoliteProStorageUpgradeOptionsResult struct {
+	Raw string `pulumi:"raw" provider:"secret"`
+}
+
+func (a *NeoliteProStorageUpgradeOptionsArgs) Annotate(ann infer.Annotator) {
+	ann.Describe(&a.AccountID, "Account id VM NEO Lite Pro.")
+}
+
+func (NeoliteProStorageUpgradeOptions) Invoke(
+	ctx context.Context, req infer.FunctionRequest[NeoliteProStorageUpgradeOptionsArgs],
+) (infer.FunctionResponse[NeoliteProStorageUpgradeOptionsResult], error) {
+	c := GetClient(ctx)
+	out, err := c.NeolitePro().StorageOptions(ctx, req.Input.AccountID)
+	if err != nil {
+		return infer.FunctionResponse[NeoliteProStorageUpgradeOptionsResult]{}, err
+	}
+	return infer.FunctionResponse[NeoliteProStorageUpgradeOptionsResult]{
+		Output: NeoliteProStorageUpgradeOptionsResult{Raw: neoRawJSON(out)},
+	}, nil
+}
+
+// ---------- getNeoliteProIPAvailability ----------
+
+type NeoliteProIPAvailability struct{}
+
+type NeoliteProIPAvailabilityArgs struct {
+	ProductID int64 `pulumi:"productId"`
+}
+
+type NeoliteProIPAvailabilityResult struct {
+	Available bool `pulumi:"available"`
+}
+
+func (a *NeoliteProIPAvailabilityArgs) Annotate(ann infer.Annotator) {
+	ann.Describe(&a.ProductID, "Product id NEO Lite Pro.")
+}
+
+func (NeoliteProIPAvailability) Invoke(
+	ctx context.Context, req infer.FunctionRequest[NeoliteProIPAvailabilityArgs],
+) (infer.FunctionResponse[NeoliteProIPAvailabilityResult], error) {
+	c := GetClient(ctx)
+	out, err := c.NeolitePro().ProductIPAvailability(ctx, req.Input.ProductID)
+	if err != nil {
+		return infer.FunctionResponse[NeoliteProIPAvailabilityResult]{}, err
+	}
+	return infer.FunctionResponse[NeoliteProIPAvailabilityResult]{
+		Output: NeoliteProIPAvailabilityResult{Available: out.Available},
+	}, nil
+}
+
+var (
+	_ infer.Fn[NeoliteProProductsArgs, NeoliteProProductsResult]                           = NeoliteProProducts{}
+	_ infer.Fn[NeoliteProOsListArgs, NeoliteProOsListResult]                               = NeoliteProOsList{}
+	_ infer.Fn[NeoliteProChangePackageOptionsArgs, NeoliteProChangePackageOptionsResult]   = NeoliteProChangePackageOptions{}  //nolint:lll // gofmt merge balik
+	_ infer.Fn[NeoliteProStorageUpgradeOptionsArgs, NeoliteProStorageUpgradeOptionsResult] = NeoliteProStorageUpgradeOptions{} //nolint:lll // gofmt merge balik
+	_ infer.Fn[NeoliteProIPAvailabilityArgs, NeoliteProIPAvailabilityResult]               = NeoliteProIPAvailability{}
+)

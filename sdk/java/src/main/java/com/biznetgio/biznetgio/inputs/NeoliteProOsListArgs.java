@@ -83,4 +83,3 @@ public final class NeoliteProOsListArgs extends com.pulumi.resources.InvokeArgs 
     }
 
 }
-// wip 271

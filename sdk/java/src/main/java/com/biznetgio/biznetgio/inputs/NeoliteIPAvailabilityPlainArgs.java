@@ -72,4 +72,3 @@ public final class NeoliteIPAvailabilityPlainArgs extends com.pulumi.resources.I
     }
 
 }
-// wip 609

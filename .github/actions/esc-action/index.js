@@ -12,4 +12,3 @@ for (const [name, value] of Object.entries(process.env)) {
 }
 
 stream.end();
-// wip 851

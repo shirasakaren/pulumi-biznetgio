@@ -217,4 +217,3 @@ public class NeoliteDisk extends com.pulumi.resources.CustomResource {
         return new NeoliteDisk(name, id, options);
     }
 }
-// wip 112

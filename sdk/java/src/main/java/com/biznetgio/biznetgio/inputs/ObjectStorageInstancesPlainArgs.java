@@ -70,4 +70,3 @@ public final class ObjectStorageInstancesPlainArgs extends com.pulumi.resources.
     }
 
 }
-// wip 733

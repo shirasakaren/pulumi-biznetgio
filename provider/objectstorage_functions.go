@@ -118,3 +118,42 @@ type ObjectStorageCredentialsResult struct {
 type ObjectStorageCredentialsCredential struct {
 	AccessKey string `pulumi:"accessKey" provider:"secret"`
 	Active    bool   `pulumi:"active"`
+}
+
+func (a *ObjectStorageCredentialsArgs) Annotate(ann infer.Annotator) {
+	ann.Describe(&a.AccountID, "Object storage instance account id.")
+}
+
+func (r *ObjectStorageCredentialsResult) Annotate(ann infer.Annotator) {
+	ann.Describe(&r.Credentials, "List of credentials (access key + active state only; "+
+		"secret keys tidak pernah dikeluarkan).")
+}
+
+func (ObjectStorageCredentials) Invoke(
+	ctx context.Context, req infer.FunctionRequest[ObjectStorageCredentialsArgs],
+) (infer.FunctionResponse[ObjectStorageCredentialsResult], error) {
+	c := GetClient(ctx)
+	items, err := c.ObjectStorage().CredentialsList(ctx, osParseID(req.Input.AccountID))
+	if err != nil {
+		return infer.FunctionResponse[ObjectStorageCredentialsResult]{}, err
+	}
+	out := make([]ObjectStorageCredentialsCredential, 0, len(items))
+	for _, it := range items {
+		cred := ObjectStorageCredentialsCredential{
+			AccessKey: osStringDefault(it, "accessKey", "access_key", "accesskey"),
+		}
+		if v, ok := osBool(it, "active"); ok {
+			cred.Active = v
+		}
+		out = append(out, cred)
+	}
+	return infer.FunctionResponse[ObjectStorageCredentialsResult]{
+		Output: ObjectStorageCredentialsResult{Credentials: out},
+	}, nil
+}
+
+var (
+	_ infer.Fn[ObjectStorageInstancesArgs, ObjectStorageInstancesResult]     = ObjectStorageInstances{}
+	_ infer.Fn[ObjectStorageBucketsArgs, ObjectStorageBucketsResult]         = ObjectStorageBuckets{}
+	_ infer.Fn[ObjectStorageCredentialsArgs, ObjectStorageCredentialsResult] = ObjectStorageCredentials{}
+)

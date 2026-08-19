@@ -69,5 +69,3 @@ func (o NeoliteProStorageUpgradeOptionsResultOutput) Raw() pulumi.StringOutput {
 func init() {
 	pulumi.RegisterOutputType(NeoliteProStorageUpgradeOptionsResultOutput{})
 }
-// wip 199
-// wip 906

@@ -28,4 +28,3 @@ vm = pulumi_biznetgio.NeoliteVm(
 )
 
 pulumi.export("vmStatus", vm.status)
-// wip 878

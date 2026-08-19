@@ -51,4 +51,3 @@ export interface GpuGraphOutputArgs {
      */
     timeframe?: pulumi.Input<string | undefined>;
 }
-// wip 884

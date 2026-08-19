@@ -321,4 +321,3 @@ public final class BaremetalElasticStorageArgs extends com.pulumi.resources.Reso
     }
 
 }
-// wip 739

@@ -25,4 +25,3 @@ export function neoliteProductsOutput(opts?: pulumi.InvokeOutputOptions): pulumi
     }, opts);
 }
 
-// wip 792

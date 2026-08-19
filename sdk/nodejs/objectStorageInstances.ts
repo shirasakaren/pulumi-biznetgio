@@ -41,5 +41,3 @@ export interface ObjectStorageInstancesOutputArgs {
      */
     status?: pulumi.Input<string | undefined>;
 }
-// wip 476
-// wip 531

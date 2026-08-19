@@ -306,3 +306,45 @@ func readNeoliteProVm(
 	st.Region = acc.ExtraDetails.Region
 	st.RegionLabel = acc.ExtraDetails.RegionLabel
 	st.CIUser = acc.ExtraDetails.CIUser
+	st.CIPassword = acc.ExtraDetails.CIPassword
+	st.OSName = acc.ExtraDetails.OSName
+	if acc.ExtraDetails.KeypairID != 0 {
+		st.KeypairID = acc.ExtraDetails.KeypairID
+	}
+	if v := acc.ExtraDetails.DiskSize; v != "" {
+		if n, err := strconv.ParseInt(v, 10, 64); err == nil {
+			st.DiskSize = &n
+		}
+	}
+	if v := acc.ExtraDetails.Name; v != "" {
+		st.VMName = &v
+	}
+	st.LastInvoice = NeoliteLastInvoice{
+		ID:          acc.LastInvoice.ID,
+		PaidID:      acc.LastInvoice.PaidID,
+		Status:      acc.LastInvoice.Status,
+		Date:        acc.LastInvoice.Date,
+		Duedate:     acc.LastInvoice.Duedate,
+		Paybefore:   acc.LastInvoice.Paybefore,
+		Datepaid:    acc.LastInvoice.Datepaid,
+		InvoiceType: acc.LastInvoice.InvoiceType,
+	}
+
+	if n, err := parseNeoID(id); err == nil {
+		if vm, err := c.NeolitePro().VMDetails(ctx, n); err == nil {
+			st.Uptime = vm.Uptime
+			st.MaxDisk = vm.MaxDisk
+			st.MaxMem = vm.MaxMem
+			st.Mem = vm.Mem
+			st.CPUs = vm.CPUs
+		}
+	}
+
+	if b, err := json.Marshal(acc); err == nil {
+		var m map[string]any
+		if json.Unmarshal(b, &m) == nil {
+			st.Raw = string(RedactJSON(m))
+		}
+	}
+	return st, nil
+}

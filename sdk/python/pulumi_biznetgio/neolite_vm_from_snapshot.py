@@ -212,3 +212,217 @@ class NeoliteVmFromSnapshot(pulumi.CustomResource):
         :param pulumi.Input[_builtins.int] keypair_id: Id keypair dari `NeoliteKeypair`.
         :param pulumi.Input[_builtins.str] name: Nama VM hasil restore.
         :param pulumi.Input[_builtins.bool] pay_with_credit_card: Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        :param pulumi.Input[_builtins.int] product_id: Product id dari function `getProducts` atau portal.
+        :param pulumi.Input[_builtins.str] promocode: Kode promo saat order.
+        :param pulumi.Input[_builtins.int] snapshot_id: Account id snapshot sumber, dari `NeoliteSnapshot`.
+        :param pulumi.Input[_builtins.str] ssh_and_console_user: User SSH & console yang dipasang saat create.
+        """
+        ...
+    @overload
+    def __init__(__self__,
+                 resource_name: str,
+                 args: NeoliteVmFromSnapshotArgs,
+                 opts: Optional[pulumi.ResourceOptions] = None):
+        """
+        Create a NeoliteVmFromSnapshot resource with the given unique name, props, and options.
+
+        :param str resource_name: The name of the resource.
+        :param NeoliteVmFromSnapshotArgs args: The arguments to use to populate this resource's properties.
+        :param pulumi.ResourceOptions opts: Options for the resource.
+        """
+        ...
+    def __init__(__self__, resource_name: str, *args, **kwargs):
+        resource_args, opts = _utilities.get_resource_args_opts(NeoliteVmFromSnapshotArgs, pulumi.ResourceOptions, *args, **kwargs)
+        if resource_args is not None:
+            __self__._internal_init(resource_name, opts, **resource_args.__dict__)
+        else:
+            __self__._internal_init(resource_name, *args, **kwargs)
+
+    def _internal_init(__self__,
+                 resource_name: str,
+                 opts: Optional[pulumi.ResourceOptions] = None,
+                 console_password: pulumi.Input[Optional[_builtins.str]] = None,
+                 cycle: pulumi.Input[Optional[_builtins.str]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 keypair_id: pulumi.Input[Optional[_builtins.int]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 pay_with_credit_card: pulumi.Input[Optional[_builtins.bool]] = None,
+                 product_id: pulumi.Input[Optional[_builtins.int]] = None,
+                 promocode: pulumi.Input[Optional[_builtins.str]] = None,
+                 snapshot_id: pulumi.Input[Optional[_builtins.int]] = None,
+                 ssh_and_console_user: pulumi.Input[Optional[_builtins.str]] = None,
+                 __props__=None):
+        opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
+        if not isinstance(opts, pulumi.ResourceOptions):
+            raise TypeError('Expected resource options to be a ResourceOptions instance')
+        if opts.id is None:
+            if __props__ is not None:
+                raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
+            __props__ = NeoliteVmFromSnapshotArgs.__new__(NeoliteVmFromSnapshotArgs)
+
+            if console_password is None and not opts.urn:
+                raise TypeError("Missing required property 'console_password'")
+            __props__.__dict__["console_password"] = None if console_password is None else pulumi.Output.secret(console_password)
+            if cycle is None and not opts.urn:
+                raise TypeError("Missing required property 'cycle'")
+            __props__.__dict__["cycle"] = cycle
+            if description is None:
+                description = ''
+            __props__.__dict__["description"] = description
+            if keypair_id is None and not opts.urn:
+                raise TypeError("Missing required property 'keypair_id'")
+            __props__.__dict__["keypair_id"] = keypair_id
+            if name is None and not opts.urn:
+                raise TypeError("Missing required property 'name'")
+            __props__.__dict__["name"] = name
+            if pay_with_credit_card is None:
+                pay_with_credit_card = True
+            __props__.__dict__["pay_with_credit_card"] = pay_with_credit_card
+            if product_id is None and not opts.urn:
+                raise TypeError("Missing required property 'product_id'")
+            __props__.__dict__["product_id"] = product_id
+            if promocode is None:
+                promocode = ''
+            __props__.__dict__["promocode"] = promocode
+            if snapshot_id is None and not opts.urn:
+                raise TypeError("Missing required property 'snapshot_id'")
+            __props__.__dict__["snapshot_id"] = snapshot_id
+            if ssh_and_console_user is None and not opts.urn:
+                raise TypeError("Missing required property 'ssh_and_console_user'")
+            __props__.__dict__["ssh_and_console_user"] = ssh_and_console_user
+            __props__.__dict__["order_id"] = None
+            __props__.__dict__["status"] = None
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["consolePassword"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
+        super(NeoliteVmFromSnapshot, __self__).__init__(
+            'biznetgio:index:NeoliteVmFromSnapshot',
+            resource_name,
+            __props__,
+            opts)
+
+    @staticmethod
+    def get(resource_name: str,
+            id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None) -> 'NeoliteVmFromSnapshot':
+        """
+        Get an existing NeoliteVmFromSnapshot resource's state with the given name, id, and optional extra
+        properties used to qualify the lookup.
+
+        :param str resource_name: The unique name of the resulting resource.
+        :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
+        :param pulumi.ResourceOptions opts: Options for the resource.
+        """
+        opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
+
+        __props__ = NeoliteVmFromSnapshotArgs.__new__(NeoliteVmFromSnapshotArgs)
+
+        __props__.__dict__["console_password"] = None
+        __props__.__dict__["cycle"] = None
+        __props__.__dict__["description"] = None
+        __props__.__dict__["keypair_id"] = None
+        __props__.__dict__["name"] = None
+        __props__.__dict__["order_id"] = None
+        __props__.__dict__["pay_with_credit_card"] = None
+        __props__.__dict__["product_id"] = None
+        __props__.__dict__["promocode"] = None
+        __props__.__dict__["snapshot_id"] = None
+        __props__.__dict__["ssh_and_console_user"] = None
+        __props__.__dict__["status"] = None
+        return NeoliteVmFromSnapshot(resource_name, opts=opts, __props__=__props__)
+
+    @_builtins.property
+    @pulumi.getter(name="consolePassword")
+    def console_password(self) -> pulumi.Output[_builtins.str]:
+        """
+        Password console saat create. Write-only: ga pernah di-refetch dari API.
+        """
+        return pulumi.get(self, "console_password")
+
+    @_builtins.property
+    @pulumi.getter
+    def cycle(self) -> pulumi.Output[_builtins.str]:
+        """
+        Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        """
+        return pulumi.get(self, "cycle")
+
+    @_builtins.property
+    @pulumi.getter
+    def description(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Deskripsi VM.
+        """
+        return pulumi.get(self, "description")
+
+    @_builtins.property
+    @pulumi.getter(name="keypairId")
+    def keypair_id(self) -> pulumi.Output[_builtins.int]:
+        """
+        Id keypair dari `NeoliteKeypair`.
+        """
+        return pulumi.get(self, "keypair_id")
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Output[_builtins.str]:
+        """
+        Nama VM hasil restore.
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter(name="orderId")
+    def order_id(self) -> pulumi.Output[_builtins.str]:
+        """
+        Order id dari response create.
+        """
+        return pulumi.get(self, "order_id")
+
+    @_builtins.property
+    @pulumi.getter(name="payWithCreditCard")
+    def pay_with_credit_card(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        """
+        return pulumi.get(self, "pay_with_credit_card")
+
+    @_builtins.property
+    @pulumi.getter(name="productId")
+    def product_id(self) -> pulumi.Output[_builtins.int]:
+        """
+        Product id dari function `getProducts` atau portal.
+        """
+        return pulumi.get(self, "product_id")
+
+    @_builtins.property
+    @pulumi.getter
+    def promocode(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Kode promo saat order.
+        """
+        return pulumi.get(self, "promocode")
+
+    @_builtins.property
+    @pulumi.getter(name="snapshotId")
+    def snapshot_id(self) -> pulumi.Output[_builtins.int]:
+        """
+        Account id snapshot sumber, dari `NeoliteSnapshot`.
+        """
+        return pulumi.get(self, "snapshot_id")
+
+    @_builtins.property
+    @pulumi.getter(name="sshAndConsoleUser")
+    def ssh_and_console_user(self) -> pulumi.Output[_builtins.str]:
+        """
+        User SSH & console yang dipasang saat create.
+        """
+        return pulumi.get(self, "ssh_and_console_user")
+
+    @_builtins.property
+    @pulumi.getter
+    def status(self) -> pulumi.Output[_builtins.str]:
+        """
+        Status VM (Active, Pending, Suspended, Terminated).
+        """
+        return pulumi.get(self, "status")
+
