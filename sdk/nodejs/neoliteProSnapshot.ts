@@ -32,35 +32,35 @@ export class NeoliteProSnapshot extends pulumi.CustomResource {
     }
 
     /**
-     * Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+     * Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
      */
     declare public readonly cycle: pulumi.Output<string>;
     /**
-     * Deskripsi snapshot.
+     * Snapshot description.
      */
     declare public readonly description: pulumi.Output<string | undefined>;
     /**
-     * Nama snapshot. Default `snapshot-name`.
+     * Snapshot name. Defaults to `snapshot-name`.
      */
     declare public readonly name: pulumi.Output<string | undefined>;
     /**
-     * Account id VM NEO Lite Pro yang di-snapshot.
+     * Account id of the NEO Lite Pro VM being snapshotted.
      */
     declare public readonly neoliteAccountId: pulumi.Output<number>;
     /**
-     * Order id dari response create.
+     * Order id from the creation response.
      */
     declare public /*out*/ readonly orderId: pulumi.Output<string>;
     /**
-     * Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+     * Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
      */
     declare public readonly payWithCreditCard: pulumi.Output<boolean | undefined>;
     /**
-     * Kode promo saat order.
+     * Promo code to apply at order.
      */
     declare public readonly promocode: pulumi.Output<string | undefined>;
     /**
-     * Status snapshot (Active, Pending, Suspended, Terminated).
+     * Snapshot status (Active, Pending, Suspended, Terminated).
      */
     declare public /*out*/ readonly status: pulumi.Output<string>;
 
@@ -109,27 +109,27 @@ export class NeoliteProSnapshot extends pulumi.CustomResource {
  */
 export interface NeoliteProSnapshotArgs {
     /**
-     * Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+     * Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
      */
     cycle: pulumi.Input<string>;
     /**
-     * Deskripsi snapshot.
+     * Snapshot description.
      */
     description?: pulumi.Input<string | undefined>;
     /**
-     * Nama snapshot. Default `snapshot-name`.
+     * Snapshot name. Defaults to `snapshot-name`.
      */
     name?: pulumi.Input<string | undefined>;
     /**
-     * Account id VM NEO Lite Pro yang di-snapshot.
+     * Account id of the NEO Lite Pro VM being snapshotted.
      */
     neoliteAccountId: pulumi.Input<number>;
     /**
-     * Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+     * Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
      */
     payWithCreditCard?: pulumi.Input<boolean | undefined>;
     /**
-     * Kode promo saat order.
+     * Promo code to apply at order.
      */
     promocode?: pulumi.Input<string | undefined>;
 }

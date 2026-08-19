@@ -22,7 +22,7 @@ func NeoliteIPAvailability(ctx *pulumi.Context, args *NeoliteIPAvailabilityArgs,
 }
 
 type NeoliteIPAvailabilityArgs struct {
-	// Product id NEO Lite.
+	// NEO Lite product id.
 	ProductId int `pulumi:"productId"`
 }
 
@@ -40,7 +40,7 @@ func NeoliteIPAvailabilityOutput(ctx *pulumi.Context, args NeoliteIPAvailability
 }
 
 type NeoliteIPAvailabilityOutputArgs struct {
-	// Product id NEO Lite.
+	// NEO Lite product id.
 	ProductId pulumi.IntInput `pulumi:"productId"`
 }
 

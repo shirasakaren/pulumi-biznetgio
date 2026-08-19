@@ -4,13 +4,13 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>shirasakaren</Authors>
     <Company>shirasakaren</Company>
-    <Description>Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren — NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.</Description>
+    <Description>Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren - NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://biznetgio.creations.ren</PackageProjectUrl>
     <RepositoryUrl>https://github.com/shirasakaren/pulumi-biznetgio</RepositoryUrl>
     <PackageIcon>logo.png</PackageIcon>
 
-    <Version>0.1.2</Version>
+    <Version>0.1.6</Version>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>

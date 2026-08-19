@@ -13,7 +13,7 @@ export function neoliteIPAvailability(args: NeoliteIPAvailabilityArgs, opts?: pu
 
 export interface NeoliteIPAvailabilityArgs {
     /**
-     * Product id NEO Lite.
+     * NEO Lite product id.
      */
     productId: number;
 }
@@ -30,7 +30,7 @@ export function neoliteIPAvailabilityOutput(args: NeoliteIPAvailabilityOutputArg
 
 export interface NeoliteIPAvailabilityOutputArgs {
     /**
-     * Product id NEO Lite.
+     * NEO Lite product id.
      */
     productId: pulumi.Input<number>;
 }

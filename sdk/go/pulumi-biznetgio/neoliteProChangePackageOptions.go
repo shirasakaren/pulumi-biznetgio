@@ -22,7 +22,7 @@ func NeoliteProChangePackageOptions(ctx *pulumi.Context, args *NeoliteProChangeP
 }
 
 type NeoliteProChangePackageOptionsArgs struct {
-	// Account id VM NEO Lite Pro.
+	// Account id of the NEO Lite Pro VM.
 	AccountId int `pulumi:"accountId"`
 }
 
@@ -40,7 +40,7 @@ func NeoliteProChangePackageOptionsOutput(ctx *pulumi.Context, args NeoliteProCh
 }
 
 type NeoliteProChangePackageOptionsOutputArgs struct {
-	// Account id VM NEO Lite Pro.
+	// Account id of the NEO Lite Pro VM.
 	AccountId pulumi.IntInput `pulumi:"accountId"`
 }
 

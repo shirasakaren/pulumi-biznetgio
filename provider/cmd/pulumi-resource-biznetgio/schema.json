@@ -1,7 +1,7 @@
 {
   "name": "biznetgio",
   "displayName": "Pulumi BiznetGIO Provider",
-  "version": "0.1.5",
+  "version": "0.0.0",
   "description": "Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren - NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.",
   "keywords": [
     "biznetgio",
@@ -24,10 +24,7 @@
       "importBasePath": "github.com/shirasakaren/pulumi-biznetgio/sdk/go/pulumi-biznetgio"
     },
     "java": {
-      "basePackage": "ren.shirasaka.biznetgio",
-      "packages": {
-        "biznetgio": "ren.shirasaka:biznetgio"
-      }
+      "basePackage": "ren.shirasaka"
     },
     "nodejs": {
       "packageName": "@shirasakaren/biznetgio"
@@ -1092,48 +1089,48 @@
       "properties": {
         "cycle": {
           "type": "string",
-          "description": "Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
+          "description": "Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
         },
         "neoliteAccountId": {
           "type": "integer",
-          "description": "Account id VM NEO Lite tempat disk dipasang."
+          "description": "Account id of the NEO Lite VM the disk is attached to."
         },
         "orderId": {
           "type": "string",
-          "description": "Order id dari response create."
+          "description": "Order id from the creation response."
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
+          "description": "Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.",
           "default": true
         },
         "productId": {
           "type": "integer",
-          "description": "Product id disk dari endpoint `/neolites/disks/products`."
+          "description": "Disk product id from the `/neolites/disks/products` endpoint."
         },
         "promocode": {
           "type": "string",
-          "description": "Kode promo saat order.",
+          "description": "Promo code to apply at order.",
           "default": ""
         },
         "raw": {
           "type": "string",
-          "description": "Full JSON response disk terakhir dari API, buat akses field yang belum dimodel.",
+          "description": "Raw JSON of the last-read disk response, for accessing fields not yet modeled.",
           "secret": true
         },
         "serviceName": {
           "type": "string",
-          "description": "Nama layanan disk. Default `service-name`.",
+          "description": "Disk service name. Defaults to `service-name`.",
           "default": "service-name"
         },
         "size": {
           "type": "integer",
-          "description": "Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.",
+          "description": "Disk size (GB). Defaults to 60. Can only go up, never down.",
           "default": 60
         },
         "status": {
           "type": "string",
-          "description": "Status disk (Active, Pending, Suspended, Terminated)."
+          "description": "Disk status (Active, Pending, Suspended, Terminated)."
         }
       },
       "required": [
@@ -1147,34 +1144,34 @@
       "inputProperties": {
         "cycle": {
           "type": "string",
-          "description": "Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
+          "description": "Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
         },
         "neoliteAccountId": {
           "type": "integer",
-          "description": "Account id VM NEO Lite tempat disk dipasang."
+          "description": "Account id of the NEO Lite VM the disk is attached to."
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
+          "description": "Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.",
           "default": true
         },
         "productId": {
           "type": "integer",
-          "description": "Product id disk dari endpoint `/neolites/disks/products`."
+          "description": "Disk product id from the `/neolites/disks/products` endpoint."
         },
         "promocode": {
           "type": "string",
-          "description": "Kode promo saat order.",
+          "description": "Promo code to apply at order.",
           "default": ""
         },
         "serviceName": {
           "type": "string",
-          "description": "Nama layanan disk. Default `service-name`.",
+          "description": "Disk service name. Defaults to `service-name`.",
           "default": "service-name"
         },
         "size": {
           "type": "integer",
-          "description": "Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.",
+          "description": "Disk size (GB). Defaults to 60. Can only go up, never down.",
           "default": 60
         }
       },
@@ -1188,20 +1185,20 @@
       "properties": {
         "keypairId": {
           "type": "integer",
-          "description": "Id keypair di BiznetGIO."
+          "description": "Keypair id in BiznetGIO."
         },
         "name": {
           "type": "string",
-          "description": "Nama keypair."
+          "description": "Keypair name."
         },
         "privateKey": {
           "type": "string",
-          "description": "Private key (sensitive). Write-only: cuma ada di response create, ga bisa di-refetch.",
+          "description": "Private key (sensitive). Write-only: only present in the create response, can't be re-fetched.",
           "secret": true
         },
         "publicKey": {
           "type": "string",
-          "description": "Public key yang di-generate."
+          "description": "Generated public key."
         }
       },
       "required": [
@@ -1213,7 +1210,7 @@
       "inputProperties": {
         "name": {
           "type": "string",
-          "description": "Nama keypair."
+          "description": "Keypair name."
         }
       },
       "requiredInputs": [
@@ -1224,48 +1221,48 @@
       "properties": {
         "cycle": {
           "type": "string",
-          "description": "Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
+          "description": "Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
         },
         "neoliteAccountId": {
           "type": "integer",
-          "description": "Account id VM NEO Lite Pro tempat disk dipasang."
+          "description": "Account id of the NEO Lite Pro VM the disk is attached to."
         },
         "orderId": {
           "type": "string",
-          "description": "Order id dari response create."
+          "description": "Order id from the creation response."
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
+          "description": "Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.",
           "default": true
         },
         "productId": {
           "type": "integer",
-          "description": "Product id disk dari endpoint `/neolite-pros/disks/products`."
+          "description": "Disk product id from the `/neolite-pros/disks/products` endpoint."
         },
         "promocode": {
           "type": "string",
-          "description": "Kode promo saat order.",
+          "description": "Promo code to apply at order.",
           "default": ""
         },
         "raw": {
           "type": "string",
-          "description": "Full JSON response disk terakhir dari API, buat akses field yang belum dimodel.",
+          "description": "Raw JSON of the last-read disk response, for accessing fields not yet modeled.",
           "secret": true
         },
         "serviceName": {
           "type": "string",
-          "description": "Nama layanan disk. Default `service-name`.",
+          "description": "Disk service name. Defaults to `service-name`.",
           "default": "service-name"
         },
         "size": {
           "type": "integer",
-          "description": "Ukuran disk (GB). Default 30 (minimal product disk pro). Cuma bisa naik, bukan turun.",
+          "description": "Disk size (GB). Defaults to 30 (minimum disk-pro product). Can only go up, never down.",
           "default": 30
         },
         "status": {
           "type": "string",
-          "description": "Status disk (Active, Pending, Suspended, Terminated)."
+          "description": "Disk status (Active, Pending, Suspended, Terminated)."
         }
       },
       "required": [
@@ -1279,34 +1276,34 @@
       "inputProperties": {
         "cycle": {
           "type": "string",
-          "description": "Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
+          "description": "Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
         },
         "neoliteAccountId": {
           "type": "integer",
-          "description": "Account id VM NEO Lite Pro tempat disk dipasang."
+          "description": "Account id of the NEO Lite Pro VM the disk is attached to."
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
+          "description": "Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.",
           "default": true
         },
         "productId": {
           "type": "integer",
-          "description": "Product id disk dari endpoint `/neolite-pros/disks/products`."
+          "description": "Disk product id from the `/neolite-pros/disks/products` endpoint."
         },
         "promocode": {
           "type": "string",
-          "description": "Kode promo saat order.",
+          "description": "Promo code to apply at order.",
           "default": ""
         },
         "serviceName": {
           "type": "string",
-          "description": "Nama layanan disk. Default `service-name`.",
+          "description": "Disk service name. Defaults to `service-name`.",
           "default": "service-name"
         },
         "size": {
           "type": "integer",
-          "description": "Ukuran disk (GB). Default 30 (minimal product disk pro). Cuma bisa naik, bukan turun.",
+          "description": "Disk size (GB). Defaults to 30 (minimum disk-pro product). Can only go up, never down.",
           "default": 30
         }
       },
@@ -1320,20 +1317,20 @@
       "properties": {
         "keypairId": {
           "type": "integer",
-          "description": "Id keypair di BiznetGIO."
+          "description": "Keypair id in BiznetGIO."
         },
         "name": {
           "type": "string",
-          "description": "Nama keypair."
+          "description": "Keypair name."
         },
         "privateKey": {
           "type": "string",
-          "description": "Private key (sensitive). Write-only: cuma ada di response create, ga bisa di-refetch.",
+          "description": "Private key (sensitive). Write-only: only present in the create response, can't be re-fetched.",
           "secret": true
         },
         "publicKey": {
           "type": "string",
-          "description": "Public key yang di-generate."
+          "description": "Generated public key."
         }
       },
       "required": [
@@ -1345,7 +1342,7 @@
       "inputProperties": {
         "name": {
           "type": "string",
-          "description": "Nama keypair."
+          "description": "Keypair name."
         }
       },
       "requiredInputs": [
@@ -1356,39 +1353,39 @@
       "properties": {
         "cycle": {
           "type": "string",
-          "description": "Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
+          "description": "Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
         },
         "description": {
           "type": "string",
-          "description": "Deskripsi snapshot.",
+          "description": "Snapshot description.",
           "default": ""
         },
         "name": {
           "type": "string",
-          "description": "Nama snapshot. Default `snapshot-name`.",
+          "description": "Snapshot name. Defaults to `snapshot-name`.",
           "default": "snapshot-name"
         },
         "neoliteAccountId": {
           "type": "integer",
-          "description": "Account id VM NEO Lite Pro yang di-snapshot."
+          "description": "Account id of the NEO Lite Pro VM being snapshotted."
         },
         "orderId": {
           "type": "string",
-          "description": "Order id dari response create."
+          "description": "Order id from the creation response."
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
+          "description": "Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.",
           "default": true
         },
         "promocode": {
           "type": "string",
-          "description": "Kode promo saat order.",
+          "description": "Promo code to apply at order.",
           "default": ""
         },
         "status": {
           "type": "string",
-          "description": "Status snapshot (Active, Pending, Suspended, Terminated)."
+          "description": "Snapshot status (Active, Pending, Suspended, Terminated)."
         }
       },
       "required": [
@@ -1400,30 +1397,30 @@
       "inputProperties": {
         "cycle": {
           "type": "string",
-          "description": "Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
+          "description": "Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
         },
         "description": {
           "type": "string",
-          "description": "Deskripsi snapshot.",
+          "description": "Snapshot description.",
           "default": ""
         },
         "name": {
           "type": "string",
-          "description": "Nama snapshot. Default `snapshot-name`.",
+          "description": "Snapshot name. Defaults to `snapshot-name`.",
           "default": "snapshot-name"
         },
         "neoliteAccountId": {
           "type": "integer",
-          "description": "Account id VM NEO Lite Pro yang di-snapshot."
+          "description": "Account id of the NEO Lite Pro VM being snapshotted."
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
+          "description": "Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.",
           "default": true
         },
         "promocode": {
           "type": "string",
-          "description": "Kode promo saat order.",
+          "description": "Promo code to apply at order.",
           "default": ""
         }
       },
@@ -1436,133 +1433,133 @@
       "properties": {
         "billingcycle": {
           "type": "string",
-          "description": "Siklus billing aktif."
+          "description": "Active billing cycle."
         },
         "ciPassword": {
           "type": "string",
-          "description": "Cloud-init password VM (sensitive).",
+          "description": "VM cloud-init password (sensitive).",
           "secret": true
         },
         "ciUser": {
           "type": "string",
-          "description": "Cloud-init user VM."
+          "description": "VM cloud-init user."
         },
         "consolePassword": {
           "type": "string",
-          "description": "Password console saat create. Write-only: ga pernah di-refetch dari API.",
+          "description": "Console password at creation. Write-only: never re-fetched from the API.",
           "secret": true
         },
         "cpus": {
           "type": "integer",
-          "description": "Jumlah CPU VM."
+          "description": "Number of VM CPUs."
         },
         "cycle": {
           "type": "string",
-          "description": "Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
+          "description": "Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
         },
         "description": {
           "type": "string",
-          "description": "Deskripsi VM.",
+          "description": "VM description.",
           "default": ""
         },
         "diskSize": {
           "type": "integer",
-          "description": "Ukuran disk target (GB, absolute - bukan tambahan). Cuma bisa naik, bukan turun."
+          "description": "Target disk size (GB, absolute - not an increment). Can only go up, never down."
         },
         "keypairId": {
           "type": "integer",
-          "description": "Id keypair dari `NeoliteProKeypair`. Bisa diganti via change-keypair."
+          "description": "Keypair id from `NeoliteProKeypair`. Can be changed via change-keypair."
         },
         "lastInvoice": {
           "$ref": "#/types/biznetgio:index:NeoliteLastInvoice",
-          "description": "Invoice terakhir VM."
+          "description": "VM's last invoice."
         },
         "maxDisk": {
           "type": "integer",
-          "description": "Ukuran disk maksimal VM (GB)."
+          "description": "Maximum VM disk size (GB)."
         },
         "maxMem": {
           "type": "integer",
-          "description": "Memory maksimal VM (MB)."
+          "description": "Maximum VM memory (MB)."
         },
         "mem": {
           "type": "integer",
-          "description": "Memory yang dipakai VM (MB)."
+          "description": "Memory used by the VM (MB)."
         },
         "nextDue": {
           "type": "string",
-          "description": "Tanggal tagihan berikutnya."
+          "description": "Next billing due date."
         },
         "orderId": {
           "type": "string",
-          "description": "Order id dari response create."
+          "description": "Order id from the creation response."
         },
         "osName": {
           "type": "string",
-          "description": "Nama OS yang jalan di VM."
+          "description": "Name of the OS running on the VM."
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
+          "description": "Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.",
           "default": true
         },
         "powerState": {
           "type": "string",
-          "description": "Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah."
+          "description": "VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes."
         },
         "productId": {
           "type": "integer",
-          "description": "Product id dari function `getProducts` atau portal."
+          "description": "Product id from the `getProducts` function or the portal."
         },
         "productName": {
           "type": "string",
-          "description": "Nama product aktif."
+          "description": "Active product name."
         },
         "promocode": {
           "type": "string",
-          "description": "Kode promo saat order.",
+          "description": "Promo code to apply at order.",
           "default": ""
         },
         "raw": {
           "type": "string",
-          "description": "Full JSON response akun terakhir dari API, buat akses field yang belum dimodel (cipassword di-mask).",
+          "description": "Raw JSON response of the last-read account, for accessing fields not yet modeled (cipassword masked).",
           "secret": true
         },
         "rebuildOs": {
           "type": "string",
-          "description": "Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`."
+          "description": "When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function."
         },
         "recurringAmount": {
           "type": "integer",
-          "description": "Nominal recurring per siklus."
+          "description": "Recurring amount per cycle."
         },
         "region": {
           "type": "string",
-          "description": "Region VM."
+          "description": "VM region."
         },
         "regionLabel": {
           "type": "string",
-          "description": "Label region VM."
+          "description": "VM region label."
         },
         "selectOs": {
           "type": "string",
-          "description": "OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`."
+          "description": "OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`."
         },
         "sshAndConsoleUser": {
           "type": "string",
-          "description": "User SSH \u0026 console yang dipasang saat create."
+          "description": "SSH and console user set at creation."
         },
         "status": {
           "type": "string",
-          "description": "Status akun terakhir dari API (Active, Pending, Suspended, Terminated)."
+          "description": "Last known account status from the API (Active, Pending, Suspended, Terminated)."
         },
         "uptime": {
           "type": "integer",
-          "description": "Uptime VM dalam detik."
+          "description": "VM uptime in seconds."
         },
         "vmName": {
           "type": "string",
-          "description": "Nama VM. Default `server-name`. Bisa diubah via change-vm-name.",
+          "description": "VM name. Defaults to `server-name`. Can be changed via change-vm-name.",
           "default": "server-name"
         }
       },
@@ -1595,59 +1592,59 @@
       "inputProperties": {
         "consolePassword": {
           "type": "string",
-          "description": "Password console saat create. Write-only: ga pernah di-refetch dari API.",
+          "description": "Console password at creation. Write-only: never re-fetched from the API.",
           "secret": true
         },
         "cycle": {
           "type": "string",
-          "description": "Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
+          "description": "Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
         },
         "description": {
           "type": "string",
-          "description": "Deskripsi VM.",
+          "description": "VM description.",
           "default": ""
         },
         "diskSize": {
           "type": "integer",
-          "description": "Ukuran disk target (GB, absolute - bukan tambahan). Cuma bisa naik, bukan turun."
+          "description": "Target disk size (GB, absolute - not an increment). Can only go up, never down."
         },
         "keypairId": {
           "type": "integer",
-          "description": "Id keypair dari `NeoliteProKeypair`. Bisa diganti via change-keypair."
+          "description": "Keypair id from `NeoliteProKeypair`. Can be changed via change-keypair."
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
+          "description": "Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.",
           "default": true
         },
         "powerState": {
           "type": "string",
-          "description": "Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah."
+          "description": "VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes."
         },
         "productId": {
           "type": "integer",
-          "description": "Product id dari function `getProducts` atau portal."
+          "description": "Product id from the `getProducts` function or the portal."
         },
         "promocode": {
           "type": "string",
-          "description": "Kode promo saat order.",
+          "description": "Promo code to apply at order.",
           "default": ""
         },
         "rebuildOs": {
           "type": "string",
-          "description": "Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`."
+          "description": "When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function."
         },
         "selectOs": {
           "type": "string",
-          "description": "OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`."
+          "description": "OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`."
         },
         "sshAndConsoleUser": {
           "type": "string",
-          "description": "User SSH \u0026 console yang dipasang saat create."
+          "description": "SSH and console user set at creation."
         },
         "vmName": {
           "type": "string",
-          "description": "Nama VM. Default `server-name`. Bisa diubah via change-vm-name.",
+          "description": "VM name. Defaults to `server-name`. Can be changed via change-vm-name.",
           "default": "server-name"
         }
       },
@@ -1664,39 +1661,39 @@
       "properties": {
         "cycle": {
           "type": "string",
-          "description": "Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
+          "description": "Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
         },
         "description": {
           "type": "string",
-          "description": "Deskripsi snapshot.",
+          "description": "Snapshot description.",
           "default": ""
         },
         "name": {
           "type": "string",
-          "description": "Nama snapshot. Default `snapshot-name`.",
+          "description": "Snapshot name. Defaults to `snapshot-name`.",
           "default": "snapshot-name"
         },
         "neoliteAccountId": {
           "type": "integer",
-          "description": "Account id VM NEO Lite yang di-snapshot."
+          "description": "Account id of the NEO Lite VM being snapshotted."
         },
         "orderId": {
           "type": "string",
-          "description": "Order id dari response create."
+          "description": "Order id from the creation response."
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
+          "description": "Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.",
           "default": true
         },
         "promocode": {
           "type": "string",
-          "description": "Kode promo saat order.",
+          "description": "Promo code to apply at order.",
           "default": ""
         },
         "status": {
           "type": "string",
-          "description": "Status snapshot (Active, Pending, Suspended, Terminated)."
+          "description": "Snapshot status (Active, Pending, Suspended, Terminated)."
         }
       },
       "required": [
@@ -1708,30 +1705,30 @@
       "inputProperties": {
         "cycle": {
           "type": "string",
-          "description": "Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
+          "description": "Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
         },
         "description": {
           "type": "string",
-          "description": "Deskripsi snapshot.",
+          "description": "Snapshot description.",
           "default": ""
         },
         "name": {
           "type": "string",
-          "description": "Nama snapshot. Default `snapshot-name`.",
+          "description": "Snapshot name. Defaults to `snapshot-name`.",
           "default": "snapshot-name"
         },
         "neoliteAccountId": {
           "type": "integer",
-          "description": "Account id VM NEO Lite yang di-snapshot."
+          "description": "Account id of the NEO Lite VM being snapshotted."
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
+          "description": "Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.",
           "default": true
         },
         "promocode": {
           "type": "string",
-          "description": "Kode promo saat order.",
+          "description": "Promo code to apply at order.",
           "default": ""
         }
       },
@@ -1744,137 +1741,137 @@
       "properties": {
         "billingcycle": {
           "type": "string",
-          "description": "Siklus billing aktif."
+          "description": "Active billing cycle."
         },
         "ciPassword": {
           "type": "string",
-          "description": "Cloud-init password VM (sensitive).",
+          "description": "VM cloud-init password (sensitive).",
           "secret": true
         },
         "ciUser": {
           "type": "string",
-          "description": "Cloud-init user VM."
+          "description": "VM cloud-init user."
         },
         "consolePassword": {
           "type": "string",
-          "description": "Password console saat create. Write-only: ga pernah di-refetch dari API.",
+          "description": "Console password at creation. Write-only: never re-fetched from the API.",
           "secret": true
         },
         "cpus": {
           "type": "integer",
-          "description": "Jumlah CPU VM."
+          "description": "Number of VM CPUs."
         },
         "cycle": {
           "type": "string",
-          "description": "Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
+          "description": "Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
         },
         "description": {
           "type": "string",
-          "description": "Deskripsi VM.",
+          "description": "VM description.",
           "default": ""
         },
         "diskSize": {
           "type": "integer",
-          "description": "Ukuran disk target (GB, absolute - bukan tambahan). Cuma bisa naik, bukan turun."
+          "description": "Target disk size (GB, absolute - not an increment). Can only go up, never down."
         },
         "keypairId": {
           "type": "integer",
-          "description": "Id keypair dari `NeoliteKeypair`. Bisa diganti via change-keypair."
+          "description": "Keypair id from `NeoliteKeypair`. Can be changed via change-keypair."
         },
         "lastInvoice": {
           "$ref": "#/types/biznetgio:index:NeoliteLastInvoice",
-          "description": "Invoice terakhir VM."
+          "description": "VM's last invoice."
         },
         "maxDisk": {
           "type": "integer",
-          "description": "Ukuran disk maksimal VM (GB)."
+          "description": "Maximum VM disk size (GB)."
         },
         "maxMem": {
           "type": "integer",
-          "description": "Memory maksimal VM (MB)."
+          "description": "Maximum VM memory (MB)."
         },
         "mem": {
           "type": "integer",
-          "description": "Memory yang dipakai VM (MB)."
+          "description": "Memory used by the VM (MB)."
         },
         "migrateToPro": {
           "type": "string",
-          "description": "Trigger one-shot migrate ke NEO Lite Pro: isi neolitepro_product_id target. Ganti nilainya buat re-trigger."
+          "description": "Trigger a one-shot migration to NEO Lite Pro: set the neolitepro_product_id target. Change the value again to re-trigger."
         },
         "nextDue": {
           "type": "string",
-          "description": "Tanggal tagihan berikutnya."
+          "description": "Next billing due date."
         },
         "orderId": {
           "type": "string",
-          "description": "Order id dari response create."
+          "description": "Order id from the creation response."
         },
         "osName": {
           "type": "string",
-          "description": "Nama OS yang jalan di VM."
+          "description": "Name of the OS running on the VM."
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
+          "description": "Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.",
           "default": true
         },
         "powerState": {
           "type": "string",
-          "description": "Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah."
+          "description": "VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes."
         },
         "productId": {
           "type": "integer",
-          "description": "Product id dari function `getProducts` atau portal."
+          "description": "Product id from the `getProducts` function or the portal."
         },
         "productName": {
           "type": "string",
-          "description": "Nama product aktif."
+          "description": "Active product name."
         },
         "promocode": {
           "type": "string",
-          "description": "Kode promo saat order.",
+          "description": "Promo code to apply at order.",
           "default": ""
         },
         "raw": {
           "type": "string",
-          "description": "Full JSON response akun terakhir dari API, buat akses field yang belum dimodel (cipassword di-mask).",
+          "description": "Raw JSON response of the last-read account, for accessing fields not yet modeled (cipassword masked).",
           "secret": true
         },
         "rebuildOs": {
           "type": "string",
-          "description": "Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`."
+          "description": "When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function."
         },
         "recurringAmount": {
           "type": "integer",
-          "description": "Nominal recurring per siklus."
+          "description": "Recurring amount per cycle."
         },
         "region": {
           "type": "string",
-          "description": "Region VM."
+          "description": "VM region."
         },
         "regionLabel": {
           "type": "string",
-          "description": "Label region VM."
+          "description": "VM region label."
         },
         "selectOs": {
           "type": "string",
-          "description": "OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`."
+          "description": "OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`."
         },
         "sshAndConsoleUser": {
           "type": "string",
-          "description": "User SSH \u0026 console yang dipasang saat create."
+          "description": "SSH and console user set at creation."
         },
         "status": {
           "type": "string",
-          "description": "Status akun terakhir dari API (Active, Pending, Suspended, Terminated)."
+          "description": "Last known account status from the API (Active, Pending, Suspended, Terminated)."
         },
         "uptime": {
           "type": "integer",
-          "description": "Uptime VM dalam detik."
+          "description": "VM uptime in seconds."
         },
         "vmName": {
           "type": "string",
-          "description": "Nama VM. Default `server-name`. Bisa diubah via change-vm-name.",
+          "description": "VM name. Defaults to `server-name`. Can be changed via change-vm-name.",
           "default": "server-name"
         }
       },
@@ -1907,63 +1904,63 @@
       "inputProperties": {
         "consolePassword": {
           "type": "string",
-          "description": "Password console saat create. Write-only: ga pernah di-refetch dari API.",
+          "description": "Console password at creation. Write-only: never re-fetched from the API.",
           "secret": true
         },
         "cycle": {
           "type": "string",
-          "description": "Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
+          "description": "Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
         },
         "description": {
           "type": "string",
-          "description": "Deskripsi VM.",
+          "description": "VM description.",
           "default": ""
         },
         "diskSize": {
           "type": "integer",
-          "description": "Ukuran disk target (GB, absolute - bukan tambahan). Cuma bisa naik, bukan turun."
+          "description": "Target disk size (GB, absolute - not an increment). Can only go up, never down."
         },
         "keypairId": {
           "type": "integer",
-          "description": "Id keypair dari `NeoliteKeypair`. Bisa diganti via change-keypair."
+          "description": "Keypair id from `NeoliteKeypair`. Can be changed via change-keypair."
         },
         "migrateToPro": {
           "type": "string",
-          "description": "Trigger one-shot migrate ke NEO Lite Pro: isi neolitepro_product_id target. Ganti nilainya buat re-trigger."
+          "description": "Trigger a one-shot migration to NEO Lite Pro: set the neolitepro_product_id target. Change the value again to re-trigger."
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
+          "description": "Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.",
           "default": true
         },
         "powerState": {
           "type": "string",
-          "description": "Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah."
+          "description": "VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes."
         },
         "productId": {
           "type": "integer",
-          "description": "Product id dari function `getProducts` atau portal."
+          "description": "Product id from the `getProducts` function or the portal."
         },
         "promocode": {
           "type": "string",
-          "description": "Kode promo saat order.",
+          "description": "Promo code to apply at order.",
           "default": ""
         },
         "rebuildOs": {
           "type": "string",
-          "description": "Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`."
+          "description": "When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function."
         },
         "selectOs": {
           "type": "string",
-          "description": "OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`."
+          "description": "OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`."
         },
         "sshAndConsoleUser": {
           "type": "string",
-          "description": "User SSH \u0026 console yang dipasang saat create."
+          "description": "SSH and console user set at creation."
         },
         "vmName": {
           "type": "string",
-          "description": "Nama VM. Default `server-name`. Bisa diubah via change-vm-name.",
+          "description": "VM name. Defaults to `server-name`. Can be changed via change-vm-name.",
           "default": "server-name"
         }
       },
@@ -1980,55 +1977,55 @@
       "properties": {
         "consolePassword": {
           "type": "string",
-          "description": "Password console saat create. Write-only: ga pernah di-refetch dari API.",
+          "description": "Console password at creation. Write-only: never re-fetched from the API.",
           "secret": true
         },
         "cycle": {
           "type": "string",
-          "description": "Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
+          "description": "Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
         },
         "description": {
           "type": "string",
-          "description": "Deskripsi VM.",
+          "description": "VM description.",
           "default": ""
         },
         "keypairId": {
           "type": "integer",
-          "description": "Id keypair dari `NeoliteKeypair`."
+          "description": "Keypair id from `NeoliteKeypair`."
         },
         "name": {
           "type": "string",
-          "description": "Nama VM hasil restore."
+          "description": "Name of the restored VM."
         },
         "orderId": {
           "type": "string",
-          "description": "Order id dari response create."
+          "description": "Order id from the creation response."
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
+          "description": "Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.",
           "default": true
         },
         "productId": {
           "type": "integer",
-          "description": "Product id dari function `getProducts` atau portal."
+          "description": "Product id from the `getProducts` function or the portal."
         },
         "promocode": {
           "type": "string",
-          "description": "Kode promo saat order.",
+          "description": "Promo code to apply at order.",
           "default": ""
         },
         "snapshotId": {
           "type": "integer",
-          "description": "Account id snapshot sumber, dari `NeoliteSnapshot`."
+          "description": "Account id of the source snapshot, from `NeoliteSnapshot`."
         },
         "sshAndConsoleUser": {
           "type": "string",
-          "description": "User SSH \u0026 console yang dipasang saat create."
+          "description": "SSH and console user set at creation."
         },
         "status": {
           "type": "string",
-          "description": "Status VM (Active, Pending, Suspended, Terminated)."
+          "description": "VM status (Active, Pending, Suspended, Terminated)."
         }
       },
       "required": [
@@ -2045,47 +2042,47 @@
       "inputProperties": {
         "consolePassword": {
           "type": "string",
-          "description": "Password console saat create. Write-only: ga pernah di-refetch dari API.",
+          "description": "Console password at creation. Write-only: never re-fetched from the API.",
           "secret": true
         },
         "cycle": {
           "type": "string",
-          "description": "Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
+          "description": "Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5."
         },
         "description": {
           "type": "string",
-          "description": "Deskripsi VM.",
+          "description": "VM description.",
           "default": ""
         },
         "keypairId": {
           "type": "integer",
-          "description": "Id keypair dari `NeoliteKeypair`."
+          "description": "Keypair id from `NeoliteKeypair`."
         },
         "name": {
           "type": "string",
-          "description": "Nama VM hasil restore."
+          "description": "Name of the restored VM."
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
+          "description": "Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.",
           "default": true
         },
         "productId": {
           "type": "integer",
-          "description": "Product id dari function `getProducts` atau portal."
+          "description": "Product id from the `getProducts` function or the portal."
         },
         "promocode": {
           "type": "string",
-          "description": "Kode promo saat order.",
+          "description": "Promo code to apply at order.",
           "default": ""
         },
         "snapshotId": {
           "type": "integer",
-          "description": "Account id snapshot sumber, dari `NeoliteSnapshot`."
+          "description": "Account id of the source snapshot, from `NeoliteSnapshot`."
         },
         "sshAndConsoleUser": {
           "type": "string",
-          "description": "User SSH \u0026 console yang dipasang saat create."
+          "description": "SSH and console user set at creation."
         }
       },
       "requiredInputs": [
@@ -2129,7 +2126,7 @@
         },
         "quota": {
           "type": "integer",
-          "description": "Quota in GB. Defaults to 10. Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).",
+          "description": "Quota in GB. Defaults to 10. Can only be increased (counted as an add-on to the previous quota).",
           "default": 10
         },
         "raw": {
@@ -2176,7 +2173,7 @@
         },
         "quota": {
           "type": "integer",
-          "description": "Quota in GB. Defaults to 10. Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).",
+          "description": "Quota in GB. Defaults to 10. Can only be increased (counted as an add-on to the previous quota).",
           "default": 10
         }
       },
@@ -2305,7 +2302,7 @@
         },
         "content": {
           "type": "string",
-          "description": "Inline content yang mau di-upload. Exactly one of `source`/`content` required.",
+          "description": "Inline content to upload. Exactly one of `source`/`content` required.",
           "secret": true,
           "replaceOnChanges": true
         },
@@ -2321,7 +2318,7 @@
         },
         "source": {
           "type": "string",
-          "description": "Path ke file lokal yang mau di-upload. Exactly one of `source`/`content` required.",
+          "description": "Path to the local file to upload. Exactly one of `source`/`content` required.",
           "replaceOnChanges": true
         }
       },
@@ -2349,7 +2346,7 @@
         },
         "content": {
           "type": "string",
-          "description": "Inline content yang mau di-upload. Exactly one of `source`/`content` required.",
+          "description": "Inline content to upload. Exactly one of `source`/`content` required.",
           "secret": true,
           "replaceOnChanges": true
         },
@@ -2360,7 +2357,7 @@
         },
         "source": {
           "type": "string",
-          "description": "Path ke file lokal yang mau di-upload. Exactly one of `source`/`content` required.",
+          "description": "Path to the local file to upload. Exactly one of `source`/`content` required.",
           "replaceOnChanges": true
         }
       },
@@ -2551,7 +2548,7 @@
         "properties": {
           "accountId": {
             "type": "integer",
-            "description": "Account id VM NEO Lite."
+            "description": "Account id of the NEO Lite VM."
           }
         },
         "type": "object",
@@ -2577,7 +2574,7 @@
         "properties": {
           "productId": {
             "type": "integer",
-            "description": "Product id NEO Lite."
+            "description": "NEO Lite product id."
           }
         },
         "type": "object",
@@ -2602,7 +2599,7 @@
         "properties": {
           "productId": {
             "type": "integer",
-            "description": "Product id NEO Lite."
+            "description": "NEO Lite product id."
           }
         },
         "type": "object",
@@ -2630,7 +2627,7 @@
         "properties": {
           "accountId": {
             "type": "integer",
-            "description": "Account id VM NEO Lite Pro."
+            "description": "Account id of the NEO Lite Pro VM."
           }
         },
         "type": "object",
@@ -2656,7 +2653,7 @@
         "properties": {
           "productId": {
             "type": "integer",
-            "description": "Product id NEO Lite Pro."
+            "description": "NEO Lite Pro product id."
           }
         },
         "type": "object",
@@ -2681,7 +2678,7 @@
         "properties": {
           "productId": {
             "type": "integer",
-            "description": "Product id NEO Lite Pro."
+            "description": "NEO Lite Pro product id."
           }
         },
         "type": "object",
@@ -2728,7 +2725,7 @@
         "properties": {
           "accountId": {
             "type": "integer",
-            "description": "Account id VM NEO Lite Pro."
+            "description": "Account id of the NEO Lite Pro VM."
           }
         },
         "type": "object",
@@ -2773,7 +2770,7 @@
         "properties": {
           "accountId": {
             "type": "integer",
-            "description": "Account id VM NEO Lite."
+            "description": "Account id of the NEO Lite VM."
           }
         },
         "type": "object",

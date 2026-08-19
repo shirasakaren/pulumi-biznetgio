@@ -15,21 +15,21 @@ import (
 type NeoliteProSnapshot struct {
 	pulumi.CustomResourceState
 
-	// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+	// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 	Cycle pulumi.StringOutput `pulumi:"cycle"`
-	// Deskripsi snapshot.
+	// Snapshot description.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
-	// Nama snapshot. Default `snapshot-name`.
+	// Snapshot name. Defaults to `snapshot-name`.
 	Name pulumi.StringPtrOutput `pulumi:"name"`
-	// Account id VM NEO Lite Pro yang di-snapshot.
+	// Account id of the NEO Lite Pro VM being snapshotted.
 	NeoliteAccountId pulumi.IntOutput `pulumi:"neoliteAccountId"`
-	// Order id dari response create.
+	// Order id from the creation response.
 	OrderId pulumi.StringOutput `pulumi:"orderId"`
-	// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+	// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 	PayWithCreditCard pulumi.BoolPtrOutput `pulumi:"payWithCreditCard"`
-	// Kode promo saat order.
+	// Promo code to apply at order.
 	Promocode pulumi.StringPtrOutput `pulumi:"promocode"`
-	// Status snapshot (Active, Pending, Suspended, Terminated).
+	// Snapshot status (Active, Pending, Suspended, Terminated).
 	Status pulumi.StringOutput `pulumi:"status"`
 }
 
@@ -91,33 +91,33 @@ func (NeoliteProSnapshotState) ElementType() reflect.Type {
 }
 
 type neoliteProSnapshotArgs struct {
-	// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+	// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 	Cycle string `pulumi:"cycle"`
-	// Deskripsi snapshot.
+	// Snapshot description.
 	Description *string `pulumi:"description"`
-	// Nama snapshot. Default `snapshot-name`.
+	// Snapshot name. Defaults to `snapshot-name`.
 	Name *string `pulumi:"name"`
-	// Account id VM NEO Lite Pro yang di-snapshot.
+	// Account id of the NEO Lite Pro VM being snapshotted.
 	NeoliteAccountId int `pulumi:"neoliteAccountId"`
-	// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+	// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 	PayWithCreditCard *bool `pulumi:"payWithCreditCard"`
-	// Kode promo saat order.
+	// Promo code to apply at order.
 	Promocode *string `pulumi:"promocode"`
 }
 
 // The set of arguments for constructing a NeoliteProSnapshot resource.
 type NeoliteProSnapshotArgs struct {
-	// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+	// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 	Cycle pulumi.StringInput
-	// Deskripsi snapshot.
+	// Snapshot description.
 	Description pulumi.StringPtrInput
-	// Nama snapshot. Default `snapshot-name`.
+	// Snapshot name. Defaults to `snapshot-name`.
 	Name pulumi.StringPtrInput
-	// Account id VM NEO Lite Pro yang di-snapshot.
+	// Account id of the NEO Lite Pro VM being snapshotted.
 	NeoliteAccountId pulumi.IntInput
-	// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+	// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 	PayWithCreditCard pulumi.BoolPtrInput
-	// Kode promo saat order.
+	// Promo code to apply at order.
 	Promocode pulumi.StringPtrInput
 }
 
@@ -158,42 +158,42 @@ func (o NeoliteProSnapshotOutput) ToNeoliteProSnapshotOutputWithContext(ctx cont
 	return o
 }
 
-// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 func (o NeoliteProSnapshotOutput) Cycle() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteProSnapshot) pulumi.StringOutput { return v.Cycle }).(pulumi.StringOutput)
 }
 
-// Deskripsi snapshot.
+// Snapshot description.
 func (o NeoliteProSnapshotOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NeoliteProSnapshot) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
-// Nama snapshot. Default `snapshot-name`.
+// Snapshot name. Defaults to `snapshot-name`.
 func (o NeoliteProSnapshotOutput) Name() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NeoliteProSnapshot) pulumi.StringPtrOutput { return v.Name }).(pulumi.StringPtrOutput)
 }
 
-// Account id VM NEO Lite Pro yang di-snapshot.
+// Account id of the NEO Lite Pro VM being snapshotted.
 func (o NeoliteProSnapshotOutput) NeoliteAccountId() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteProSnapshot) pulumi.IntOutput { return v.NeoliteAccountId }).(pulumi.IntOutput)
 }
 
-// Order id dari response create.
+// Order id from the creation response.
 func (o NeoliteProSnapshotOutput) OrderId() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteProSnapshot) pulumi.StringOutput { return v.OrderId }).(pulumi.StringOutput)
 }
 
-// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 func (o NeoliteProSnapshotOutput) PayWithCreditCard() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *NeoliteProSnapshot) pulumi.BoolPtrOutput { return v.PayWithCreditCard }).(pulumi.BoolPtrOutput)
 }
 
-// Kode promo saat order.
+// Promo code to apply at order.
 func (o NeoliteProSnapshotOutput) Promocode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NeoliteProSnapshot) pulumi.StringPtrOutput { return v.Promocode }).(pulumi.StringPtrOutput)
 }
 
-// Status snapshot (Active, Pending, Suspended, Terminated).
+// Snapshot status (Active, Pending, Suspended, Terminated).
 func (o NeoliteProSnapshotOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteProSnapshot) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
 }

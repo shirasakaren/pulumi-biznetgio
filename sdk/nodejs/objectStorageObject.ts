@@ -44,7 +44,7 @@ export class ObjectStorageObject extends pulumi.CustomResource {
      */
     declare public readonly bucket: pulumi.Output<string>;
     /**
-     * Inline content yang mau di-upload. Exactly one of `source`/`content` required.
+     * Inline content to upload. Exactly one of `source`/`content` required.
      */
     declare public readonly content: pulumi.Output<string | undefined>;
     /**
@@ -56,7 +56,7 @@ export class ObjectStorageObject extends pulumi.CustomResource {
      */
     declare public /*out*/ readonly raw: pulumi.Output<string>;
     /**
-     * Path ke file lokal yang mau di-upload. Exactly one of `source`/`content` required.
+     * Path to the local file to upload. Exactly one of `source`/`content` required.
      */
     declare public readonly source: pulumi.Output<string | undefined>;
 
@@ -122,7 +122,7 @@ export interface ObjectStorageObjectArgs {
      */
     bucket: pulumi.Input<string>;
     /**
-     * Inline content yang mau di-upload. Exactly one of `source`/`content` required.
+     * Inline content to upload. Exactly one of `source`/`content` required.
      */
     content?: pulumi.Input<string | undefined>;
     /**
@@ -130,7 +130,7 @@ export interface ObjectStorageObjectArgs {
      */
     key: pulumi.Input<string>;
     /**
-     * Path ke file lokal yang mau di-upload. Exactly one of `source`/`content` required.
+     * Path to the local file to upload. Exactly one of `source`/`content` required.
      */
     source?: pulumi.Input<string | undefined>;
 }

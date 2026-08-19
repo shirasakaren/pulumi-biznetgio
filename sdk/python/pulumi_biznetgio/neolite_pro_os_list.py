@@ -49,7 +49,7 @@ def neolite_pro_os_list(product_id: Optional[_builtins.int] = None,
     """
     Use this data source to access information about an existing resource.
 
-    :param _builtins.int product_id: Product id NEO Lite Pro.
+    :param _builtins.int product_id: NEO Lite Pro product id.
     """
     __args__ = dict()
     __args__['productId'] = product_id
@@ -63,7 +63,7 @@ def neolite_pro_os_list_output(product_id: pulumi.Input[Optional[_builtins.int]]
     """
     Use this data source to access information about an existing resource.
 
-    :param _builtins.int product_id: Product id NEO Lite Pro.
+    :param _builtins.int product_id: NEO Lite Pro product id.
     """
     __args__ = dict()
     __args__['productId'] = product_id

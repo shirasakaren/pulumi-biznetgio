@@ -15,29 +15,29 @@ import (
 type NeoliteVmFromSnapshot struct {
 	pulumi.CustomResourceState
 
-	// Password console saat create. Write-only: ga pernah di-refetch dari API.
+	// Console password at creation. Write-only: never re-fetched from the API.
 	ConsolePassword pulumi.StringOutput `pulumi:"consolePassword"`
-	// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+	// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 	Cycle pulumi.StringOutput `pulumi:"cycle"`
-	// Deskripsi VM.
+	// VM description.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
-	// Id keypair dari `NeoliteKeypair`.
+	// Keypair id from `NeoliteKeypair`.
 	KeypairId pulumi.IntOutput `pulumi:"keypairId"`
-	// Nama VM hasil restore.
+	// Name of the restored VM.
 	Name pulumi.StringOutput `pulumi:"name"`
-	// Order id dari response create.
+	// Order id from the creation response.
 	OrderId pulumi.StringOutput `pulumi:"orderId"`
-	// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+	// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 	PayWithCreditCard pulumi.BoolPtrOutput `pulumi:"payWithCreditCard"`
-	// Product id dari function `getProducts` atau portal.
+	// Product id from the `getProducts` function or the portal.
 	ProductId pulumi.IntOutput `pulumi:"productId"`
-	// Kode promo saat order.
+	// Promo code to apply at order.
 	Promocode pulumi.StringPtrOutput `pulumi:"promocode"`
-	// Account id snapshot sumber, dari `NeoliteSnapshot`.
+	// Account id of the source snapshot, from `NeoliteSnapshot`.
 	SnapshotId pulumi.IntOutput `pulumi:"snapshotId"`
-	// User SSH & console yang dipasang saat create.
+	// SSH and console user set at creation.
 	SshAndConsoleUser pulumi.StringOutput `pulumi:"sshAndConsoleUser"`
-	// Status VM (Active, Pending, Suspended, Terminated).
+	// VM status (Active, Pending, Suspended, Terminated).
 	Status pulumi.StringOutput `pulumi:"status"`
 }
 
@@ -118,49 +118,49 @@ func (NeoliteVmFromSnapshotState) ElementType() reflect.Type {
 }
 
 type neoliteVmFromSnapshotArgs struct {
-	// Password console saat create. Write-only: ga pernah di-refetch dari API.
+	// Console password at creation. Write-only: never re-fetched from the API.
 	ConsolePassword string `pulumi:"consolePassword"`
-	// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+	// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 	Cycle string `pulumi:"cycle"`
-	// Deskripsi VM.
+	// VM description.
 	Description *string `pulumi:"description"`
-	// Id keypair dari `NeoliteKeypair`.
+	// Keypair id from `NeoliteKeypair`.
 	KeypairId int `pulumi:"keypairId"`
-	// Nama VM hasil restore.
+	// Name of the restored VM.
 	Name string `pulumi:"name"`
-	// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+	// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 	PayWithCreditCard *bool `pulumi:"payWithCreditCard"`
-	// Product id dari function `getProducts` atau portal.
+	// Product id from the `getProducts` function or the portal.
 	ProductId int `pulumi:"productId"`
-	// Kode promo saat order.
+	// Promo code to apply at order.
 	Promocode *string `pulumi:"promocode"`
-	// Account id snapshot sumber, dari `NeoliteSnapshot`.
+	// Account id of the source snapshot, from `NeoliteSnapshot`.
 	SnapshotId int `pulumi:"snapshotId"`
-	// User SSH & console yang dipasang saat create.
+	// SSH and console user set at creation.
 	SshAndConsoleUser string `pulumi:"sshAndConsoleUser"`
 }
 
 // The set of arguments for constructing a NeoliteVmFromSnapshot resource.
 type NeoliteVmFromSnapshotArgs struct {
-	// Password console saat create. Write-only: ga pernah di-refetch dari API.
+	// Console password at creation. Write-only: never re-fetched from the API.
 	ConsolePassword pulumi.StringInput
-	// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+	// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 	Cycle pulumi.StringInput
-	// Deskripsi VM.
+	// VM description.
 	Description pulumi.StringPtrInput
-	// Id keypair dari `NeoliteKeypair`.
+	// Keypair id from `NeoliteKeypair`.
 	KeypairId pulumi.IntInput
-	// Nama VM hasil restore.
+	// Name of the restored VM.
 	Name pulumi.StringInput
-	// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+	// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 	PayWithCreditCard pulumi.BoolPtrInput
-	// Product id dari function `getProducts` atau portal.
+	// Product id from the `getProducts` function or the portal.
 	ProductId pulumi.IntInput
-	// Kode promo saat order.
+	// Promo code to apply at order.
 	Promocode pulumi.StringPtrInput
-	// Account id snapshot sumber, dari `NeoliteSnapshot`.
+	// Account id of the source snapshot, from `NeoliteSnapshot`.
 	SnapshotId pulumi.IntInput
-	// User SSH & console yang dipasang saat create.
+	// SSH and console user set at creation.
 	SshAndConsoleUser pulumi.StringInput
 }
 
@@ -201,62 +201,62 @@ func (o NeoliteVmFromSnapshotOutput) ToNeoliteVmFromSnapshotOutputWithContext(ct
 	return o
 }
 
-// Password console saat create. Write-only: ga pernah di-refetch dari API.
+// Console password at creation. Write-only: never re-fetched from the API.
 func (o NeoliteVmFromSnapshotOutput) ConsolePassword() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVmFromSnapshot) pulumi.StringOutput { return v.ConsolePassword }).(pulumi.StringOutput)
 }
 
-// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 func (o NeoliteVmFromSnapshotOutput) Cycle() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVmFromSnapshot) pulumi.StringOutput { return v.Cycle }).(pulumi.StringOutput)
 }
 
-// Deskripsi VM.
+// VM description.
 func (o NeoliteVmFromSnapshotOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NeoliteVmFromSnapshot) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
-// Id keypair dari `NeoliteKeypair`.
+// Keypair id from `NeoliteKeypair`.
 func (o NeoliteVmFromSnapshotOutput) KeypairId() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteVmFromSnapshot) pulumi.IntOutput { return v.KeypairId }).(pulumi.IntOutput)
 }
 
-// Nama VM hasil restore.
+// Name of the restored VM.
 func (o NeoliteVmFromSnapshotOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVmFromSnapshot) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// Order id dari response create.
+// Order id from the creation response.
 func (o NeoliteVmFromSnapshotOutput) OrderId() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVmFromSnapshot) pulumi.StringOutput { return v.OrderId }).(pulumi.StringOutput)
 }
 
-// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 func (o NeoliteVmFromSnapshotOutput) PayWithCreditCard() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *NeoliteVmFromSnapshot) pulumi.BoolPtrOutput { return v.PayWithCreditCard }).(pulumi.BoolPtrOutput)
 }
 
-// Product id dari function `getProducts` atau portal.
+// Product id from the `getProducts` function or the portal.
 func (o NeoliteVmFromSnapshotOutput) ProductId() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteVmFromSnapshot) pulumi.IntOutput { return v.ProductId }).(pulumi.IntOutput)
 }
 
-// Kode promo saat order.
+// Promo code to apply at order.
 func (o NeoliteVmFromSnapshotOutput) Promocode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NeoliteVmFromSnapshot) pulumi.StringPtrOutput { return v.Promocode }).(pulumi.StringPtrOutput)
 }
 
-// Account id snapshot sumber, dari `NeoliteSnapshot`.
+// Account id of the source snapshot, from `NeoliteSnapshot`.
 func (o NeoliteVmFromSnapshotOutput) SnapshotId() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteVmFromSnapshot) pulumi.IntOutput { return v.SnapshotId }).(pulumi.IntOutput)
 }
 
-// User SSH & console yang dipasang saat create.
+// SSH and console user set at creation.
 func (o NeoliteVmFromSnapshotOutput) SshAndConsoleUser() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVmFromSnapshot) pulumi.StringOutput { return v.SshAndConsoleUser }).(pulumi.StringOutput)
 }
 
-// Status VM (Active, Pending, Suspended, Terminated).
+// VM status (Active, Pending, Suspended, Terminated).
 func (o NeoliteVmFromSnapshotOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVmFromSnapshot) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
 }

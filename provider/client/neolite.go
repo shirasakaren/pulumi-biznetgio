@@ -298,8 +298,8 @@ func (s *NeoliteService) KeypairCreate(ctx context.Context, name string) (*Keypa
 	return decodeJSON[*KeypairResource](raw)
 }
 
-// KeypairCreateRaw create keypair, return raw response map - private key cuma
-// keluar di response ini dan field-nya undocumented, jadi jangan di-decode typed.
+// KeypairCreateRaw creates a keypair and returns the raw response map - the private key only
+// appears in this response and the field is undocumented, so don't decode it typed.
 func (s *NeoliteService) KeypairCreateRaw(ctx context.Context, name string) (map[string]any, error) {
 	raw, err := s.client.doJSON(ctx, http.MethodPost, "/neolites/keypairs/", map[string]string{"name": name})
 	if err != nil {
@@ -421,8 +421,8 @@ type KeypairResource struct {
 	PublicKey string `json:"public_key"`
 }
 
-// UnmarshalJSON toleran: keypair_id bisa number, string numerik, atau malah
-// ke-rename jadi neosshkey_id (wire field beda-beda per endpoint).
+// UnmarshalJSON is tolerant: keypair_id can be a number, a numeric string, or even
+// renamed to neosshkey_id (the wire field varies per endpoint).
 func (k *KeypairResource) UnmarshalJSON(b []byte) error {
 	var a struct {
 		KeypairID   jsonInt64 `json:"keypair_id"`
@@ -452,7 +452,7 @@ type PlanResource struct {
 	Billing      []Billing `json:"billing"`
 }
 
-// UnmarshalJSON toleran: product_id juga bisa string numerik di wire.
+// UnmarshalJSON is tolerant: product_id can also be a numeric string on the wire.
 func (p *PlanResource) UnmarshalJSON(b []byte) error {
 	var a struct {
 		ProductID    jsonInt64 `json:"product_id"`

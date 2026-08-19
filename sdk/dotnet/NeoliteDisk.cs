@@ -14,61 +14,61 @@ namespace Shirasakaren.Biznetgio
     public partial class NeoliteDisk : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        /// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
         /// </summary>
         [Output("cycle")]
         public Output<string> Cycle { get; private set; } = null!;
 
         /// <summary>
-        /// Account id VM NEO Lite tempat disk dipasang.
+        /// Account id of the NEO Lite VM the disk is attached to.
         /// </summary>
         [Output("neoliteAccountId")]
         public Output<int> NeoliteAccountId { get; private set; } = null!;
 
         /// <summary>
-        /// Order id dari response create.
+        /// Order id from the creation response.
         /// </summary>
         [Output("orderId")]
         public Output<string> OrderId { get; private set; } = null!;
 
         /// <summary>
-        /// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        /// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
         /// </summary>
         [Output("payWithCreditCard")]
         public Output<bool?> PayWithCreditCard { get; private set; } = null!;
 
         /// <summary>
-        /// Product id disk dari endpoint `/neolites/disks/products`.
+        /// Disk product id from the `/neolites/disks/products` endpoint.
         /// </summary>
         [Output("productId")]
         public Output<int> ProductId { get; private set; } = null!;
 
         /// <summary>
-        /// Kode promo saat order.
+        /// Promo code to apply at order.
         /// </summary>
         [Output("promocode")]
         public Output<string?> Promocode { get; private set; } = null!;
 
         /// <summary>
-        /// Full JSON response disk terakhir dari API, buat akses field yang belum dimodel.
+        /// Raw JSON of the last-read disk response, for accessing fields not yet modeled.
         /// </summary>
         [Output("raw")]
         public Output<string> Raw { get; private set; } = null!;
 
         /// <summary>
-        /// Nama layanan disk. Default `service-name`.
+        /// Disk service name. Defaults to `service-name`.
         /// </summary>
         [Output("serviceName")]
         public Output<string?> ServiceName { get; private set; } = null!;
 
         /// <summary>
-        /// Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.
+        /// Disk size (GB). Defaults to 60. Can only go up, never down.
         /// </summary>
         [Output("size")]
         public Output<int?> Size { get; private set; } = null!;
 
         /// <summary>
-        /// Status disk (Active, Pending, Suspended, Terminated).
+        /// Disk status (Active, Pending, Suspended, Terminated).
         /// </summary>
         [Output("status")]
         public Output<string> Status { get; private set; } = null!;
@@ -124,43 +124,43 @@ namespace Shirasakaren.Biznetgio
     public sealed class NeoliteDiskArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        /// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
         /// </summary>
         [Input("cycle", required: true)]
         public Input<string> Cycle { get; set; } = null!;
 
         /// <summary>
-        /// Account id VM NEO Lite tempat disk dipasang.
+        /// Account id of the NEO Lite VM the disk is attached to.
         /// </summary>
         [Input("neoliteAccountId", required: true)]
         public Input<int> NeoliteAccountId { get; set; } = null!;
 
         /// <summary>
-        /// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        /// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
         /// </summary>
         [Input("payWithCreditCard")]
         public Input<bool>? PayWithCreditCard { get; set; }
 
         /// <summary>
-        /// Product id disk dari endpoint `/neolites/disks/products`.
+        /// Disk product id from the `/neolites/disks/products` endpoint.
         /// </summary>
         [Input("productId", required: true)]
         public Input<int> ProductId { get; set; } = null!;
 
         /// <summary>
-        /// Kode promo saat order.
+        /// Promo code to apply at order.
         /// </summary>
         [Input("promocode")]
         public Input<string>? Promocode { get; set; }
 
         /// <summary>
-        /// Nama layanan disk. Default `service-name`.
+        /// Disk service name. Defaults to `service-name`.
         /// </summary>
         [Input("serviceName")]
         public Input<string>? ServiceName { get; set; }
 
         /// <summary>
-        /// Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.
+        /// Disk size (GB). Defaults to 60. Can only go up, never down.
         /// </summary>
         [Input("size")]
         public Input<int>? Size { get; set; }

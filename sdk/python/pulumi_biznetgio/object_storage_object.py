@@ -32,8 +32,8 @@ class ObjectStorageObjectArgs:
         :param pulumi.Input[_builtins.str] bucket: Bucket name. Create-only.
         :param pulumi.Input[_builtins.str] key: Object key inside the bucket. Create-only.
         :param pulumi.Input[_builtins.str] acl: S3-style canned ACL applied to the object. Defaults to empty.
-        :param pulumi.Input[_builtins.str] content: Inline content yang mau di-upload. Exactly one of `source`/`content` required.
-        :param pulumi.Input[_builtins.str] source: Path ke file lokal yang mau di-upload. Exactly one of `source`/`content` required.
+        :param pulumi.Input[_builtins.str] content: Inline content to upload. Exactly one of `source`/`content` required.
+        :param pulumi.Input[_builtins.str] source: Path to the local file to upload. Exactly one of `source`/`content` required.
         """
         pulumi.set(__self__, "account_id", account_id)
         pulumi.set(__self__, "bucket", bucket)
@@ -99,7 +99,7 @@ class ObjectStorageObjectArgs:
     @pulumi.getter
     def content(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Inline content yang mau di-upload. Exactly one of `source`/`content` required.
+        Inline content to upload. Exactly one of `source`/`content` required.
         """
         return pulumi.get(self, "content")
 
@@ -111,7 +111,7 @@ class ObjectStorageObjectArgs:
     @pulumi.getter
     def source(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Path ke file lokal yang mau di-upload. Exactly one of `source`/`content` required.
+        Path to the local file to upload. Exactly one of `source`/`content` required.
         """
         return pulumi.get(self, "source")
 
@@ -141,9 +141,9 @@ class ObjectStorageObject(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] account_id: Object storage instance account id. Create-only.
         :param pulumi.Input[_builtins.str] acl: S3-style canned ACL applied to the object. Defaults to empty.
         :param pulumi.Input[_builtins.str] bucket: Bucket name. Create-only.
-        :param pulumi.Input[_builtins.str] content: Inline content yang mau di-upload. Exactly one of `source`/`content` required.
+        :param pulumi.Input[_builtins.str] content: Inline content to upload. Exactly one of `source`/`content` required.
         :param pulumi.Input[_builtins.str] key: Object key inside the bucket. Create-only.
-        :param pulumi.Input[_builtins.str] source: Path ke file lokal yang mau di-upload. Exactly one of `source`/`content` required.
+        :param pulumi.Input[_builtins.str] source: Path to the local file to upload. Exactly one of `source`/`content` required.
         """
         ...
     @overload
@@ -262,7 +262,7 @@ class ObjectStorageObject(pulumi.CustomResource):
     @pulumi.getter
     def content(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Inline content yang mau di-upload. Exactly one of `source`/`content` required.
+        Inline content to upload. Exactly one of `source`/`content` required.
         """
         return pulumi.get(self, "content")
 
@@ -286,7 +286,7 @@ class ObjectStorageObject(pulumi.CustomResource):
     @pulumi.getter
     def source(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Path ke file lokal yang mau di-upload. Exactly one of `source`/`content` required.
+        Path to the local file to upload. Exactly one of `source`/`content` required.
         """
         return pulumi.get(self, "source")
 

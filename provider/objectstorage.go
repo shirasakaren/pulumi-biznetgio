@@ -37,7 +37,7 @@ func (a *ObjectStorageArgs) Annotate(ann infer.Annotator) {
 	ann.Describe(&a.Cycle, "Billing cycle, e.g. `m` for monthly or `a` for annual.")
 	ann.Describe(&a.Label, "Instance label, 6-16 chars, `[a-zA-Z0-9-_]`. Create-only, changing it replaces the instance.")
 	ann.Describe(&a.Quota, "Quota in GB. Defaults to 10. "+
-		"Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).")
+		"Can only be increased (counted as an add-on to the previous quota).")
 	ann.SetDefault(&a.Quota, int64(10))
 	ann.Describe(&a.Promocode, "Promo code to apply at creation. Create-only.")
 	ann.Describe(&a.PayWithCreditCard, "Pay the invoice with the registered credit card. Defaults to true.")
@@ -87,7 +87,7 @@ func (ObjectStorage) Create(
 			"cancelled"}); err != nil {
 		if errors.Is(err, context.DeadlineExceeded) {
 			return resp, infer.ResourceInitFailedError{Reasons: []string{
-				fmt.Sprintf("object storage %s belum active, lanjutin via update aja: %s", accountID, err),
+				fmt.Sprintf("object storage %s not active yet, continue via update: %s", accountID, err),
 			}}
 		}
 		return resp, err
@@ -110,7 +110,7 @@ func (ObjectStorage) Update(
 	cur := osQuota(a)
 	if cur < old {
 		return infer.UpdateResponse[ObjectStorageState]{},
-			fmt.Errorf("biznetgio: object storage quota hanya bisa diperbesar, bukan diperkecil (%d -> %d)", old, cur)
+			fmt.Errorf("biznetgio: object storage quota can only be increased, not decreased (%d -> %d)", old, cur)
 	}
 	if cur > old {
 		if _, err := c.ObjectStorage().QuotaUpgrade(ctx, accountID, client.NOSQuotaUpgradePayload{

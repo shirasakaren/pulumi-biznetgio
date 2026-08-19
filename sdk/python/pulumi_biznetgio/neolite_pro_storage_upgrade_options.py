@@ -48,7 +48,7 @@ def neolite_pro_storage_upgrade_options(account_id: Optional[_builtins.int] = No
     """
     Use this data source to access information about an existing resource.
 
-    :param _builtins.int account_id: Account id VM NEO Lite Pro.
+    :param _builtins.int account_id: Account id of the NEO Lite Pro VM.
     """
     __args__ = dict()
     __args__['accountId'] = account_id
@@ -62,7 +62,7 @@ def neolite_pro_storage_upgrade_options_output(account_id: pulumi.Input[Optional
     """
     Use this data source to access information about an existing resource.
 
-    :param _builtins.int account_id: Account id VM NEO Lite Pro.
+    :param _builtins.int account_id: Account id of the NEO Lite Pro VM.
     """
     __args__ = dict()
     __args__['accountId'] = account_id

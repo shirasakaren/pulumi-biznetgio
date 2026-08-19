@@ -56,7 +56,7 @@ export class ObjectStorage extends pulumi.CustomResource {
      */
     declare public readonly promocode: pulumi.Output<string | undefined>;
     /**
-     * Quota in GB. Defaults to 10. Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).
+     * Quota in GB. Defaults to 10. Can only be increased (counted as an add-on to the previous quota).
      */
     declare public readonly quota: pulumi.Output<number | undefined>;
     /**
@@ -142,7 +142,7 @@ export interface ObjectStorageArgs {
      */
     promocode?: pulumi.Input<string | undefined>;
     /**
-     * Quota in GB. Defaults to 10. Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).
+     * Quota in GB. Defaults to 10. Can only be increased (counted as an add-on to the previous quota).
      */
     quota?: pulumi.Input<number | undefined>;
 }

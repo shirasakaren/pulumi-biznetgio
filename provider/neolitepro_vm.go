@@ -54,49 +54,49 @@ type NeoliteProVmState struct {
 }
 
 func (a *NeoliteProVmArgs) Annotate(ann infer.Annotator) {
-	ann.Describe(&a.SSHAndConsoleUser, "User SSH & console yang dipasang saat create.")
-	ann.Describe(&a.ConsolePassword, "Password console saat create. Write-only: ga pernah di-refetch dari API.")
-	ann.Describe(&a.VMName, "Nama VM. Default `server-name`. Bisa diubah via change-vm-name.")
+	ann.Describe(&a.SSHAndConsoleUser, "SSH and console user set at creation.")
+	ann.Describe(&a.ConsolePassword, "Console password at creation. Write-only: never re-fetched from the API.")
+	ann.Describe(&a.VMName, "VM name. Defaults to `server-name`. Can be changed via change-vm-name.")
 	ann.SetDefault(&a.VMName, "server-name")
-	ann.Describe(&a.Description, "Deskripsi VM.")
+	ann.Describe(&a.Description, "VM description.")
 	ann.SetDefault(&a.Description, "")
-	ann.Describe(&a.ProductID, "Product id dari function `getProducts` atau portal.")
-	ann.Describe(&a.SelectOS, "OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.")
-	ann.Describe(&a.KeypairID, "Id keypair dari `NeoliteProKeypair`. Bisa diganti via change-keypair.")
-	ann.Describe(&a.Cycle, "Siklus billing: m monthly, a annual, q quarterly, s semiannual, "+
+	ann.Describe(&a.ProductID, "Product id from the `getProducts` function or the portal.")
+	ann.Describe(&a.SelectOS, "OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`.")
+	ann.Describe(&a.KeypairID, "Keypair id from `NeoliteProKeypair`. Can be changed via change-keypair.")
+	ann.Describe(&a.Cycle, "Billing cycle: m monthly, a annual, q quarterly, s semiannual, "+
 		"b biennial, t triennial, p4, p5.")
-	ann.Describe(&a.PayWithCreditCard, "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). "+
-		"Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.")
+	ann.Describe(&a.PayWithCreditCard, "Pay the invoice with the registered credit card at order time. "+
+		"Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.")
 	ann.SetDefault(&a.PayWithCreditCard, true)
-	ann.Describe(&a.Promocode, "Kode promo saat order.")
+	ann.Describe(&a.Promocode, "Promo code to apply at order.")
 	ann.SetDefault(&a.Promocode, "")
-	ann.Describe(&a.PowerState, "Power state VM: start, stop, suspend, resume, atau shutdown. "+
-		"Update cuma mengirim action kalau nilainya berubah.")
-	ann.Describe(&a.RebuildOS, "Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. "+
-		"List OS valid ada di function `getOsList`.")
-	ann.Describe(&a.DiskSize, "Ukuran disk target (GB, absolute - bukan tambahan). Cuma bisa naik, bukan turun.")
+	ann.Describe(&a.PowerState, "VM power state: start, stop, suspend, resume, or shutdown. "+
+		"Update only sends an action when the value changes.")
+	ann.Describe(&a.RebuildOS, "When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. "+
+		"Valid OS values are listed by the `getOsList` function.")
+	ann.Describe(&a.DiskSize, "Target disk size (GB, absolute - not an increment). Can only go up, never down.")
 }
 
 func (s *NeoliteProVmState) Annotate(ann infer.Annotator) {
-	ann.Describe(&s.OrderID, "Order id dari response create.")
-	ann.Describe(&s.Status, "Status akun terakhir dari API (Active, Pending, Suspended, Terminated).")
-	ann.Describe(&s.Uptime, "Uptime VM dalam detik.")
-	ann.Describe(&s.MaxDisk, "Ukuran disk maksimal VM (GB).")
-	ann.Describe(&s.MaxMem, "Memory maksimal VM (MB).")
-	ann.Describe(&s.Mem, "Memory yang dipakai VM (MB).")
-	ann.Describe(&s.CPUs, "Jumlah CPU VM.")
-	ann.Describe(&s.CIUser, "Cloud-init user VM.")
-	ann.Describe(&s.CIPassword, "Cloud-init password VM (sensitive).")
-	ann.Describe(&s.OSName, "Nama OS yang jalan di VM.")
-	ann.Describe(&s.Region, "Region VM.")
-	ann.Describe(&s.RegionLabel, "Label region VM.")
-	ann.Describe(&s.NextDue, "Tanggal tagihan berikutnya.")
-	ann.Describe(&s.RecurringAmount, "Nominal recurring per siklus.")
-	ann.Describe(&s.Billingcycle, "Siklus billing aktif.")
-	ann.Describe(&s.ProductName, "Nama product aktif.")
-	ann.Describe(&s.LastInvoice, "Invoice terakhir VM.")
-	ann.Describe(&s.Raw, "Full JSON response akun terakhir dari API, "+
-		"buat akses field yang belum dimodel (cipassword di-mask).")
+	ann.Describe(&s.OrderID, "Order id from the creation response.")
+	ann.Describe(&s.Status, "Last known account status from the API (Active, Pending, Suspended, Terminated).")
+	ann.Describe(&s.Uptime, "VM uptime in seconds.")
+	ann.Describe(&s.MaxDisk, "Maximum VM disk size (GB).")
+	ann.Describe(&s.MaxMem, "Maximum VM memory (MB).")
+	ann.Describe(&s.Mem, "Memory used by the VM (MB).")
+	ann.Describe(&s.CPUs, "Number of VM CPUs.")
+	ann.Describe(&s.CIUser, "VM cloud-init user.")
+	ann.Describe(&s.CIPassword, "VM cloud-init password (sensitive).")
+	ann.Describe(&s.OSName, "Name of the OS running on the VM.")
+	ann.Describe(&s.Region, "VM region.")
+	ann.Describe(&s.RegionLabel, "VM region label.")
+	ann.Describe(&s.NextDue, "Next billing due date.")
+	ann.Describe(&s.RecurringAmount, "Recurring amount per cycle.")
+	ann.Describe(&s.Billingcycle, "Active billing cycle.")
+	ann.Describe(&s.ProductName, "Active product name.")
+	ann.Describe(&s.LastInvoice, "VM's last invoice.")
+	ann.Describe(&s.Raw, "Raw JSON response of the last-read account, "+
+		"for accessing fields not yet modeled (cipassword masked).")
 }
 
 func (NeoliteProVm) WireDependencies(f infer.FieldSelector, _ *NeoliteProVmArgs, state *NeoliteProVmState) {
@@ -150,7 +150,7 @@ func (NeoliteProVm) Create(
 	if err != nil {
 		if ctx.Err() == context.DeadlineExceeded {
 			return infer.CreateResponse[NeoliteProVmState]{ID: id, Output: partial},
-				infer.ResourceInitFailedError{Reasons: []string{fmt.Sprintf("neolite pro vm %s belum active: %s", id, err)}}
+				infer.ResourceInitFailedError{Reasons: []string{fmt.Sprintf("neolite pro vm %s not active yet: %s", id, err)}}
 		}
 		return infer.CreateResponse[NeoliteProVmState]{}, err
 	}
@@ -203,7 +203,7 @@ func (NeoliteProVm) Update(
 		oldSize := i64Val(old.DiskSize)
 		if newSize < oldSize {
 			return infer.UpdateResponse[NeoliteProVmState]{},
-				fmt.Errorf("neolite pro vm storage cuma bisa di-upgrade: %d -> %d", oldSize, newSize)
+				fmt.Errorf("neolite pro vm storage can only be upgraded: %d -> %d", oldSize, newSize)
 		}
 		if _, err := c.NeolitePro().VMChangeStorage(ctx, id, client.UpgradePayload{
 			DiskSize:         newSize,
@@ -237,7 +237,7 @@ func (NeoliteProVm) Update(
 				return infer.UpdateResponse[NeoliteProVmState]{
 						Output: NeoliteProVmState{NeoliteProVmArgs: in},
 					}, infer.ResourceInitFailedError{Reasons: []string{
-						fmt.Sprintf("neolite pro vm %d belum active: %s", id, err),
+						fmt.Sprintf("neolite pro vm %d not active yet: %s", id, err),
 					}}
 			}
 			return infer.UpdateResponse[NeoliteProVmState]{}, fmt.Errorf("neolite pro vm %d gagal balik active: %w", id, err)

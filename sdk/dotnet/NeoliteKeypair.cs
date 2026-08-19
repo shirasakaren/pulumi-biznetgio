@@ -14,25 +14,25 @@ namespace Shirasakaren.Biznetgio
     public partial class NeoliteKeypair : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// Id keypair di BiznetGIO.
+        /// Keypair id in BiznetGIO.
         /// </summary>
         [Output("keypairId")]
         public Output<int> KeypairId { get; private set; } = null!;
 
         /// <summary>
-        /// Nama keypair.
+        /// Keypair name.
         /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// Private key (sensitive). Write-only: cuma ada di response create, ga bisa di-refetch.
+        /// Private key (sensitive). Write-only: only present in the create response, can't be re-fetched.
         /// </summary>
         [Output("privateKey")]
         public Output<string> PrivateKey { get; private set; } = null!;
 
         /// <summary>
-        /// Public key yang di-generate.
+        /// Generated public key.
         /// </summary>
         [Output("publicKey")]
         public Output<string> PublicKey { get; private set; } = null!;
@@ -88,7 +88,7 @@ namespace Shirasakaren.Biznetgio
     public sealed class NeoliteKeypairArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Nama keypair.
+        /// Keypair name.
         /// </summary>
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;

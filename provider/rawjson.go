@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-// secretJSONKeys key yang nilainya harus di-mask sebelum masuk state/log.
+// secretJSONKeys are keys whose values must be masked before entering state/log.
 var secretJSONKeys = []string{
 	"cipassword", "console_password", "consolepassword", "password", "passwd",
 	"private_key", "privatekey", "private", "secret_key", "secretkey", "secret",
@@ -41,7 +41,7 @@ func redactMap(m map[string]any) map[string]any {
 	return out
 }
 
-// RedactJSON marshal map dengan nilai rahasia di-mask, fallback nil.
+// RedactJSON marshals a map with secret values masked, falling back to nil.
 func RedactJSON(m map[string]any) []byte {
 	b, err := json.Marshal(redactMap(m))
 	if err != nil {

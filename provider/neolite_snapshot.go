@@ -29,23 +29,23 @@ type NeoliteSnapshotState struct {
 }
 
 func (a *NeoliteSnapshotArgs) Annotate(ann infer.Annotator) {
-	ann.Describe(&a.NeoliteAccountID, "Account id VM NEO Lite yang di-snapshot.")
-	ann.Describe(&a.Name, "Nama snapshot. Default `snapshot-name`.")
+	ann.Describe(&a.NeoliteAccountID, "Account id of the NEO Lite VM being snapshotted.")
+	ann.Describe(&a.Name, "Snapshot name. Defaults to `snapshot-name`.")
 	ann.SetDefault(&a.Name, "snapshot-name")
-	ann.Describe(&a.Description, "Deskripsi snapshot.")
+	ann.Describe(&a.Description, "Snapshot description.")
 	ann.SetDefault(&a.Description, "")
-	ann.Describe(&a.Cycle, "Siklus billing: m monthly, a annual, q quarterly, s semiannual, "+
+	ann.Describe(&a.Cycle, "Billing cycle: m monthly, a annual, q quarterly, s semiannual, "+
 		"b biennial, t triennial, p4, p5.")
-	ann.Describe(&a.PayWithCreditCard, "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). "+
-		"Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.")
+	ann.Describe(&a.PayWithCreditCard, "Pay the invoice with the registered credit card at order time. "+
+		"Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.")
 	ann.SetDefault(&a.PayWithCreditCard, true)
-	ann.Describe(&a.Promocode, "Kode promo saat order.")
+	ann.Describe(&a.Promocode, "Promo code to apply at order.")
 	ann.SetDefault(&a.Promocode, "")
 }
 
 func (s *NeoliteSnapshotState) Annotate(ann infer.Annotator) {
-	ann.Describe(&s.OrderID, "Order id dari response create.")
-	ann.Describe(&s.Status, "Status snapshot (Active, Pending, Suspended, Terminated).")
+	ann.Describe(&s.OrderID, "Order id from the creation response.")
+	ann.Describe(&s.Status, "Snapshot status (Active, Pending, Suspended, Terminated).")
 }
 
 func (NeoliteSnapshot) Create(
@@ -89,7 +89,7 @@ func (NeoliteSnapshot) Create(
 	if err != nil {
 		if ctx.Err() == context.DeadlineExceeded {
 			return infer.CreateResponse[NeoliteSnapshotState]{ID: id, Output: partial},
-				infer.ResourceInitFailedError{Reasons: []string{fmt.Sprintf("neolite snapshot %s belum active: %s", id, err)}}
+				infer.ResourceInitFailedError{Reasons: []string{fmt.Sprintf("neolite snapshot %s not active yet: %s", id, err)}}
 		}
 		return infer.CreateResponse[NeoliteSnapshotState]{}, err
 	}

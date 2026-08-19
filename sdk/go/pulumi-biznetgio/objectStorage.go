@@ -27,7 +27,7 @@ type ObjectStorage struct {
 	ProductId pulumi.IntOutput `pulumi:"productId"`
 	// Promo code to apply at creation. Create-only.
 	Promocode pulumi.StringPtrOutput `pulumi:"promocode"`
-	// Quota in GB. Defaults to 10. Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).
+	// Quota in GB. Defaults to 10. Can only be increased (counted as an add-on to the previous quota).
 	Quota pulumi.IntPtrOutput `pulumi:"quota"`
 	// Raw JSON of the last read response, for anything not modeled yet.
 	Raw pulumi.StringOutput `pulumi:"raw"`
@@ -109,7 +109,7 @@ type objectStorageArgs struct {
 	ProductId int `pulumi:"productId"`
 	// Promo code to apply at creation. Create-only.
 	Promocode *string `pulumi:"promocode"`
-	// Quota in GB. Defaults to 10. Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).
+	// Quota in GB. Defaults to 10. Can only be increased (counted as an add-on to the previous quota).
 	Quota *int `pulumi:"quota"`
 }
 
@@ -125,7 +125,7 @@ type ObjectStorageArgs struct {
 	ProductId pulumi.IntInput
 	// Promo code to apply at creation. Create-only.
 	Promocode pulumi.StringPtrInput
-	// Quota in GB. Defaults to 10. Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).
+	// Quota in GB. Defaults to 10. Can only be increased (counted as an add-on to the previous quota).
 	Quota pulumi.IntPtrInput
 }
 
@@ -196,7 +196,7 @@ func (o ObjectStorageOutput) Promocode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ObjectStorage) pulumi.StringPtrOutput { return v.Promocode }).(pulumi.StringPtrOutput)
 }
 
-// Quota in GB. Defaults to 10. Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).
+// Quota in GB. Defaults to 10. Can only be increased (counted as an add-on to the previous quota).
 func (o ObjectStorageOutput) Quota() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *ObjectStorage) pulumi.IntPtrOutput { return v.Quota }).(pulumi.IntPtrOutput)
 }

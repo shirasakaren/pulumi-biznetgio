@@ -15,25 +15,25 @@ import (
 type NeoliteDisk struct {
 	pulumi.CustomResourceState
 
-	// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+	// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 	Cycle pulumi.StringOutput `pulumi:"cycle"`
-	// Account id VM NEO Lite tempat disk dipasang.
+	// Account id of the NEO Lite VM the disk is attached to.
 	NeoliteAccountId pulumi.IntOutput `pulumi:"neoliteAccountId"`
-	// Order id dari response create.
+	// Order id from the creation response.
 	OrderId pulumi.StringOutput `pulumi:"orderId"`
-	// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+	// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 	PayWithCreditCard pulumi.BoolPtrOutput `pulumi:"payWithCreditCard"`
-	// Product id disk dari endpoint `/neolites/disks/products`.
+	// Disk product id from the `/neolites/disks/products` endpoint.
 	ProductId pulumi.IntOutput `pulumi:"productId"`
-	// Kode promo saat order.
+	// Promo code to apply at order.
 	Promocode pulumi.StringPtrOutput `pulumi:"promocode"`
-	// Full JSON response disk terakhir dari API, buat akses field yang belum dimodel.
+	// Raw JSON of the last-read disk response, for accessing fields not yet modeled.
 	Raw pulumi.StringOutput `pulumi:"raw"`
-	// Nama layanan disk. Default `service-name`.
+	// Disk service name. Defaults to `service-name`.
 	ServiceName pulumi.StringPtrOutput `pulumi:"serviceName"`
-	// Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.
+	// Disk size (GB). Defaults to 60. Can only go up, never down.
 	Size pulumi.IntPtrOutput `pulumi:"size"`
-	// Status disk (Active, Pending, Suspended, Terminated).
+	// Disk status (Active, Pending, Suspended, Terminated).
 	Status pulumi.StringOutput `pulumi:"status"`
 }
 
@@ -102,37 +102,37 @@ func (NeoliteDiskState) ElementType() reflect.Type {
 }
 
 type neoliteDiskArgs struct {
-	// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+	// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 	Cycle string `pulumi:"cycle"`
-	// Account id VM NEO Lite tempat disk dipasang.
+	// Account id of the NEO Lite VM the disk is attached to.
 	NeoliteAccountId int `pulumi:"neoliteAccountId"`
-	// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+	// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 	PayWithCreditCard *bool `pulumi:"payWithCreditCard"`
-	// Product id disk dari endpoint `/neolites/disks/products`.
+	// Disk product id from the `/neolites/disks/products` endpoint.
 	ProductId int `pulumi:"productId"`
-	// Kode promo saat order.
+	// Promo code to apply at order.
 	Promocode *string `pulumi:"promocode"`
-	// Nama layanan disk. Default `service-name`.
+	// Disk service name. Defaults to `service-name`.
 	ServiceName *string `pulumi:"serviceName"`
-	// Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.
+	// Disk size (GB). Defaults to 60. Can only go up, never down.
 	Size *int `pulumi:"size"`
 }
 
 // The set of arguments for constructing a NeoliteDisk resource.
 type NeoliteDiskArgs struct {
-	// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+	// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 	Cycle pulumi.StringInput
-	// Account id VM NEO Lite tempat disk dipasang.
+	// Account id of the NEO Lite VM the disk is attached to.
 	NeoliteAccountId pulumi.IntInput
-	// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+	// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 	PayWithCreditCard pulumi.BoolPtrInput
-	// Product id disk dari endpoint `/neolites/disks/products`.
+	// Disk product id from the `/neolites/disks/products` endpoint.
 	ProductId pulumi.IntInput
-	// Kode promo saat order.
+	// Promo code to apply at order.
 	Promocode pulumi.StringPtrInput
-	// Nama layanan disk. Default `service-name`.
+	// Disk service name. Defaults to `service-name`.
 	ServiceName pulumi.StringPtrInput
-	// Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.
+	// Disk size (GB). Defaults to 60. Can only go up, never down.
 	Size pulumi.IntPtrInput
 }
 
@@ -173,52 +173,52 @@ func (o NeoliteDiskOutput) ToNeoliteDiskOutputWithContext(ctx context.Context) N
 	return o
 }
 
-// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 func (o NeoliteDiskOutput) Cycle() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteDisk) pulumi.StringOutput { return v.Cycle }).(pulumi.StringOutput)
 }
 
-// Account id VM NEO Lite tempat disk dipasang.
+// Account id of the NEO Lite VM the disk is attached to.
 func (o NeoliteDiskOutput) NeoliteAccountId() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteDisk) pulumi.IntOutput { return v.NeoliteAccountId }).(pulumi.IntOutput)
 }
 
-// Order id dari response create.
+// Order id from the creation response.
 func (o NeoliteDiskOutput) OrderId() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteDisk) pulumi.StringOutput { return v.OrderId }).(pulumi.StringOutput)
 }
 
-// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 func (o NeoliteDiskOutput) PayWithCreditCard() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *NeoliteDisk) pulumi.BoolPtrOutput { return v.PayWithCreditCard }).(pulumi.BoolPtrOutput)
 }
 
-// Product id disk dari endpoint `/neolites/disks/products`.
+// Disk product id from the `/neolites/disks/products` endpoint.
 func (o NeoliteDiskOutput) ProductId() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteDisk) pulumi.IntOutput { return v.ProductId }).(pulumi.IntOutput)
 }
 
-// Kode promo saat order.
+// Promo code to apply at order.
 func (o NeoliteDiskOutput) Promocode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NeoliteDisk) pulumi.StringPtrOutput { return v.Promocode }).(pulumi.StringPtrOutput)
 }
 
-// Full JSON response disk terakhir dari API, buat akses field yang belum dimodel.
+// Raw JSON of the last-read disk response, for accessing fields not yet modeled.
 func (o NeoliteDiskOutput) Raw() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteDisk) pulumi.StringOutput { return v.Raw }).(pulumi.StringOutput)
 }
 
-// Nama layanan disk. Default `service-name`.
+// Disk service name. Defaults to `service-name`.
 func (o NeoliteDiskOutput) ServiceName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NeoliteDisk) pulumi.StringPtrOutput { return v.ServiceName }).(pulumi.StringPtrOutput)
 }
 
-// Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.
+// Disk size (GB). Defaults to 60. Can only go up, never down.
 func (o NeoliteDiskOutput) Size() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *NeoliteDisk) pulumi.IntPtrOutput { return v.Size }).(pulumi.IntPtrOutput)
 }
 
-// Status disk (Active, Pending, Suspended, Terminated).
+// Disk status (Active, Pending, Suspended, Terminated).
 func (o NeoliteDiskOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteDisk) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
 }

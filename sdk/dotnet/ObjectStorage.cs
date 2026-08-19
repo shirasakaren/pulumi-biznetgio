@@ -50,7 +50,7 @@ namespace Shirasakaren.Biznetgio
         public Output<string?> Promocode { get; private set; } = null!;
 
         /// <summary>
-        /// Quota in GB. Defaults to 10. Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).
+        /// Quota in GB. Defaults to 10. Can only be increased (counted as an add-on to the previous quota).
         /// </summary>
         [Output("quota")]
         public Output<int?> Quota { get; private set; } = null!;
@@ -153,7 +153,7 @@ namespace Shirasakaren.Biznetgio
         public Input<string>? Promocode { get; set; }
 
         /// <summary>
-        /// Quota in GB. Defaults to 10. Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).
+        /// Quota in GB. Defaults to 10. Can only be increased (counted as an add-on to the previous quota).
         /// </summary>
         [Input("quota")]
         public Input<int>? Quota { get; set; }

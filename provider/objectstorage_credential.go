@@ -97,7 +97,7 @@ func (ObjectStorageCredential) Update(
 		}
 		if !ok {
 			return infer.UpdateResponse[ObjectStorageCredentialState]{},
-				fmt.Errorf("biznetgio: credential access key tidak ada di state, tidak bisa update")
+				fmt.Errorf("biznetgio: credential access key missing from state, can't update")
 		}
 		if _, err := c.ObjectStorage().CredentialUpdateStatus(ctx, accountID, accessKey, *a.Active); err != nil {
 			return infer.UpdateResponse[ObjectStorageCredentialState]{}, err
@@ -182,8 +182,8 @@ func osFindCredential(
 	return nil, false, nil
 }
 
-// osResolveAccessKey balikin access key plaintext dari keyForm (hash atau literal).
-// Hash mode butuh list credentials - fallback dipake kalo ga ketemu (state lama).
+// osResolveAccessKey returns the plaintext access key from keyForm (hash or literal).
+// Hash mode needs the credentials list - falls back if not found (old state).
 func osResolveAccessKey(
 	ctx context.Context, c *client.Client, accountID int64, keyForm, fallback string,
 ) (string, bool, error) {

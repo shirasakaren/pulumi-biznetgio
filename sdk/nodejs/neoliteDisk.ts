@@ -32,43 +32,43 @@ export class NeoliteDisk extends pulumi.CustomResource {
     }
 
     /**
-     * Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+     * Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
      */
     declare public readonly cycle: pulumi.Output<string>;
     /**
-     * Account id VM NEO Lite tempat disk dipasang.
+     * Account id of the NEO Lite VM the disk is attached to.
      */
     declare public readonly neoliteAccountId: pulumi.Output<number>;
     /**
-     * Order id dari response create.
+     * Order id from the creation response.
      */
     declare public /*out*/ readonly orderId: pulumi.Output<string>;
     /**
-     * Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+     * Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
      */
     declare public readonly payWithCreditCard: pulumi.Output<boolean | undefined>;
     /**
-     * Product id disk dari endpoint `/neolites/disks/products`.
+     * Disk product id from the `/neolites/disks/products` endpoint.
      */
     declare public readonly productId: pulumi.Output<number>;
     /**
-     * Kode promo saat order.
+     * Promo code to apply at order.
      */
     declare public readonly promocode: pulumi.Output<string | undefined>;
     /**
-     * Full JSON response disk terakhir dari API, buat akses field yang belum dimodel.
+     * Raw JSON of the last-read disk response, for accessing fields not yet modeled.
      */
     declare public /*out*/ readonly raw: pulumi.Output<string>;
     /**
-     * Nama layanan disk. Default `service-name`.
+     * Disk service name. Defaults to `service-name`.
      */
     declare public readonly serviceName: pulumi.Output<string | undefined>;
     /**
-     * Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.
+     * Disk size (GB). Defaults to 60. Can only go up, never down.
      */
     declare public readonly size: pulumi.Output<number | undefined>;
     /**
-     * Status disk (Active, Pending, Suspended, Terminated).
+     * Disk status (Active, Pending, Suspended, Terminated).
      */
     declare public /*out*/ readonly status: pulumi.Output<string>;
 
@@ -126,31 +126,31 @@ export class NeoliteDisk extends pulumi.CustomResource {
  */
 export interface NeoliteDiskArgs {
     /**
-     * Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+     * Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
      */
     cycle: pulumi.Input<string>;
     /**
-     * Account id VM NEO Lite tempat disk dipasang.
+     * Account id of the NEO Lite VM the disk is attached to.
      */
     neoliteAccountId: pulumi.Input<number>;
     /**
-     * Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+     * Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
      */
     payWithCreditCard?: pulumi.Input<boolean | undefined>;
     /**
-     * Product id disk dari endpoint `/neolites/disks/products`.
+     * Disk product id from the `/neolites/disks/products` endpoint.
      */
     productId: pulumi.Input<number>;
     /**
-     * Kode promo saat order.
+     * Promo code to apply at order.
      */
     promocode?: pulumi.Input<string | undefined>;
     /**
-     * Nama layanan disk. Default `service-name`.
+     * Disk service name. Defaults to `service-name`.
      */
     serviceName?: pulumi.Input<string | undefined>;
     /**
-     * Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.
+     * Disk size (GB). Defaults to 60. Can only go up, never down.
      */
     size?: pulumi.Input<number | undefined>;
 }

@@ -21,13 +21,13 @@ type ObjectStorageObject struct {
 	Acl pulumi.StringPtrOutput `pulumi:"acl"`
 	// Bucket name. Create-only.
 	Bucket pulumi.StringOutput `pulumi:"bucket"`
-	// Inline content yang mau di-upload. Exactly one of `source`/`content` required.
+	// Inline content to upload. Exactly one of `source`/`content` required.
 	Content pulumi.StringPtrOutput `pulumi:"content"`
 	// Object key inside the bucket. Create-only.
 	Key pulumi.StringOutput `pulumi:"key"`
 	// Raw JSON of the last read response, for anything not modeled yet.
 	Raw pulumi.StringOutput `pulumi:"raw"`
-	// Path ke file lokal yang mau di-upload. Exactly one of `source`/`content` required.
+	// Path to the local file to upload. Exactly one of `source`/`content` required.
 	Source pulumi.StringPtrOutput `pulumi:"source"`
 }
 
@@ -105,11 +105,11 @@ type objectStorageObjectArgs struct {
 	Acl *string `pulumi:"acl"`
 	// Bucket name. Create-only.
 	Bucket string `pulumi:"bucket"`
-	// Inline content yang mau di-upload. Exactly one of `source`/`content` required.
+	// Inline content to upload. Exactly one of `source`/`content` required.
 	Content *string `pulumi:"content"`
 	// Object key inside the bucket. Create-only.
 	Key string `pulumi:"key"`
-	// Path ke file lokal yang mau di-upload. Exactly one of `source`/`content` required.
+	// Path to the local file to upload. Exactly one of `source`/`content` required.
 	Source *string `pulumi:"source"`
 }
 
@@ -121,11 +121,11 @@ type ObjectStorageObjectArgs struct {
 	Acl pulumi.StringPtrInput
 	// Bucket name. Create-only.
 	Bucket pulumi.StringInput
-	// Inline content yang mau di-upload. Exactly one of `source`/`content` required.
+	// Inline content to upload. Exactly one of `source`/`content` required.
 	Content pulumi.StringPtrInput
 	// Object key inside the bucket. Create-only.
 	Key pulumi.StringInput
-	// Path ke file lokal yang mau di-upload. Exactly one of `source`/`content` required.
+	// Path to the local file to upload. Exactly one of `source`/`content` required.
 	Source pulumi.StringPtrInput
 }
 
@@ -181,7 +181,7 @@ func (o ObjectStorageObjectOutput) Bucket() pulumi.StringOutput {
 	return o.ApplyT(func(v *ObjectStorageObject) pulumi.StringOutput { return v.Bucket }).(pulumi.StringOutput)
 }
 
-// Inline content yang mau di-upload. Exactly one of `source`/`content` required.
+// Inline content to upload. Exactly one of `source`/`content` required.
 func (o ObjectStorageObjectOutput) Content() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ObjectStorageObject) pulumi.StringPtrOutput { return v.Content }).(pulumi.StringPtrOutput)
 }
@@ -196,7 +196,7 @@ func (o ObjectStorageObjectOutput) Raw() pulumi.StringOutput {
 	return o.ApplyT(func(v *ObjectStorageObject) pulumi.StringOutput { return v.Raw }).(pulumi.StringOutput)
 }
 
-// Path ke file lokal yang mau di-upload. Exactly one of `source`/`content` required.
+// Path to the local file to upload. Exactly one of `source`/`content` required.
 func (o ObjectStorageObjectOutput) Source() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ObjectStorageObject) pulumi.StringPtrOutput { return v.Source }).(pulumi.StringPtrOutput)
 }

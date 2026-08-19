@@ -111,7 +111,7 @@ func (Baremetal) Create(
 	if err != nil {
 		if errors.Is(err, context.DeadlineExceeded) {
 			return resp, infer.ResourceInitFailedError{Reasons: []string{
-				fmt.Sprintf("baremetal %d belum active, lanjutin via update aja: %s", accountID, err),
+				fmt.Sprintf("baremetal %d not active yet, continue via update: %s", accountID, err),
 			}}
 		}
 		return resp, err

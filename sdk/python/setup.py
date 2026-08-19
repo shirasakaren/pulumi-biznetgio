@@ -21,7 +21,7 @@ def readme():
 setup(name='pulumi_biznetgio',
       python_requires='>=3.9',
       version=VERSION,
-      description="Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren — NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.",
+      description="Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren - NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.",
       long_description=readme(),
       long_description_content_type='text/markdown',
       keywords='biznetgio cloud indonesia neo',

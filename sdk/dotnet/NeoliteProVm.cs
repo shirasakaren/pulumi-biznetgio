@@ -14,187 +14,187 @@ namespace Shirasakaren.Biznetgio
     public partial class NeoliteProVm : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// Siklus billing aktif.
+        /// Active billing cycle.
         /// </summary>
         [Output("billingcycle")]
         public Output<string> Billingcycle { get; private set; } = null!;
 
         /// <summary>
-        /// Cloud-init password VM (sensitive).
+        /// VM cloud-init password (sensitive).
         /// </summary>
         [Output("ciPassword")]
         public Output<string> CiPassword { get; private set; } = null!;
 
         /// <summary>
-        /// Cloud-init user VM.
+        /// VM cloud-init user.
         /// </summary>
         [Output("ciUser")]
         public Output<string> CiUser { get; private set; } = null!;
 
         /// <summary>
-        /// Password console saat create. Write-only: ga pernah di-refetch dari API.
+        /// Console password at creation. Write-only: never re-fetched from the API.
         /// </summary>
         [Output("consolePassword")]
         public Output<string> ConsolePassword { get; private set; } = null!;
 
         /// <summary>
-        /// Jumlah CPU VM.
+        /// Number of VM CPUs.
         /// </summary>
         [Output("cpus")]
         public Output<int> Cpus { get; private set; } = null!;
 
         /// <summary>
-        /// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        /// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
         /// </summary>
         [Output("cycle")]
         public Output<string> Cycle { get; private set; } = null!;
 
         /// <summary>
-        /// Deskripsi VM.
+        /// VM description.
         /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
         /// <summary>
-        /// Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
+        /// Target disk size (GB, absolute - not an increment). Can only go up, never down.
         /// </summary>
         [Output("diskSize")]
         public Output<int?> DiskSize { get; private set; } = null!;
 
         /// <summary>
-        /// Id keypair dari `NeoliteProKeypair`. Bisa diganti via change-keypair.
+        /// Keypair id from `NeoliteProKeypair`. Can be changed via change-keypair.
         /// </summary>
         [Output("keypairId")]
         public Output<int> KeypairId { get; private set; } = null!;
 
         /// <summary>
-        /// Invoice terakhir VM.
+        /// VM's last invoice.
         /// </summary>
         [Output("lastInvoice")]
         public Output<Outputs.NeoliteLastInvoice> LastInvoice { get; private set; } = null!;
 
         /// <summary>
-        /// Ukuran disk maksimal VM (GB).
+        /// Maximum VM disk size (GB).
         /// </summary>
         [Output("maxDisk")]
         public Output<int> MaxDisk { get; private set; } = null!;
 
         /// <summary>
-        /// Memory maksimal VM (MB).
+        /// Maximum VM memory (MB).
         /// </summary>
         [Output("maxMem")]
         public Output<int> MaxMem { get; private set; } = null!;
 
         /// <summary>
-        /// Memory yang dipakai VM (MB).
+        /// Memory used by the VM (MB).
         /// </summary>
         [Output("mem")]
         public Output<int> Mem { get; private set; } = null!;
 
         /// <summary>
-        /// Tanggal tagihan berikutnya.
+        /// Next billing due date.
         /// </summary>
         [Output("nextDue")]
         public Output<string> NextDue { get; private set; } = null!;
 
         /// <summary>
-        /// Order id dari response create.
+        /// Order id from the creation response.
         /// </summary>
         [Output("orderId")]
         public Output<string> OrderId { get; private set; } = null!;
 
         /// <summary>
-        /// Nama OS yang jalan di VM.
+        /// Name of the OS running on the VM.
         /// </summary>
         [Output("osName")]
         public Output<string> OsName { get; private set; } = null!;
 
         /// <summary>
-        /// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        /// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
         /// </summary>
         [Output("payWithCreditCard")]
         public Output<bool?> PayWithCreditCard { get; private set; } = null!;
 
         /// <summary>
-        /// Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+        /// VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes.
         /// </summary>
         [Output("powerState")]
         public Output<string?> PowerState { get; private set; } = null!;
 
         /// <summary>
-        /// Product id dari function `getProducts` atau portal.
+        /// Product id from the `getProducts` function or the portal.
         /// </summary>
         [Output("productId")]
         public Output<int> ProductId { get; private set; } = null!;
 
         /// <summary>
-        /// Nama product aktif.
+        /// Active product name.
         /// </summary>
         [Output("productName")]
         public Output<string> ProductName { get; private set; } = null!;
 
         /// <summary>
-        /// Kode promo saat order.
+        /// Promo code to apply at order.
         /// </summary>
         [Output("promocode")]
         public Output<string?> Promocode { get; private set; } = null!;
 
         /// <summary>
-        /// Full JSON response akun terakhir dari API, buat akses field yang belum dimodel (cipassword di-mask).
+        /// Raw JSON response of the last-read account, for accessing fields not yet modeled (cipassword masked).
         /// </summary>
         [Output("raw")]
         public Output<string> Raw { get; private set; } = null!;
 
         /// <summary>
-        /// Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+        /// When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function.
         /// </summary>
         [Output("rebuildOs")]
         public Output<string?> RebuildOs { get; private set; } = null!;
 
         /// <summary>
-        /// Nominal recurring per siklus.
+        /// Recurring amount per cycle.
         /// </summary>
         [Output("recurringAmount")]
         public Output<int> RecurringAmount { get; private set; } = null!;
 
         /// <summary>
-        /// Region VM.
+        /// VM region.
         /// </summary>
         [Output("region")]
         public Output<string> Region { get; private set; } = null!;
 
         /// <summary>
-        /// Label region VM.
+        /// VM region label.
         /// </summary>
         [Output("regionLabel")]
         public Output<string> RegionLabel { get; private set; } = null!;
 
         /// <summary>
-        /// OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+        /// OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`.
         /// </summary>
         [Output("selectOs")]
         public Output<string> SelectOs { get; private set; } = null!;
 
         /// <summary>
-        /// User SSH &amp; console yang dipasang saat create.
+        /// SSH and console user set at creation.
         /// </summary>
         [Output("sshAndConsoleUser")]
         public Output<string> SshAndConsoleUser { get; private set; } = null!;
 
         /// <summary>
-        /// Status akun terakhir dari API (Active, Pending, Suspended, Terminated).
+        /// Last known account status from the API (Active, Pending, Suspended, Terminated).
         /// </summary>
         [Output("status")]
         public Output<string> Status { get; private set; } = null!;
 
         /// <summary>
-        /// Uptime VM dalam detik.
+        /// VM uptime in seconds.
         /// </summary>
         [Output("uptime")]
         public Output<int> Uptime { get; private set; } = null!;
 
         /// <summary>
-        /// Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+        /// VM name. Defaults to `server-name`. Can be changed via change-vm-name.
         /// </summary>
         [Output("vmName")]
         public Output<string?> VmName { get; private set; } = null!;
@@ -255,7 +255,7 @@ namespace Shirasakaren.Biznetgio
         private Input<string>? _consolePassword;
 
         /// <summary>
-        /// Password console saat create. Write-only: ga pernah di-refetch dari API.
+        /// Console password at creation. Write-only: never re-fetched from the API.
         /// </summary>
         public Input<string>? ConsolePassword
         {
@@ -268,73 +268,73 @@ namespace Shirasakaren.Biznetgio
         }
 
         /// <summary>
-        /// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        /// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
         /// </summary>
         [Input("cycle", required: true)]
         public Input<string> Cycle { get; set; } = null!;
 
         /// <summary>
-        /// Deskripsi VM.
+        /// VM description.
         /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
+        /// Target disk size (GB, absolute - not an increment). Can only go up, never down.
         /// </summary>
         [Input("diskSize")]
         public Input<int>? DiskSize { get; set; }
 
         /// <summary>
-        /// Id keypair dari `NeoliteProKeypair`. Bisa diganti via change-keypair.
+        /// Keypair id from `NeoliteProKeypair`. Can be changed via change-keypair.
         /// </summary>
         [Input("keypairId", required: true)]
         public Input<int> KeypairId { get; set; } = null!;
 
         /// <summary>
-        /// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        /// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
         /// </summary>
         [Input("payWithCreditCard")]
         public Input<bool>? PayWithCreditCard { get; set; }
 
         /// <summary>
-        /// Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+        /// VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes.
         /// </summary>
         [Input("powerState")]
         public Input<string>? PowerState { get; set; }
 
         /// <summary>
-        /// Product id dari function `getProducts` atau portal.
+        /// Product id from the `getProducts` function or the portal.
         /// </summary>
         [Input("productId", required: true)]
         public Input<int> ProductId { get; set; } = null!;
 
         /// <summary>
-        /// Kode promo saat order.
+        /// Promo code to apply at order.
         /// </summary>
         [Input("promocode")]
         public Input<string>? Promocode { get; set; }
 
         /// <summary>
-        /// Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+        /// When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function.
         /// </summary>
         [Input("rebuildOs")]
         public Input<string>? RebuildOs { get; set; }
 
         /// <summary>
-        /// OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+        /// OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`.
         /// </summary>
         [Input("selectOs", required: true)]
         public Input<string> SelectOs { get; set; } = null!;
 
         /// <summary>
-        /// User SSH &amp; console yang dipasang saat create.
+        /// SSH and console user set at creation.
         /// </summary>
         [Input("sshAndConsoleUser", required: true)]
         public Input<string> SshAndConsoleUser { get; set; } = null!;
 
         /// <summary>
-        /// Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+        /// VM name. Defaults to `server-name`. Can be changed via change-vm-name.
         /// </summary>
         [Input("vmName")]
         public Input<string>? VmName { get; set; }

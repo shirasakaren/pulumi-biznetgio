@@ -23,7 +23,7 @@ class NeoliteKeypairArgs:
         """
         The set of arguments for constructing a NeoliteKeypair resource.
 
-        :param pulumi.Input[_builtins.str] name: Nama keypair.
+        :param pulumi.Input[_builtins.str] name: Keypair name.
         """
         pulumi.set(__self__, "name", name)
 
@@ -31,7 +31,7 @@ class NeoliteKeypairArgs:
     @pulumi.getter
     def name(self) -> pulumi.Input[_builtins.str]:
         """
-        Nama keypair.
+        Keypair name.
         """
         return pulumi.get(self, "name")
 
@@ -53,7 +53,7 @@ class NeoliteKeypair(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[_builtins.str] name: Nama keypair.
+        :param pulumi.Input[_builtins.str] name: Keypair name.
         """
         ...
     @overload
@@ -129,7 +129,7 @@ class NeoliteKeypair(pulumi.CustomResource):
     @pulumi.getter(name="keypairId")
     def keypair_id(self) -> pulumi.Output[_builtins.int]:
         """
-        Id keypair di BiznetGIO.
+        Keypair id in BiznetGIO.
         """
         return pulumi.get(self, "keypair_id")
 
@@ -137,7 +137,7 @@ class NeoliteKeypair(pulumi.CustomResource):
     @pulumi.getter
     def name(self) -> pulumi.Output[_builtins.str]:
         """
-        Nama keypair.
+        Keypair name.
         """
         return pulumi.get(self, "name")
 
@@ -145,7 +145,7 @@ class NeoliteKeypair(pulumi.CustomResource):
     @pulumi.getter(name="privateKey")
     def private_key(self) -> pulumi.Output[_builtins.str]:
         """
-        Private key (sensitive). Write-only: cuma ada di response create, ga bisa di-refetch.
+        Private key (sensitive). Write-only: only present in the create response, can't be re-fetched.
         """
         return pulumi.get(self, "private_key")
 
@@ -153,7 +153,7 @@ class NeoliteKeypair(pulumi.CustomResource):
     @pulumi.getter(name="publicKey")
     def public_key(self) -> pulumi.Output[_builtins.str]:
         """
-        Public key yang di-generate.
+        Generated public key.
         """
         return pulumi.get(self, "public_key")
 

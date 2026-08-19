@@ -15,7 +15,7 @@ export function neoliteOsList(args: NeoliteOsListArgs, opts?: pulumi.InvokeOptio
 
 export interface NeoliteOsListArgs {
     /**
-     * Product id NEO Lite.
+     * NEO Lite product id.
      */
     productId: number;
 }
@@ -32,7 +32,7 @@ export function neoliteOsListOutput(args: NeoliteOsListOutputArgs, opts?: pulumi
 
 export interface NeoliteOsListOutputArgs {
     /**
-     * Product id NEO Lite.
+     * NEO Lite product id.
      */
     productId: pulumi.Input<number>;
 }

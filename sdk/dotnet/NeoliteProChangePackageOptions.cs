@@ -26,7 +26,7 @@ namespace Shirasakaren.Biznetgio
     public sealed class NeoliteProChangePackageOptionsArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
-        /// Account id VM NEO Lite Pro.
+        /// Account id of the NEO Lite Pro VM.
         /// </summary>
         [Input("accountId", required: true)]
         public int AccountId { get; set; }
@@ -40,7 +40,7 @@ namespace Shirasakaren.Biznetgio
     public sealed class NeoliteProChangePackageOptionsInvokeArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
-        /// Account id VM NEO Lite Pro.
+        /// Account id of the NEO Lite Pro VM.
         /// </summary>
         [Input("accountId", required: true)]
         public Input<int> AccountId { get; set; } = null!;

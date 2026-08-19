@@ -25,13 +25,14 @@ type NeoliteKeypairState struct {
 }
 
 func (a *NeoliteKeypairArgs) Annotate(ann infer.Annotator) {
-	ann.Describe(&a.Name, "Nama keypair.")
+	ann.Describe(&a.Name, "Keypair name.")
 }
 
 func (s *NeoliteKeypairState) Annotate(ann infer.Annotator) {
-	ann.Describe(&s.KeypairID, "Id keypair di BiznetGIO.")
-	ann.Describe(&s.PublicKey, "Public key yang di-generate.")
-	ann.Describe(&s.PrivateKey, "Private key (sensitive). Write-only: cuma ada di response create, ga bisa di-refetch.")
+	ann.Describe(&s.KeypairID, "Keypair id in BiznetGIO.")
+	ann.Describe(&s.PublicKey, "Generated public key.")
+	ann.Describe(&s.PrivateKey, "Private key (sensitive). Write-only: only present in the create response, "+
+		"can't be re-fetched.")
 }
 
 func (NeoliteKeypair) WireDependencies(f infer.FieldSelector, _ *NeoliteKeypairArgs, state *NeoliteKeypairState) {
@@ -49,7 +50,7 @@ func (NeoliteKeypair) Create(
 	}
 
 	c := GetClient(ctx)
-	// pake raw response: field private key undocumented, aliasnya bisa beda-beda.
+	// uses the raw response: the private key field is undocumented, its alias varies.
 	raw, err := c.Neolite().KeypairCreateRaw(ctx, req.Inputs.Name)
 	if err != nil {
 		return infer.CreateResponse[NeoliteKeypairState]{}, err
@@ -82,7 +83,7 @@ func (NeoliteKeypair) Read(
 			state.KeypairID = kp.KeypairID
 			state.Name = kp.Name
 			state.PublicKey = kp.PublicKey
-			// private key write-only: keep value lama dari state.
+			// private key write-only: keep the old value from state.
 			return infer.ReadResponse[NeoliteKeypairArgs, NeoliteKeypairState]{State: state}, nil
 		}
 	}
@@ -103,7 +104,7 @@ func (NeoliteKeypair) Delete(
 	return infer.DeleteResponse{}, nil
 }
 
-// neoAliasStr cari value string pake beberapa kandidat key, case-insensitive.
+// neoAliasStr looks up a string value across several candidate keys, case-insensitive.
 func neoAliasStr(v map[string]any, keys ...string) string {
 	for k, x := range v {
 		for _, want := range keys {
@@ -118,7 +119,7 @@ func neoAliasStr(v map[string]any, keys ...string) string {
 	return ""
 }
 
-// neoAliasInt cari value int64 pake beberapa kandidat key (number atau string numerik).
+// neoAliasInt looks up an int64 value across several candidate keys (number or numeric string).
 func neoAliasInt(v map[string]any, keys ...string) int64 {
 	for k, x := range v {
 		for _, want := range keys {
@@ -139,7 +140,7 @@ func neoAliasInt(v map[string]any, keys ...string) int64 {
 	return 0
 }
 
-// neoRawJSON marshal map ke string JSON pake RedactJSON, fallback empty string.
+// neoRawJSON marshals a map to a JSON string via RedactJSON, falling back to an empty string.
 func neoRawJSON(v map[string]any) string {
 	if v == nil {
 		return ""

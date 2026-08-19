@@ -32,19 +32,19 @@ export class NeoliteProKeypair extends pulumi.CustomResource {
     }
 
     /**
-     * Id keypair di BiznetGIO.
+     * Keypair id in BiznetGIO.
      */
     declare public /*out*/ readonly keypairId: pulumi.Output<number>;
     /**
-     * Nama keypair.
+     * Keypair name.
      */
     declare public readonly name: pulumi.Output<string>;
     /**
-     * Private key (sensitive). Write-only: cuma ada di response create, ga bisa di-refetch.
+     * Private key (sensitive). Write-only: only present in the create response, can't be re-fetched.
      */
     declare public /*out*/ readonly privateKey: pulumi.Output<string>;
     /**
-     * Public key yang di-generate.
+     * Generated public key.
      */
     declare public /*out*/ readonly publicKey: pulumi.Output<string>;
 
@@ -84,7 +84,7 @@ export class NeoliteProKeypair extends pulumi.CustomResource {
  */
 export interface NeoliteProKeypairArgs {
     /**
-     * Nama keypair.
+     * Keypair name.
      */
     name: pulumi.Input<string>;
 }

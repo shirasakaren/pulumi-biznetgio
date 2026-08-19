@@ -29,13 +29,13 @@ class NeoliteDiskArgs:
         """
         The set of arguments for constructing a NeoliteDisk resource.
 
-        :param pulumi.Input[_builtins.str] cycle: Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
-        :param pulumi.Input[_builtins.int] neolite_account_id: Account id VM NEO Lite tempat disk dipasang.
-        :param pulumi.Input[_builtins.int] product_id: Product id disk dari endpoint `/neolites/disks/products`.
-        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
-        :param pulumi.Input[_builtins.str] promocode: Kode promo saat order.
-        :param pulumi.Input[_builtins.str] service_name: Nama layanan disk. Default `service-name`.
-        :param pulumi.Input[_builtins.int] size: Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.
+        :param pulumi.Input[_builtins.str] cycle: Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        :param pulumi.Input[_builtins.int] neolite_account_id: Account id of the NEO Lite VM the disk is attached to.
+        :param pulumi.Input[_builtins.int] product_id: Disk product id from the `/neolites/disks/products` endpoint.
+        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
+        :param pulumi.Input[_builtins.str] promocode: Promo code to apply at order.
+        :param pulumi.Input[_builtins.str] service_name: Disk service name. Defaults to `service-name`.
+        :param pulumi.Input[_builtins.int] size: Disk size (GB). Defaults to 60. Can only go up, never down.
         """
         pulumi.set(__self__, "cycle", cycle)
         pulumi.set(__self__, "neolite_account_id", neolite_account_id)
@@ -61,7 +61,7 @@ class NeoliteDiskArgs:
     @pulumi.getter
     def cycle(self) -> pulumi.Input[_builtins.str]:
         """
-        Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
         """
         return pulumi.get(self, "cycle")
 
@@ -73,7 +73,7 @@ class NeoliteDiskArgs:
     @pulumi.getter(name="neoliteAccountId")
     def neolite_account_id(self) -> pulumi.Input[_builtins.int]:
         """
-        Account id VM NEO Lite tempat disk dipasang.
+        Account id of the NEO Lite VM the disk is attached to.
         """
         return pulumi.get(self, "neolite_account_id")
 
@@ -85,7 +85,7 @@ class NeoliteDiskArgs:
     @pulumi.getter(name="productId")
     def product_id(self) -> pulumi.Input[_builtins.int]:
         """
-        Product id disk dari endpoint `/neolites/disks/products`.
+        Disk product id from the `/neolites/disks/products` endpoint.
         """
         return pulumi.get(self, "product_id")
 
@@ -97,7 +97,7 @@ class NeoliteDiskArgs:
     @pulumi.getter(name="payWithCreditCard")
     def pay_with_credit_card(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
         """
         return pulumi.get(self, "pay_with_credit_card")
 
@@ -109,7 +109,7 @@ class NeoliteDiskArgs:
     @pulumi.getter
     def promocode(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Kode promo saat order.
+        Promo code to apply at order.
         """
         return pulumi.get(self, "promocode")
 
@@ -121,7 +121,7 @@ class NeoliteDiskArgs:
     @pulumi.getter(name="serviceName")
     def service_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Nama layanan disk. Default `service-name`.
+        Disk service name. Defaults to `service-name`.
         """
         return pulumi.get(self, "service_name")
 
@@ -133,7 +133,7 @@ class NeoliteDiskArgs:
     @pulumi.getter
     def size(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
-        Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.
+        Disk size (GB). Defaults to 60. Can only go up, never down.
         """
         return pulumi.get(self, "size")
 
@@ -161,13 +161,13 @@ class NeoliteDisk(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[_builtins.str] cycle: Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
-        :param pulumi.Input[_builtins.int] neolite_account_id: Account id VM NEO Lite tempat disk dipasang.
-        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
-        :param pulumi.Input[_builtins.int] product_id: Product id disk dari endpoint `/neolites/disks/products`.
-        :param pulumi.Input[_builtins.str] promocode: Kode promo saat order.
-        :param pulumi.Input[_builtins.str] service_name: Nama layanan disk. Default `service-name`.
-        :param pulumi.Input[_builtins.int] size: Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.
+        :param pulumi.Input[_builtins.str] cycle: Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        :param pulumi.Input[_builtins.int] neolite_account_id: Account id of the NEO Lite VM the disk is attached to.
+        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
+        :param pulumi.Input[_builtins.int] product_id: Disk product id from the `/neolites/disks/products` endpoint.
+        :param pulumi.Input[_builtins.str] promocode: Promo code to apply at order.
+        :param pulumi.Input[_builtins.str] service_name: Disk service name. Defaults to `service-name`.
+        :param pulumi.Input[_builtins.int] size: Disk size (GB). Defaults to 60. Can only go up, never down.
         """
         ...
     @overload
@@ -273,7 +273,7 @@ class NeoliteDisk(pulumi.CustomResource):
     @pulumi.getter
     def cycle(self) -> pulumi.Output[_builtins.str]:
         """
-        Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
         """
         return pulumi.get(self, "cycle")
 
@@ -281,7 +281,7 @@ class NeoliteDisk(pulumi.CustomResource):
     @pulumi.getter(name="neoliteAccountId")
     def neolite_account_id(self) -> pulumi.Output[_builtins.int]:
         """
-        Account id VM NEO Lite tempat disk dipasang.
+        Account id of the NEO Lite VM the disk is attached to.
         """
         return pulumi.get(self, "neolite_account_id")
 
@@ -289,7 +289,7 @@ class NeoliteDisk(pulumi.CustomResource):
     @pulumi.getter(name="orderId")
     def order_id(self) -> pulumi.Output[_builtins.str]:
         """
-        Order id dari response create.
+        Order id from the creation response.
         """
         return pulumi.get(self, "order_id")
 
@@ -297,7 +297,7 @@ class NeoliteDisk(pulumi.CustomResource):
     @pulumi.getter(name="payWithCreditCard")
     def pay_with_credit_card(self) -> pulumi.Output[Optional[_builtins.bool]]:
         """
-        Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
         """
         return pulumi.get(self, "pay_with_credit_card")
 
@@ -305,7 +305,7 @@ class NeoliteDisk(pulumi.CustomResource):
     @pulumi.getter(name="productId")
     def product_id(self) -> pulumi.Output[_builtins.int]:
         """
-        Product id disk dari endpoint `/neolites/disks/products`.
+        Disk product id from the `/neolites/disks/products` endpoint.
         """
         return pulumi.get(self, "product_id")
 
@@ -313,7 +313,7 @@ class NeoliteDisk(pulumi.CustomResource):
     @pulumi.getter
     def promocode(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Kode promo saat order.
+        Promo code to apply at order.
         """
         return pulumi.get(self, "promocode")
 
@@ -321,7 +321,7 @@ class NeoliteDisk(pulumi.CustomResource):
     @pulumi.getter
     def raw(self) -> pulumi.Output[_builtins.str]:
         """
-        Full JSON response disk terakhir dari API, buat akses field yang belum dimodel.
+        Raw JSON of the last-read disk response, for accessing fields not yet modeled.
         """
         return pulumi.get(self, "raw")
 
@@ -329,7 +329,7 @@ class NeoliteDisk(pulumi.CustomResource):
     @pulumi.getter(name="serviceName")
     def service_name(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Nama layanan disk. Default `service-name`.
+        Disk service name. Defaults to `service-name`.
         """
         return pulumi.get(self, "service_name")
 
@@ -337,7 +337,7 @@ class NeoliteDisk(pulumi.CustomResource):
     @pulumi.getter
     def size(self) -> pulumi.Output[Optional[_builtins.int]]:
         """
-        Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.
+        Disk size (GB). Defaults to 60. Can only go up, never down.
         """
         return pulumi.get(self, "size")
 
@@ -345,7 +345,7 @@ class NeoliteDisk(pulumi.CustomResource):
     @pulumi.getter
     def status(self) -> pulumi.Output[_builtins.str]:
         """
-        Status disk (Active, Pending, Suspended, Terminated).
+        Disk status (Active, Pending, Suspended, Terminated).
         """
         return pulumi.get(self, "status")
 

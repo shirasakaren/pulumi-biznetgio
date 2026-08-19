@@ -119,9 +119,9 @@ func (c *Client) doJSON(ctx context.Context, method, path string, body any) (jso
 	return unwrapJSON(raw)
 }
 
-// unwrapJSON pisahin payload dari envelope `{success, code, data}`.
-// Kalo body valid JSON tapi tanpa key data, balikin body utuh (list endpoint
-// kadang kirim bare array/object). Body kosong tetap error.
+// unwrapJSON extracts the payload from the `{success, code, data}` envelope.
+// If the body is valid JSON but has no data key, it returns the body as-is (list
+// endpoints sometimes send a bare array/object). An empty body is still an error.
 func unwrapJSON(raw []byte) (json.RawMessage, error) {
 	var env struct {
 		Data json.RawMessage `json:"data"`
@@ -136,8 +136,8 @@ func unwrapJSON(raw []byte) (json.RawMessage, error) {
 	return nil, fmt.Errorf("biznetgio: empty response body")
 }
 
-// jsonInt64 toleran: terima number ATAU string numerik di wire (Rust SDK
-// pake deserialize_number_from_string buat keypair_id dkk).
+// jsonInt64 is tolerant: it accepts a number OR a numeric string on the wire (the Rust SDK
+// uses deserialize_number_from_string for keypair_id and friends).
 type jsonInt64 int64
 
 func (n *jsonInt64) UnmarshalJSON(b []byte) error {

@@ -13,7 +13,7 @@ export function neoliteProChangePackageOptions(args: NeoliteProChangePackageOpti
 
 export interface NeoliteProChangePackageOptionsArgs {
     /**
-     * Account id VM NEO Lite Pro.
+     * Account id of the NEO Lite Pro VM.
      */
     accountId: number;
 }
@@ -30,7 +30,7 @@ export function neoliteProChangePackageOptionsOutput(args: NeoliteProChangePacka
 
 export interface NeoliteProChangePackageOptionsOutputArgs {
     /**
-     * Account id VM NEO Lite Pro.
+     * Account id of the NEO Lite Pro VM.
      */
     accountId: pulumi.Input<number>;
 }

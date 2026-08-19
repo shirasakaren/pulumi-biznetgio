@@ -32,25 +32,25 @@ type NeoliteDiskState struct {
 }
 
 func (a *NeoliteDiskArgs) Annotate(ann infer.Annotator) {
-	ann.Describe(&a.ProductID, "Product id disk dari endpoint `/neolites/disks/products`.")
-	ann.Describe(&a.Cycle, "Siklus billing: m monthly, a annual, q quarterly, s semiannual, "+
+	ann.Describe(&a.ProductID, "Disk product id from the `/neolites/disks/products` endpoint.")
+	ann.Describe(&a.Cycle, "Billing cycle: m monthly, a annual, q quarterly, s semiannual, "+
 		"b biennial, t triennial, p4, p5.")
-	ann.Describe(&a.NeoliteAccountID, "Account id VM NEO Lite tempat disk dipasang.")
-	ann.Describe(&a.ServiceName, "Nama layanan disk. Default `service-name`.")
+	ann.Describe(&a.NeoliteAccountID, "Account id of the NEO Lite VM the disk is attached to.")
+	ann.Describe(&a.ServiceName, "Disk service name. Defaults to `service-name`.")
 	ann.SetDefault(&a.ServiceName, "service-name")
-	ann.Describe(&a.Promocode, "Kode promo saat order.")
+	ann.Describe(&a.Promocode, "Promo code to apply at order.")
 	ann.SetDefault(&a.Promocode, "")
-	ann.Describe(&a.PayWithCreditCard, "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). "+
-		"Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.")
+	ann.Describe(&a.PayWithCreditCard, "Pay the invoice with the registered credit card at order time. "+
+		"Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.")
 	ann.SetDefault(&a.PayWithCreditCard, true)
-	ann.Describe(&a.Size, "Ukuran disk (GB). Default 60. Cuma bisa naik, bukan turun.")
+	ann.Describe(&a.Size, "Disk size (GB). Defaults to 60. Can only go up, never down.")
 	ann.SetDefault(&a.Size, int64(60))
 }
 
 func (s *NeoliteDiskState) Annotate(ann infer.Annotator) {
-	ann.Describe(&s.OrderID, "Order id dari response create.")
-	ann.Describe(&s.Status, "Status disk (Active, Pending, Suspended, Terminated).")
-	ann.Describe(&s.Raw, "Full JSON response disk terakhir dari API, buat akses field yang belum dimodel.")
+	ann.Describe(&s.OrderID, "Order id from the creation response.")
+	ann.Describe(&s.Status, "Disk status (Active, Pending, Suspended, Terminated).")
+	ann.Describe(&s.Raw, "Raw JSON of the last-read disk response, for accessing fields not yet modeled.")
 }
 
 func (NeoliteDisk) Create(
@@ -96,7 +96,7 @@ func (NeoliteDisk) Create(
 	if err != nil {
 		if ctx.Err() == context.DeadlineExceeded {
 			return infer.CreateResponse[NeoliteDiskState]{ID: id, Output: partial},
-				infer.ResourceInitFailedError{Reasons: []string{fmt.Sprintf("neolite disk %d belum active: %s", diskID, err)}}
+				infer.ResourceInitFailedError{Reasons: []string{fmt.Sprintf("neolite disk %d not active yet: %s", diskID, err)}}
 		}
 		return infer.CreateResponse[NeoliteDiskState]{}, err
 	}
@@ -126,7 +126,7 @@ func (NeoliteDisk) Update(
 	}
 	if newSize < oldSize {
 		return infer.UpdateResponse[NeoliteDiskState]{},
-			fmt.Errorf("neolite disk cuma bisa di-upgrade: %d -> %d", oldSize, newSize)
+			fmt.Errorf("neolite disk can only be upgraded: %d -> %d", oldSize, newSize)
 	}
 
 	// upgrade pakai additional_size INCREMENT, bukan target absolute.
@@ -147,7 +147,7 @@ func (NeoliteDisk) Update(
 			return infer.UpdateResponse[NeoliteDiskState]{
 					Output: NeoliteDiskState{NeoliteDiskArgs: req.Inputs},
 				}, infer.ResourceInitFailedError{Reasons: []string{
-					fmt.Sprintf("neolite disk %d belum active: %s", id, err),
+					fmt.Sprintf("neolite disk %d not active yet: %s", id, err),
 				}}
 		}
 		return infer.UpdateResponse[NeoliteDiskState]{}, fmt.Errorf("neolite disk %d gagal balik active: %w", id, err)

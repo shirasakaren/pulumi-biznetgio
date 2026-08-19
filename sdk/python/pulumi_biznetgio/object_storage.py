@@ -33,7 +33,7 @@ class ObjectStorageArgs:
         :param pulumi.Input[_builtins.int] product_id: Object storage product/plan id.
         :param pulumi.Input[_builtins.bool] pay_with_credit_card: Pay the invoice with the registered credit card. Defaults to true.
         :param pulumi.Input[_builtins.str] promocode: Promo code to apply at creation. Create-only.
-        :param pulumi.Input[_builtins.int] quota: Quota in GB. Defaults to 10. Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).
+        :param pulumi.Input[_builtins.int] quota: Quota in GB. Defaults to 10. Can only be increased (counted as an add-on to the previous quota).
         """
         pulumi.set(__self__, "cycle", cycle)
         pulumi.set(__self__, "label", label)
@@ -113,7 +113,7 @@ class ObjectStorageArgs:
     @pulumi.getter
     def quota(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
-        Quota in GB. Defaults to 10. Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).
+        Quota in GB. Defaults to 10. Can only be increased (counted as an add-on to the previous quota).
         """
         return pulumi.get(self, "quota")
 
@@ -145,7 +145,7 @@ class ObjectStorage(pulumi.CustomResource):
         :param pulumi.Input[_builtins.bool] pay_with_credit_card: Pay the invoice with the registered credit card. Defaults to true.
         :param pulumi.Input[_builtins.int] product_id: Object storage product/plan id.
         :param pulumi.Input[_builtins.str] promocode: Promo code to apply at creation. Create-only.
-        :param pulumi.Input[_builtins.int] quota: Quota in GB. Defaults to 10. Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).
+        :param pulumi.Input[_builtins.int] quota: Quota in GB. Defaults to 10. Can only be increased (counted as an add-on to the previous quota).
         """
         ...
     @overload
@@ -294,7 +294,7 @@ class ObjectStorage(pulumi.CustomResource):
     @pulumi.getter
     def quota(self) -> pulumi.Output[Optional[_builtins.int]]:
         """
-        Quota in GB. Defaults to 10. Hanya bisa diperbesar (dihitung sebagai tambahan dari quota lama).
+        Quota in GB. Defaults to 10. Can only be increased (counted as an add-on to the previous quota).
         """
         return pulumi.get(self, "quota")
 

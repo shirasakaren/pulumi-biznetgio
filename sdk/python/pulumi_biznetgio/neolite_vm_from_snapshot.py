@@ -32,16 +32,16 @@ class NeoliteVmFromSnapshotArgs:
         """
         The set of arguments for constructing a NeoliteVmFromSnapshot resource.
 
-        :param pulumi.Input[_builtins.str] console_password: Password console saat create. Write-only: ga pernah di-refetch dari API.
-        :param pulumi.Input[_builtins.str] cycle: Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
-        :param pulumi.Input[_builtins.int] keypair_id: Id keypair dari `NeoliteKeypair`.
-        :param pulumi.Input[_builtins.str] name: Nama VM hasil restore.
-        :param pulumi.Input[_builtins.int] product_id: Product id dari function `getProducts` atau portal.
-        :param pulumi.Input[_builtins.int] snapshot_id: Account id snapshot sumber, dari `NeoliteSnapshot`.
-        :param pulumi.Input[_builtins.str] ssh_and_console_user: User SSH & console yang dipasang saat create.
-        :param pulumi.Input[_builtins.str] description: Deskripsi VM.
-        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
-        :param pulumi.Input[_builtins.str] promocode: Kode promo saat order.
+        :param pulumi.Input[_builtins.str] console_password: Console password at creation. Write-only: never re-fetched from the API.
+        :param pulumi.Input[_builtins.str] cycle: Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        :param pulumi.Input[_builtins.int] keypair_id: Keypair id from `NeoliteKeypair`.
+        :param pulumi.Input[_builtins.str] name: Name of the restored VM.
+        :param pulumi.Input[_builtins.int] product_id: Product id from the `getProducts` function or the portal.
+        :param pulumi.Input[_builtins.int] snapshot_id: Account id of the source snapshot, from `NeoliteSnapshot`.
+        :param pulumi.Input[_builtins.str] ssh_and_console_user: SSH and console user set at creation.
+        :param pulumi.Input[_builtins.str] description: VM description.
+        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
+        :param pulumi.Input[_builtins.str] promocode: Promo code to apply at order.
         """
         pulumi.set(__self__, "console_password", console_password)
         pulumi.set(__self__, "cycle", cycle)
@@ -67,7 +67,7 @@ class NeoliteVmFromSnapshotArgs:
     @pulumi.getter(name="consolePassword")
     def console_password(self) -> pulumi.Input[_builtins.str]:
         """
-        Password console saat create. Write-only: ga pernah di-refetch dari API.
+        Console password at creation. Write-only: never re-fetched from the API.
         """
         return pulumi.get(self, "console_password")
 
@@ -79,7 +79,7 @@ class NeoliteVmFromSnapshotArgs:
     @pulumi.getter
     def cycle(self) -> pulumi.Input[_builtins.str]:
         """
-        Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
         """
         return pulumi.get(self, "cycle")
 
@@ -91,7 +91,7 @@ class NeoliteVmFromSnapshotArgs:
     @pulumi.getter(name="keypairId")
     def keypair_id(self) -> pulumi.Input[_builtins.int]:
         """
-        Id keypair dari `NeoliteKeypair`.
+        Keypair id from `NeoliteKeypair`.
         """
         return pulumi.get(self, "keypair_id")
 
@@ -103,7 +103,7 @@ class NeoliteVmFromSnapshotArgs:
     @pulumi.getter
     def name(self) -> pulumi.Input[_builtins.str]:
         """
-        Nama VM hasil restore.
+        Name of the restored VM.
         """
         return pulumi.get(self, "name")
 
@@ -115,7 +115,7 @@ class NeoliteVmFromSnapshotArgs:
     @pulumi.getter(name="productId")
     def product_id(self) -> pulumi.Input[_builtins.int]:
         """
-        Product id dari function `getProducts` atau portal.
+        Product id from the `getProducts` function or the portal.
         """
         return pulumi.get(self, "product_id")
 
@@ -127,7 +127,7 @@ class NeoliteVmFromSnapshotArgs:
     @pulumi.getter(name="snapshotId")
     def snapshot_id(self) -> pulumi.Input[_builtins.int]:
         """
-        Account id snapshot sumber, dari `NeoliteSnapshot`.
+        Account id of the source snapshot, from `NeoliteSnapshot`.
         """
         return pulumi.get(self, "snapshot_id")
 
@@ -139,7 +139,7 @@ class NeoliteVmFromSnapshotArgs:
     @pulumi.getter(name="sshAndConsoleUser")
     def ssh_and_console_user(self) -> pulumi.Input[_builtins.str]:
         """
-        User SSH & console yang dipasang saat create.
+        SSH and console user set at creation.
         """
         return pulumi.get(self, "ssh_and_console_user")
 
@@ -151,7 +151,7 @@ class NeoliteVmFromSnapshotArgs:
     @pulumi.getter
     def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Deskripsi VM.
+        VM description.
         """
         return pulumi.get(self, "description")
 
@@ -163,7 +163,7 @@ class NeoliteVmFromSnapshotArgs:
     @pulumi.getter(name="payWithCreditCard")
     def pay_with_credit_card(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
         """
         return pulumi.get(self, "pay_with_credit_card")
 
@@ -175,7 +175,7 @@ class NeoliteVmFromSnapshotArgs:
     @pulumi.getter
     def promocode(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Kode promo saat order.
+        Promo code to apply at order.
         """
         return pulumi.get(self, "promocode")
 
@@ -206,16 +206,16 @@ class NeoliteVmFromSnapshot(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[_builtins.str] console_password: Password console saat create. Write-only: ga pernah di-refetch dari API.
-        :param pulumi.Input[_builtins.str] cycle: Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
-        :param pulumi.Input[_builtins.str] description: Deskripsi VM.
-        :param pulumi.Input[_builtins.int] keypair_id: Id keypair dari `NeoliteKeypair`.
-        :param pulumi.Input[_builtins.str] name: Nama VM hasil restore.
-        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
-        :param pulumi.Input[_builtins.int] product_id: Product id dari function `getProducts` atau portal.
-        :param pulumi.Input[_builtins.str] promocode: Kode promo saat order.
-        :param pulumi.Input[_builtins.int] snapshot_id: Account id snapshot sumber, dari `NeoliteSnapshot`.
-        :param pulumi.Input[_builtins.str] ssh_and_console_user: User SSH & console yang dipasang saat create.
+        :param pulumi.Input[_builtins.str] console_password: Console password at creation. Write-only: never re-fetched from the API.
+        :param pulumi.Input[_builtins.str] cycle: Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        :param pulumi.Input[_builtins.str] description: VM description.
+        :param pulumi.Input[_builtins.int] keypair_id: Keypair id from `NeoliteKeypair`.
+        :param pulumi.Input[_builtins.str] name: Name of the restored VM.
+        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
+        :param pulumi.Input[_builtins.int] product_id: Product id from the `getProducts` function or the portal.
+        :param pulumi.Input[_builtins.str] promocode: Promo code to apply at order.
+        :param pulumi.Input[_builtins.int] snapshot_id: Account id of the source snapshot, from `NeoliteSnapshot`.
+        :param pulumi.Input[_builtins.str] ssh_and_console_user: SSH and console user set at creation.
         """
         ...
     @overload
@@ -334,7 +334,7 @@ class NeoliteVmFromSnapshot(pulumi.CustomResource):
     @pulumi.getter(name="consolePassword")
     def console_password(self) -> pulumi.Output[_builtins.str]:
         """
-        Password console saat create. Write-only: ga pernah di-refetch dari API.
+        Console password at creation. Write-only: never re-fetched from the API.
         """
         return pulumi.get(self, "console_password")
 
@@ -342,7 +342,7 @@ class NeoliteVmFromSnapshot(pulumi.CustomResource):
     @pulumi.getter
     def cycle(self) -> pulumi.Output[_builtins.str]:
         """
-        Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
         """
         return pulumi.get(self, "cycle")
 
@@ -350,7 +350,7 @@ class NeoliteVmFromSnapshot(pulumi.CustomResource):
     @pulumi.getter
     def description(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Deskripsi VM.
+        VM description.
         """
         return pulumi.get(self, "description")
 
@@ -358,7 +358,7 @@ class NeoliteVmFromSnapshot(pulumi.CustomResource):
     @pulumi.getter(name="keypairId")
     def keypair_id(self) -> pulumi.Output[_builtins.int]:
         """
-        Id keypair dari `NeoliteKeypair`.
+        Keypair id from `NeoliteKeypair`.
         """
         return pulumi.get(self, "keypair_id")
 
@@ -366,7 +366,7 @@ class NeoliteVmFromSnapshot(pulumi.CustomResource):
     @pulumi.getter
     def name(self) -> pulumi.Output[_builtins.str]:
         """
-        Nama VM hasil restore.
+        Name of the restored VM.
         """
         return pulumi.get(self, "name")
 
@@ -374,7 +374,7 @@ class NeoliteVmFromSnapshot(pulumi.CustomResource):
     @pulumi.getter(name="orderId")
     def order_id(self) -> pulumi.Output[_builtins.str]:
         """
-        Order id dari response create.
+        Order id from the creation response.
         """
         return pulumi.get(self, "order_id")
 
@@ -382,7 +382,7 @@ class NeoliteVmFromSnapshot(pulumi.CustomResource):
     @pulumi.getter(name="payWithCreditCard")
     def pay_with_credit_card(self) -> pulumi.Output[Optional[_builtins.bool]]:
         """
-        Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
         """
         return pulumi.get(self, "pay_with_credit_card")
 
@@ -390,7 +390,7 @@ class NeoliteVmFromSnapshot(pulumi.CustomResource):
     @pulumi.getter(name="productId")
     def product_id(self) -> pulumi.Output[_builtins.int]:
         """
-        Product id dari function `getProducts` atau portal.
+        Product id from the `getProducts` function or the portal.
         """
         return pulumi.get(self, "product_id")
 
@@ -398,7 +398,7 @@ class NeoliteVmFromSnapshot(pulumi.CustomResource):
     @pulumi.getter
     def promocode(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Kode promo saat order.
+        Promo code to apply at order.
         """
         return pulumi.get(self, "promocode")
 
@@ -406,7 +406,7 @@ class NeoliteVmFromSnapshot(pulumi.CustomResource):
     @pulumi.getter(name="snapshotId")
     def snapshot_id(self) -> pulumi.Output[_builtins.int]:
         """
-        Account id snapshot sumber, dari `NeoliteSnapshot`.
+        Account id of the source snapshot, from `NeoliteSnapshot`.
         """
         return pulumi.get(self, "snapshot_id")
 
@@ -414,7 +414,7 @@ class NeoliteVmFromSnapshot(pulumi.CustomResource):
     @pulumi.getter(name="sshAndConsoleUser")
     def ssh_and_console_user(self) -> pulumi.Output[_builtins.str]:
         """
-        User SSH & console yang dipasang saat create.
+        SSH and console user set at creation.
         """
         return pulumi.get(self, "ssh_and_console_user")
 
@@ -422,7 +422,7 @@ class NeoliteVmFromSnapshot(pulumi.CustomResource):
     @pulumi.getter
     def status(self) -> pulumi.Output[_builtins.str]:
         """
-        Status VM (Active, Pending, Suspended, Terminated).
+        VM status (Active, Pending, Suspended, Terminated).
         """
         return pulumi.get(self, "status")
 

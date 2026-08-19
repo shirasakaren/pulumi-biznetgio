@@ -22,7 +22,7 @@ func NeoliteProStorageUpgradeOptions(ctx *pulumi.Context, args *NeoliteProStorag
 }
 
 type NeoliteProStorageUpgradeOptionsArgs struct {
-	// Account id VM NEO Lite Pro.
+	// Account id of the NEO Lite Pro VM.
 	AccountId int `pulumi:"accountId"`
 }
 
@@ -40,7 +40,7 @@ func NeoliteProStorageUpgradeOptionsOutput(ctx *pulumi.Context, args NeoliteProS
 }
 
 type NeoliteProStorageUpgradeOptionsOutputArgs struct {
-	// Account id VM NEO Lite Pro.
+	// Account id of the NEO Lite Pro VM.
 	AccountId pulumi.IntInput `pulumi:"accountId"`
 }
 

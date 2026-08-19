@@ -113,7 +113,7 @@ type NeoliteOsItem struct {
 }
 
 func (a *NeoliteOsListArgs) Annotate(ann infer.Annotator) {
-	ann.Describe(&a.ProductID, "Product id NEO Lite.")
+	ann.Describe(&a.ProductID, "NEO Lite product id.")
 }
 
 func (NeoliteOsList) Invoke(
@@ -151,7 +151,7 @@ type NeoliteChangePackageOptionsResult struct {
 }
 
 func (a *NeoliteChangePackageOptionsArgs) Annotate(ann infer.Annotator) {
-	ann.Describe(&a.AccountID, "Account id VM NEO Lite.")
+	ann.Describe(&a.AccountID, "Account id of the NEO Lite VM.")
 }
 
 func (NeoliteChangePackageOptions) Invoke(
@@ -180,7 +180,7 @@ type NeoliteStorageUpgradeOptionsResult struct {
 }
 
 func (a *NeoliteStorageUpgradeOptionsArgs) Annotate(ann infer.Annotator) {
-	ann.Describe(&a.AccountID, "Account id VM NEO Lite.")
+	ann.Describe(&a.AccountID, "Account id of the NEO Lite VM.")
 }
 
 func (NeoliteStorageUpgradeOptions) Invoke(
@@ -209,7 +209,7 @@ type NeoliteIPAvailabilityResult struct {
 }
 
 func (a *NeoliteIPAvailabilityArgs) Annotate(ann infer.Annotator) {
-	ann.Describe(&a.ProductID, "Product id NEO Lite.")
+	ann.Describe(&a.ProductID, "NEO Lite product id.")
 }
 
 func (NeoliteIPAvailability) Invoke(

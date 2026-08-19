@@ -15,69 +15,69 @@ import (
 type NeoliteVm struct {
 	pulumi.CustomResourceState
 
-	// Siklus billing aktif.
+	// Active billing cycle.
 	Billingcycle pulumi.StringOutput `pulumi:"billingcycle"`
-	// Cloud-init password VM (sensitive).
+	// VM cloud-init password (sensitive).
 	CiPassword pulumi.StringOutput `pulumi:"ciPassword"`
-	// Cloud-init user VM.
+	// VM cloud-init user.
 	CiUser pulumi.StringOutput `pulumi:"ciUser"`
-	// Password console saat create. Write-only: ga pernah di-refetch dari API.
+	// Console password at creation. Write-only: never re-fetched from the API.
 	ConsolePassword pulumi.StringOutput `pulumi:"consolePassword"`
-	// Jumlah CPU VM.
+	// Number of VM CPUs.
 	Cpus pulumi.IntOutput `pulumi:"cpus"`
-	// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+	// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 	Cycle pulumi.StringOutput `pulumi:"cycle"`
-	// Deskripsi VM.
+	// VM description.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
-	// Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
+	// Target disk size (GB, absolute - not an increment). Can only go up, never down.
 	DiskSize pulumi.IntPtrOutput `pulumi:"diskSize"`
-	// Id keypair dari `NeoliteKeypair`. Bisa diganti via change-keypair.
+	// Keypair id from `NeoliteKeypair`. Can be changed via change-keypair.
 	KeypairId pulumi.IntOutput `pulumi:"keypairId"`
-	// Invoice terakhir VM.
+	// VM's last invoice.
 	LastInvoice NeoliteLastInvoiceOutput `pulumi:"lastInvoice"`
-	// Ukuran disk maksimal VM (GB).
+	// Maximum VM disk size (GB).
 	MaxDisk pulumi.IntOutput `pulumi:"maxDisk"`
-	// Memory maksimal VM (MB).
+	// Maximum VM memory (MB).
 	MaxMem pulumi.IntOutput `pulumi:"maxMem"`
-	// Memory yang dipakai VM (MB).
+	// Memory used by the VM (MB).
 	Mem pulumi.IntOutput `pulumi:"mem"`
-	// Trigger one-shot migrate ke NEO Lite Pro: isi neolitepro_product_id target. Ganti nilainya buat re-trigger.
+	// Trigger a one-shot migration to NEO Lite Pro: set the neolitepro_product_id target. Change the value again to re-trigger.
 	MigrateToPro pulumi.StringPtrOutput `pulumi:"migrateToPro"`
-	// Tanggal tagihan berikutnya.
+	// Next billing due date.
 	NextDue pulumi.StringOutput `pulumi:"nextDue"`
-	// Order id dari response create.
+	// Order id from the creation response.
 	OrderId pulumi.StringOutput `pulumi:"orderId"`
-	// Nama OS yang jalan di VM.
+	// Name of the OS running on the VM.
 	OsName pulumi.StringOutput `pulumi:"osName"`
-	// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+	// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 	PayWithCreditCard pulumi.BoolPtrOutput `pulumi:"payWithCreditCard"`
-	// Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+	// VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes.
 	PowerState pulumi.StringPtrOutput `pulumi:"powerState"`
-	// Product id dari function `getProducts` atau portal.
+	// Product id from the `getProducts` function or the portal.
 	ProductId pulumi.IntOutput `pulumi:"productId"`
-	// Nama product aktif.
+	// Active product name.
 	ProductName pulumi.StringOutput `pulumi:"productName"`
-	// Kode promo saat order.
+	// Promo code to apply at order.
 	Promocode pulumi.StringPtrOutput `pulumi:"promocode"`
-	// Full JSON response akun terakhir dari API, buat akses field yang belum dimodel (cipassword di-mask).
+	// Raw JSON response of the last-read account, for accessing fields not yet modeled (cipassword masked).
 	Raw pulumi.StringOutput `pulumi:"raw"`
-	// Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+	// When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function.
 	RebuildOs pulumi.StringPtrOutput `pulumi:"rebuildOs"`
-	// Nominal recurring per siklus.
+	// Recurring amount per cycle.
 	RecurringAmount pulumi.IntOutput `pulumi:"recurringAmount"`
-	// Region VM.
+	// VM region.
 	Region pulumi.StringOutput `pulumi:"region"`
-	// Label region VM.
+	// VM region label.
 	RegionLabel pulumi.StringOutput `pulumi:"regionLabel"`
-	// OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+	// OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`.
 	SelectOs pulumi.StringOutput `pulumi:"selectOs"`
-	// User SSH & console yang dipasang saat create.
+	// SSH and console user set at creation.
 	SshAndConsoleUser pulumi.StringOutput `pulumi:"sshAndConsoleUser"`
-	// Status akun terakhir dari API (Active, Pending, Suspended, Terminated).
+	// Last known account status from the API (Active, Pending, Suspended, Terminated).
 	Status pulumi.StringOutput `pulumi:"status"`
-	// Uptime VM dalam detik.
+	// VM uptime in seconds.
 	Uptime pulumi.IntOutput `pulumi:"uptime"`
-	// Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+	// VM name. Defaults to `server-name`. Can be changed via change-vm-name.
 	VmName pulumi.StringPtrOutput `pulumi:"vmName"`
 }
 
@@ -160,65 +160,65 @@ func (NeoliteVmState) ElementType() reflect.Type {
 }
 
 type neoliteVmArgs struct {
-	// Password console saat create. Write-only: ga pernah di-refetch dari API.
+	// Console password at creation. Write-only: never re-fetched from the API.
 	ConsolePassword string `pulumi:"consolePassword"`
-	// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+	// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 	Cycle string `pulumi:"cycle"`
-	// Deskripsi VM.
+	// VM description.
 	Description *string `pulumi:"description"`
-	// Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
+	// Target disk size (GB, absolute - not an increment). Can only go up, never down.
 	DiskSize *int `pulumi:"diskSize"`
-	// Id keypair dari `NeoliteKeypair`. Bisa diganti via change-keypair.
+	// Keypair id from `NeoliteKeypair`. Can be changed via change-keypair.
 	KeypairId int `pulumi:"keypairId"`
-	// Trigger one-shot migrate ke NEO Lite Pro: isi neolitepro_product_id target. Ganti nilainya buat re-trigger.
+	// Trigger a one-shot migration to NEO Lite Pro: set the neolitepro_product_id target. Change the value again to re-trigger.
 	MigrateToPro *string `pulumi:"migrateToPro"`
-	// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+	// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 	PayWithCreditCard *bool `pulumi:"payWithCreditCard"`
-	// Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+	// VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes.
 	PowerState *string `pulumi:"powerState"`
-	// Product id dari function `getProducts` atau portal.
+	// Product id from the `getProducts` function or the portal.
 	ProductId int `pulumi:"productId"`
-	// Kode promo saat order.
+	// Promo code to apply at order.
 	Promocode *string `pulumi:"promocode"`
-	// Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+	// When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function.
 	RebuildOs *string `pulumi:"rebuildOs"`
-	// OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+	// OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`.
 	SelectOs string `pulumi:"selectOs"`
-	// User SSH & console yang dipasang saat create.
+	// SSH and console user set at creation.
 	SshAndConsoleUser string `pulumi:"sshAndConsoleUser"`
-	// Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+	// VM name. Defaults to `server-name`. Can be changed via change-vm-name.
 	VmName *string `pulumi:"vmName"`
 }
 
 // The set of arguments for constructing a NeoliteVm resource.
 type NeoliteVmArgs struct {
-	// Password console saat create. Write-only: ga pernah di-refetch dari API.
+	// Console password at creation. Write-only: never re-fetched from the API.
 	ConsolePassword pulumi.StringInput
-	// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+	// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 	Cycle pulumi.StringInput
-	// Deskripsi VM.
+	// VM description.
 	Description pulumi.StringPtrInput
-	// Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
+	// Target disk size (GB, absolute - not an increment). Can only go up, never down.
 	DiskSize pulumi.IntPtrInput
-	// Id keypair dari `NeoliteKeypair`. Bisa diganti via change-keypair.
+	// Keypair id from `NeoliteKeypair`. Can be changed via change-keypair.
 	KeypairId pulumi.IntInput
-	// Trigger one-shot migrate ke NEO Lite Pro: isi neolitepro_product_id target. Ganti nilainya buat re-trigger.
+	// Trigger a one-shot migration to NEO Lite Pro: set the neolitepro_product_id target. Change the value again to re-trigger.
 	MigrateToPro pulumi.StringPtrInput
-	// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+	// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 	PayWithCreditCard pulumi.BoolPtrInput
-	// Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+	// VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes.
 	PowerState pulumi.StringPtrInput
-	// Product id dari function `getProducts` atau portal.
+	// Product id from the `getProducts` function or the portal.
 	ProductId pulumi.IntInput
-	// Kode promo saat order.
+	// Promo code to apply at order.
 	Promocode pulumi.StringPtrInput
-	// Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+	// When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function.
 	RebuildOs pulumi.StringPtrInput
-	// OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+	// OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`.
 	SelectOs pulumi.StringInput
-	// User SSH & console yang dipasang saat create.
+	// SSH and console user set at creation.
 	SshAndConsoleUser pulumi.StringInput
-	// Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+	// VM name. Defaults to `server-name`. Can be changed via change-vm-name.
 	VmName pulumi.StringPtrInput
 }
 
@@ -259,162 +259,162 @@ func (o NeoliteVmOutput) ToNeoliteVmOutputWithContext(ctx context.Context) Neoli
 	return o
 }
 
-// Siklus billing aktif.
+// Active billing cycle.
 func (o NeoliteVmOutput) Billingcycle() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.Billingcycle }).(pulumi.StringOutput)
 }
 
-// Cloud-init password VM (sensitive).
+// VM cloud-init password (sensitive).
 func (o NeoliteVmOutput) CiPassword() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.CiPassword }).(pulumi.StringOutput)
 }
 
-// Cloud-init user VM.
+// VM cloud-init user.
 func (o NeoliteVmOutput) CiUser() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.CiUser }).(pulumi.StringOutput)
 }
 
-// Password console saat create. Write-only: ga pernah di-refetch dari API.
+// Console password at creation. Write-only: never re-fetched from the API.
 func (o NeoliteVmOutput) ConsolePassword() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.ConsolePassword }).(pulumi.StringOutput)
 }
 
-// Jumlah CPU VM.
+// Number of VM CPUs.
 func (o NeoliteVmOutput) Cpus() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.Cpus }).(pulumi.IntOutput)
 }
 
-// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
 func (o NeoliteVmOutput) Cycle() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.Cycle }).(pulumi.StringOutput)
 }
 
-// Deskripsi VM.
+// VM description.
 func (o NeoliteVmOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
-// Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
+// Target disk size (GB, absolute - not an increment). Can only go up, never down.
 func (o NeoliteVmOutput) DiskSize() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.IntPtrOutput { return v.DiskSize }).(pulumi.IntPtrOutput)
 }
 
-// Id keypair dari `NeoliteKeypair`. Bisa diganti via change-keypair.
+// Keypair id from `NeoliteKeypair`. Can be changed via change-keypair.
 func (o NeoliteVmOutput) KeypairId() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.KeypairId }).(pulumi.IntOutput)
 }
 
-// Invoice terakhir VM.
+// VM's last invoice.
 func (o NeoliteVmOutput) LastInvoice() NeoliteLastInvoiceOutput {
 	return o.ApplyT(func(v *NeoliteVm) NeoliteLastInvoiceOutput { return v.LastInvoice }).(NeoliteLastInvoiceOutput)
 }
 
-// Ukuran disk maksimal VM (GB).
+// Maximum VM disk size (GB).
 func (o NeoliteVmOutput) MaxDisk() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.MaxDisk }).(pulumi.IntOutput)
 }
 
-// Memory maksimal VM (MB).
+// Maximum VM memory (MB).
 func (o NeoliteVmOutput) MaxMem() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.MaxMem }).(pulumi.IntOutput)
 }
 
-// Memory yang dipakai VM (MB).
+// Memory used by the VM (MB).
 func (o NeoliteVmOutput) Mem() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.Mem }).(pulumi.IntOutput)
 }
 
-// Trigger one-shot migrate ke NEO Lite Pro: isi neolitepro_product_id target. Ganti nilainya buat re-trigger.
+// Trigger a one-shot migration to NEO Lite Pro: set the neolitepro_product_id target. Change the value again to re-trigger.
 func (o NeoliteVmOutput) MigrateToPro() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringPtrOutput { return v.MigrateToPro }).(pulumi.StringPtrOutput)
 }
 
-// Tanggal tagihan berikutnya.
+// Next billing due date.
 func (o NeoliteVmOutput) NextDue() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.NextDue }).(pulumi.StringOutput)
 }
 
-// Order id dari response create.
+// Order id from the creation response.
 func (o NeoliteVmOutput) OrderId() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.OrderId }).(pulumi.StringOutput)
 }
 
-// Nama OS yang jalan di VM.
+// Name of the OS running on the VM.
 func (o NeoliteVmOutput) OsName() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.OsName }).(pulumi.StringOutput)
 }
 
-// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
 func (o NeoliteVmOutput) PayWithCreditCard() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.BoolPtrOutput { return v.PayWithCreditCard }).(pulumi.BoolPtrOutput)
 }
 
-// Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+// VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes.
 func (o NeoliteVmOutput) PowerState() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringPtrOutput { return v.PowerState }).(pulumi.StringPtrOutput)
 }
 
-// Product id dari function `getProducts` atau portal.
+// Product id from the `getProducts` function or the portal.
 func (o NeoliteVmOutput) ProductId() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.ProductId }).(pulumi.IntOutput)
 }
 
-// Nama product aktif.
+// Active product name.
 func (o NeoliteVmOutput) ProductName() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.ProductName }).(pulumi.StringOutput)
 }
 
-// Kode promo saat order.
+// Promo code to apply at order.
 func (o NeoliteVmOutput) Promocode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringPtrOutput { return v.Promocode }).(pulumi.StringPtrOutput)
 }
 
-// Full JSON response akun terakhir dari API, buat akses field yang belum dimodel (cipassword di-mask).
+// Raw JSON response of the last-read account, for accessing fields not yet modeled (cipassword masked).
 func (o NeoliteVmOutput) Raw() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.Raw }).(pulumi.StringOutput)
 }
 
-// Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+// When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function.
 func (o NeoliteVmOutput) RebuildOs() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringPtrOutput { return v.RebuildOs }).(pulumi.StringPtrOutput)
 }
 
-// Nominal recurring per siklus.
+// Recurring amount per cycle.
 func (o NeoliteVmOutput) RecurringAmount() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.RecurringAmount }).(pulumi.IntOutput)
 }
 
-// Region VM.
+// VM region.
 func (o NeoliteVmOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
 }
 
-// Label region VM.
+// VM region label.
 func (o NeoliteVmOutput) RegionLabel() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.RegionLabel }).(pulumi.StringOutput)
 }
 
-// OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+// OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`.
 func (o NeoliteVmOutput) SelectOs() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.SelectOs }).(pulumi.StringOutput)
 }
 
-// User SSH & console yang dipasang saat create.
+// SSH and console user set at creation.
 func (o NeoliteVmOutput) SshAndConsoleUser() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.SshAndConsoleUser }).(pulumi.StringOutput)
 }
 
-// Status akun terakhir dari API (Active, Pending, Suspended, Terminated).
+// Last known account status from the API (Active, Pending, Suspended, Terminated).
 func (o NeoliteVmOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
 }
 
-// Uptime VM dalam detik.
+// VM uptime in seconds.
 func (o NeoliteVmOutput) Uptime() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.IntOutput { return v.Uptime }).(pulumi.IntOutput)
 }
 
-// Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+// VM name. Defaults to `server-name`. Can be changed via change-vm-name.
 func (o NeoliteVmOutput) VmName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NeoliteVm) pulumi.StringPtrOutput { return v.VmName }).(pulumi.StringPtrOutput)
 }

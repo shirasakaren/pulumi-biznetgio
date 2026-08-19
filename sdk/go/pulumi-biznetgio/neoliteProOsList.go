@@ -22,7 +22,7 @@ func NeoliteProOsList(ctx *pulumi.Context, args *NeoliteProOsListArgs, opts ...p
 }
 
 type NeoliteProOsListArgs struct {
-	// Product id NEO Lite Pro.
+	// NEO Lite Pro product id.
 	ProductId int `pulumi:"productId"`
 }
 
@@ -40,7 +40,7 @@ func NeoliteProOsListOutput(ctx *pulumi.Context, args NeoliteProOsListOutputArgs
 }
 
 type NeoliteProOsListOutputArgs struct {
-	// Product id NEO Lite Pro.
+	// NEO Lite Pro product id.
 	ProductId pulumi.IntInput `pulumi:"productId"`
 }
 

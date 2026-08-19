@@ -29,7 +29,7 @@ type BaremetalElasticStorage struct {
 	Promocode pulumi.StringPtrOutput `pulumi:"promocode"`
 	// Raw JSON of the last read response, for anything not modeled yet.
 	Raw pulumi.StringOutput `pulumi:"raw"`
-	// Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.
+	// Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.
 	Size pulumi.IntPtrOutput `pulumi:"size"`
 	// Current status of the storage (e.g. Active, Pending, Suspended, Terminated).
 	Status pulumi.StringOutput `pulumi:"status"`
@@ -109,7 +109,7 @@ type baremetalElasticStorageArgs struct {
 	ProductId int `pulumi:"productId"`
 	// Promo code to apply at creation.
 	Promocode *string `pulumi:"promocode"`
-	// Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.
+	// Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.
 	Size *int `pulumi:"size"`
 	// Name of the storage. Create-only, changing it replaces the storage.
 	StorageName string `pulumi:"storageName"`
@@ -127,7 +127,7 @@ type BaremetalElasticStorageArgs struct {
 	ProductId pulumi.IntInput
 	// Promo code to apply at creation.
 	Promocode pulumi.StringPtrInput
-	// Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.
+	// Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.
 	Size pulumi.IntPtrInput
 	// Name of the storage. Create-only, changing it replaces the storage.
 	StorageName pulumi.StringInput
@@ -205,7 +205,7 @@ func (o BaremetalElasticStorageOutput) Raw() pulumi.StringOutput {
 	return o.ApplyT(func(v *BaremetalElasticStorage) pulumi.StringOutput { return v.Raw }).(pulumi.StringOutput)
 }
 
-// Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.
+// Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.
 func (o BaremetalElasticStorageOutput) Size() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *BaremetalElasticStorage) pulumi.IntPtrOutput { return v.Size }).(pulumi.IntPtrOutput)
 }

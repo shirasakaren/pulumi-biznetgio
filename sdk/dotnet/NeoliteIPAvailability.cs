@@ -26,7 +26,7 @@ namespace Shirasakaren.Biznetgio
     public sealed class NeoliteIPAvailabilityArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
-        /// Product id NEO Lite.
+        /// NEO Lite product id.
         /// </summary>
         [Input("productId", required: true)]
         public int ProductId { get; set; }
@@ -40,7 +40,7 @@ namespace Shirasakaren.Biznetgio
     public sealed class NeoliteIPAvailabilityInvokeArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
-        /// Product id NEO Lite.
+        /// NEO Lite product id.
         /// </summary>
         [Input("productId", required: true)]
         public Input<int> ProductId { get; set; } = null!;

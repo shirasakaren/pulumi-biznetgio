@@ -15,13 +15,13 @@ import (
 type NeoliteKeypair struct {
 	pulumi.CustomResourceState
 
-	// Id keypair di BiznetGIO.
+	// Keypair id in BiznetGIO.
 	KeypairId pulumi.IntOutput `pulumi:"keypairId"`
-	// Nama keypair.
+	// Keypair name.
 	Name pulumi.StringOutput `pulumi:"name"`
-	// Private key (sensitive). Write-only: cuma ada di response create, ga bisa di-refetch.
+	// Private key (sensitive). Write-only: only present in the create response, can't be re-fetched.
 	PrivateKey pulumi.StringOutput `pulumi:"privateKey"`
-	// Public key yang di-generate.
+	// Generated public key.
 	PublicKey pulumi.StringOutput `pulumi:"publicKey"`
 }
 
@@ -72,13 +72,13 @@ func (NeoliteKeypairState) ElementType() reflect.Type {
 }
 
 type neoliteKeypairArgs struct {
-	// Nama keypair.
+	// Keypair name.
 	Name string `pulumi:"name"`
 }
 
 // The set of arguments for constructing a NeoliteKeypair resource.
 type NeoliteKeypairArgs struct {
-	// Nama keypair.
+	// Keypair name.
 	Name pulumi.StringInput
 }
 
@@ -119,22 +119,22 @@ func (o NeoliteKeypairOutput) ToNeoliteKeypairOutputWithContext(ctx context.Cont
 	return o
 }
 
-// Id keypair di BiznetGIO.
+// Keypair id in BiznetGIO.
 func (o NeoliteKeypairOutput) KeypairId() pulumi.IntOutput {
 	return o.ApplyT(func(v *NeoliteKeypair) pulumi.IntOutput { return v.KeypairId }).(pulumi.IntOutput)
 }
 
-// Nama keypair.
+// Keypair name.
 func (o NeoliteKeypairOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteKeypair) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// Private key (sensitive). Write-only: cuma ada di response create, ga bisa di-refetch.
+// Private key (sensitive). Write-only: only present in the create response, can't be re-fetched.
 func (o NeoliteKeypairOutput) PrivateKey() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteKeypair) pulumi.StringOutput { return v.PrivateKey }).(pulumi.StringOutput)
 }
 
-// Public key yang di-generate.
+// Generated public key.
 func (o NeoliteKeypairOutput) PublicKey() pulumi.StringOutput {
 	return o.ApplyT(func(v *NeoliteKeypair) pulumi.StringOutput { return v.PublicKey }).(pulumi.StringOutput)
 }

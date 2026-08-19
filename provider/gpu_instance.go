@@ -125,7 +125,7 @@ func (GpuInstance) Create(
 		gpuStatus, []string{"active"}, []string{"terminated", "failed", "error", "deleted", "cancelled"}); err != nil {
 		if errors.Is(err, context.DeadlineExceeded) {
 			return resp, infer.ResourceInitFailedError{Reasons: []string{
-				fmt.Sprintf("gpu instance %d belum active, lanjutin via update aja: %s", accountID, err),
+				fmt.Sprintf("gpu instance %d not active yet, continue via update: %s", accountID, err),
 			}}
 		}
 		return resp, err

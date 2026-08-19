@@ -112,11 +112,13 @@ publishing {
     }
 }
 
-// publish to a local maven repo, then collect the artifacts for the portal bundle
+// publish to a local maven repo, then collect the artifacts for the portal bundle.
+// Central Portal validates the upload as a real Maven repo, so the bundle must
+// keep the groupId/artifactId/version directory layout, not just the bare files.
 tasks.register('assemblePortal', Copy) {
     dependsOn 'publishMainPublicationPublicationToLocalPortalRepoRepository'
-    from layout.buildDirectory.dir("local-repo/ren/shirasaka/biznetgio/${project.version}")
-    include '*.jar', '*.pom'
+    from layout.buildDirectory.dir("local-repo")
+    include "ren/shirasaka/biznetgio/${project.version}/*.jar", "ren/shirasaka/biznetgio/${project.version}/*.pom"
     into layout.buildDirectory.dir('portal')
 }
 """)

@@ -14,73 +14,73 @@ namespace Shirasakaren.Biznetgio
     public partial class NeoliteVmFromSnapshot : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// Password console saat create. Write-only: ga pernah di-refetch dari API.
+        /// Console password at creation. Write-only: never re-fetched from the API.
         /// </summary>
         [Output("consolePassword")]
         public Output<string> ConsolePassword { get; private set; } = null!;
 
         /// <summary>
-        /// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        /// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
         /// </summary>
         [Output("cycle")]
         public Output<string> Cycle { get; private set; } = null!;
 
         /// <summary>
-        /// Deskripsi VM.
+        /// VM description.
         /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
         /// <summary>
-        /// Id keypair dari `NeoliteKeypair`.
+        /// Keypair id from `NeoliteKeypair`.
         /// </summary>
         [Output("keypairId")]
         public Output<int> KeypairId { get; private set; } = null!;
 
         /// <summary>
-        /// Nama VM hasil restore.
+        /// Name of the restored VM.
         /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// Order id dari response create.
+        /// Order id from the creation response.
         /// </summary>
         [Output("orderId")]
         public Output<string> OrderId { get; private set; } = null!;
 
         /// <summary>
-        /// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        /// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
         /// </summary>
         [Output("payWithCreditCard")]
         public Output<bool?> PayWithCreditCard { get; private set; } = null!;
 
         /// <summary>
-        /// Product id dari function `getProducts` atau portal.
+        /// Product id from the `getProducts` function or the portal.
         /// </summary>
         [Output("productId")]
         public Output<int> ProductId { get; private set; } = null!;
 
         /// <summary>
-        /// Kode promo saat order.
+        /// Promo code to apply at order.
         /// </summary>
         [Output("promocode")]
         public Output<string?> Promocode { get; private set; } = null!;
 
         /// <summary>
-        /// Account id snapshot sumber, dari `NeoliteSnapshot`.
+        /// Account id of the source snapshot, from `NeoliteSnapshot`.
         /// </summary>
         [Output("snapshotId")]
         public Output<int> SnapshotId { get; private set; } = null!;
 
         /// <summary>
-        /// User SSH &amp; console yang dipasang saat create.
+        /// SSH and console user set at creation.
         /// </summary>
         [Output("sshAndConsoleUser")]
         public Output<string> SshAndConsoleUser { get; private set; } = null!;
 
         /// <summary>
-        /// Status VM (Active, Pending, Suspended, Terminated).
+        /// VM status (Active, Pending, Suspended, Terminated).
         /// </summary>
         [Output("status")]
         public Output<string> Status { get; private set; } = null!;
@@ -139,7 +139,7 @@ namespace Shirasakaren.Biznetgio
         private Input<string>? _consolePassword;
 
         /// <summary>
-        /// Password console saat create. Write-only: ga pernah di-refetch dari API.
+        /// Console password at creation. Write-only: never re-fetched from the API.
         /// </summary>
         public Input<string>? ConsolePassword
         {
@@ -152,55 +152,55 @@ namespace Shirasakaren.Biznetgio
         }
 
         /// <summary>
-        /// Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        /// Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
         /// </summary>
         [Input("cycle", required: true)]
         public Input<string> Cycle { get; set; } = null!;
 
         /// <summary>
-        /// Deskripsi VM.
+        /// VM description.
         /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// Id keypair dari `NeoliteKeypair`.
+        /// Keypair id from `NeoliteKeypair`.
         /// </summary>
         [Input("keypairId", required: true)]
         public Input<int> KeypairId { get; set; } = null!;
 
         /// <summary>
-        /// Nama VM hasil restore.
+        /// Name of the restored VM.
         /// </summary>
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
         /// <summary>
-        /// Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        /// Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
         /// </summary>
         [Input("payWithCreditCard")]
         public Input<bool>? PayWithCreditCard { get; set; }
 
         /// <summary>
-        /// Product id dari function `getProducts` atau portal.
+        /// Product id from the `getProducts` function or the portal.
         /// </summary>
         [Input("productId", required: true)]
         public Input<int> ProductId { get; set; } = null!;
 
         /// <summary>
-        /// Kode promo saat order.
+        /// Promo code to apply at order.
         /// </summary>
         [Input("promocode")]
         public Input<string>? Promocode { get; set; }
 
         /// <summary>
-        /// Account id snapshot sumber, dari `NeoliteSnapshot`.
+        /// Account id of the source snapshot, from `NeoliteSnapshot`.
         /// </summary>
         [Input("snapshotId", required: true)]
         public Input<int> SnapshotId { get; set; } = null!;
 
         /// <summary>
-        /// User SSH &amp; console yang dipasang saat create.
+        /// SSH and console user set at creation.
         /// </summary>
         [Input("sshAndConsoleUser", required: true)]
         public Input<string> SshAndConsoleUser { get; set; } = null!;

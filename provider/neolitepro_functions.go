@@ -69,7 +69,7 @@ type NeoliteProOsListResult struct {
 }
 
 func (a *NeoliteProOsListArgs) Annotate(ann infer.Annotator) {
-	ann.Describe(&a.ProductID, "Product id NEO Lite Pro.")
+	ann.Describe(&a.ProductID, "NEO Lite Pro product id.")
 }
 
 func (NeoliteProOsList) Invoke(
@@ -107,7 +107,7 @@ type NeoliteProChangePackageOptionsResult struct {
 }
 
 func (a *NeoliteProChangePackageOptionsArgs) Annotate(ann infer.Annotator) {
-	ann.Describe(&a.AccountID, "Account id VM NEO Lite Pro.")
+	ann.Describe(&a.AccountID, "Account id of the NEO Lite Pro VM.")
 }
 
 func (NeoliteProChangePackageOptions) Invoke(
@@ -136,7 +136,7 @@ type NeoliteProStorageUpgradeOptionsResult struct {
 }
 
 func (a *NeoliteProStorageUpgradeOptionsArgs) Annotate(ann infer.Annotator) {
-	ann.Describe(&a.AccountID, "Account id VM NEO Lite Pro.")
+	ann.Describe(&a.AccountID, "Account id of the NEO Lite Pro VM.")
 }
 
 func (NeoliteProStorageUpgradeOptions) Invoke(
@@ -165,7 +165,7 @@ type NeoliteProIPAvailabilityResult struct {
 }
 
 func (a *NeoliteProIPAvailabilityArgs) Annotate(ann infer.Annotator) {
-	ann.Describe(&a.ProductID, "Product id NEO Lite Pro.")
+	ann.Describe(&a.ProductID, "NEO Lite Pro product id.")
 }
 
 func (NeoliteProIPAvailability) Invoke(

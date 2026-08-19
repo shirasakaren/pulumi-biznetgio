@@ -19,7 +19,8 @@ const Name string = "biznetgio"
 func Provider() p.Provider {
 	p, err := infer.NewProviderBuilder().
 		WithDisplayName("Pulumi BiznetGIO Provider").
-		WithDescription("Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren - NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.").
+		WithDescription("Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren - "+
+			"NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.").
 		WithHomepage("https://biznetgio.creations.ren").
 		WithRepository("github.com/shirasakaren/pulumi-biznetgio").
 		WithPublisher("shirasakaren").
@@ -32,58 +33,60 @@ func Provider() p.Provider {
 			"nodejs": map[string]any{"packageName": "@shirasakaren/biznetgio"},
 			"python": map[string]any{"packageName": "pulumi_biznetgio"},
 			"dotnet": map[string]any{"packageName": "Shirasakaren.Biznetgio"},
-			"java":   map[string]any{"packages": map[string]any{"biznetgio": "ren.shirasaka:biznetgio"}, "basePackage": "ren.shirasaka.biznetgio"},
+			// java codegen appends the schema name ("biznetgio") after basePackage on its
+			// own, so basePackage must stop at "ren.shirasaka" or the package doubles up.
+			"java": map[string]any{"basePackage": "ren.shirasaka"},
 		}).
 		WithGoImportPath("github.com/shirasakaren/pulumi-biznetgio/sdk/go/pulumi-biznetgio").
 		WithResources(
-			// metal dulu
+			// baremetal
 			infer.Resource(Baremetal{}),
 			infer.Resource(BaremetalKeypair{}),
 			infer.Resource(BaremetalAdditionalIp{}),
 			infer.Resource(BaremetalAdditionalIpAssignment{}),
 			infer.Resource(BaremetalElasticStorage{}),
-			// gpu cekidot
+			// gpu
 			infer.Resource(GpuInstance{}),
 			infer.Resource(GpuKeypair{}),
-			// neolite gaskeun
+			// neolite
 			infer.Resource(NeoliteVm{}),
 			infer.Resource(NeoliteKeypair{}),
 			infer.Resource(NeoliteSnapshot{}),
 			infer.Resource(NeoliteVmFromSnapshot{}),
 			infer.Resource(NeoliteDisk{}),
-			// pro gacor
+			// neolite pro
 			infer.Resource(NeoliteProVm{}),
 			infer.Resource(NeoliteProKeypair{}),
 			infer.Resource(NeoliteProSnapshot{}),
 			infer.Resource(NeoliteProDisk{}),
-			// object storage jos
+			// object storage
 			infer.Resource(ObjectStorage{}),
 			infer.Resource(ObjectStorageBucket{}),
 			infer.Resource(ObjectStorageCredential{}),
 			infer.Resource(ObjectStorageObject{}),
 		).
 		WithFunctions(
-			// metal dulu
+			// baremetal
 			infer.Function(BaremetalProducts{}),
 			infer.Function(BaremetalRebuildOsList{}),
 			infer.Function(BaremetalOpenvpn{}),
-			// gpu cekidot
+			// gpu
 			infer.Function(GpuProducts{}),
 			infer.Function(GpuConsole{}),
 			infer.Function(GpuGraph{}),
-			// neolite gaskeun
+			// neolite
 			infer.Function(NeoliteProducts{}),
 			infer.Function(NeoliteOsList{}),
 			infer.Function(NeoliteChangePackageOptions{}),
 			infer.Function(NeoliteStorageUpgradeOptions{}),
 			infer.Function(NeoliteIPAvailability{}),
-			// pro gacor
+			// neolite pro
 			infer.Function(NeoliteProProducts{}),
 			infer.Function(NeoliteProOsList{}),
 			infer.Function(NeoliteProChangePackageOptions{}),
 			infer.Function(NeoliteProStorageUpgradeOptions{}),
 			infer.Function(NeoliteProIPAvailability{}),
-			// object storage jos
+			// object storage
 			infer.Function(ObjectStorageInstances{}),
 			infer.Function(ObjectStorageBuckets{}),
 			infer.Function(ObjectStorageCredentials{}),

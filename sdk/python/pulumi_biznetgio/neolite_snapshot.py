@@ -28,12 +28,12 @@ class NeoliteSnapshotArgs:
         """
         The set of arguments for constructing a NeoliteSnapshot resource.
 
-        :param pulumi.Input[_builtins.str] cycle: Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
-        :param pulumi.Input[_builtins.int] neolite_account_id: Account id VM NEO Lite yang di-snapshot.
-        :param pulumi.Input[_builtins.str] description: Deskripsi snapshot.
-        :param pulumi.Input[_builtins.str] name: Nama snapshot. Default `snapshot-name`.
-        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
-        :param pulumi.Input[_builtins.str] promocode: Kode promo saat order.
+        :param pulumi.Input[_builtins.str] cycle: Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        :param pulumi.Input[_builtins.int] neolite_account_id: Account id of the NEO Lite VM being snapshotted.
+        :param pulumi.Input[_builtins.str] description: Snapshot description.
+        :param pulumi.Input[_builtins.str] name: Snapshot name. Defaults to `snapshot-name`.
+        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
+        :param pulumi.Input[_builtins.str] promocode: Promo code to apply at order.
         """
         pulumi.set(__self__, "cycle", cycle)
         pulumi.set(__self__, "neolite_account_id", neolite_account_id)
@@ -58,7 +58,7 @@ class NeoliteSnapshotArgs:
     @pulumi.getter
     def cycle(self) -> pulumi.Input[_builtins.str]:
         """
-        Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
         """
         return pulumi.get(self, "cycle")
 
@@ -70,7 +70,7 @@ class NeoliteSnapshotArgs:
     @pulumi.getter(name="neoliteAccountId")
     def neolite_account_id(self) -> pulumi.Input[_builtins.int]:
         """
-        Account id VM NEO Lite yang di-snapshot.
+        Account id of the NEO Lite VM being snapshotted.
         """
         return pulumi.get(self, "neolite_account_id")
 
@@ -82,7 +82,7 @@ class NeoliteSnapshotArgs:
     @pulumi.getter
     def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Deskripsi snapshot.
+        Snapshot description.
         """
         return pulumi.get(self, "description")
 
@@ -94,7 +94,7 @@ class NeoliteSnapshotArgs:
     @pulumi.getter
     def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Nama snapshot. Default `snapshot-name`.
+        Snapshot name. Defaults to `snapshot-name`.
         """
         return pulumi.get(self, "name")
 
@@ -106,7 +106,7 @@ class NeoliteSnapshotArgs:
     @pulumi.getter(name="payWithCreditCard")
     def pay_with_credit_card(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
         """
         return pulumi.get(self, "pay_with_credit_card")
 
@@ -118,7 +118,7 @@ class NeoliteSnapshotArgs:
     @pulumi.getter
     def promocode(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Kode promo saat order.
+        Promo code to apply at order.
         """
         return pulumi.get(self, "promocode")
 
@@ -145,12 +145,12 @@ class NeoliteSnapshot(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[_builtins.str] cycle: Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
-        :param pulumi.Input[_builtins.str] description: Deskripsi snapshot.
-        :param pulumi.Input[_builtins.str] name: Nama snapshot. Default `snapshot-name`.
-        :param pulumi.Input[_builtins.int] neolite_account_id: Account id VM NEO Lite yang di-snapshot.
-        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
-        :param pulumi.Input[_builtins.str] promocode: Kode promo saat order.
+        :param pulumi.Input[_builtins.str] cycle: Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        :param pulumi.Input[_builtins.str] description: Snapshot description.
+        :param pulumi.Input[_builtins.str] name: Snapshot name. Defaults to `snapshot-name`.
+        :param pulumi.Input[_builtins.int] neolite_account_id: Account id of the NEO Lite VM being snapshotted.
+        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
+        :param pulumi.Input[_builtins.str] promocode: Promo code to apply at order.
         """
         ...
     @overload
@@ -247,7 +247,7 @@ class NeoliteSnapshot(pulumi.CustomResource):
     @pulumi.getter
     def cycle(self) -> pulumi.Output[_builtins.str]:
         """
-        Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
         """
         return pulumi.get(self, "cycle")
 
@@ -255,7 +255,7 @@ class NeoliteSnapshot(pulumi.CustomResource):
     @pulumi.getter
     def description(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Deskripsi snapshot.
+        Snapshot description.
         """
         return pulumi.get(self, "description")
 
@@ -263,7 +263,7 @@ class NeoliteSnapshot(pulumi.CustomResource):
     @pulumi.getter
     def name(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Nama snapshot. Default `snapshot-name`.
+        Snapshot name. Defaults to `snapshot-name`.
         """
         return pulumi.get(self, "name")
 
@@ -271,7 +271,7 @@ class NeoliteSnapshot(pulumi.CustomResource):
     @pulumi.getter(name="neoliteAccountId")
     def neolite_account_id(self) -> pulumi.Output[_builtins.int]:
         """
-        Account id VM NEO Lite yang di-snapshot.
+        Account id of the NEO Lite VM being snapshotted.
         """
         return pulumi.get(self, "neolite_account_id")
 
@@ -279,7 +279,7 @@ class NeoliteSnapshot(pulumi.CustomResource):
     @pulumi.getter(name="orderId")
     def order_id(self) -> pulumi.Output[_builtins.str]:
         """
-        Order id dari response create.
+        Order id from the creation response.
         """
         return pulumi.get(self, "order_id")
 
@@ -287,7 +287,7 @@ class NeoliteSnapshot(pulumi.CustomResource):
     @pulumi.getter(name="payWithCreditCard")
     def pay_with_credit_card(self) -> pulumi.Output[Optional[_builtins.bool]]:
         """
-        Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
         """
         return pulumi.get(self, "pay_with_credit_card")
 
@@ -295,7 +295,7 @@ class NeoliteSnapshot(pulumi.CustomResource):
     @pulumi.getter
     def promocode(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Kode promo saat order.
+        Promo code to apply at order.
         """
         return pulumi.get(self, "promocode")
 
@@ -303,7 +303,7 @@ class NeoliteSnapshot(pulumi.CustomResource):
     @pulumi.getter
     def status(self) -> pulumi.Output[_builtins.str]:
         """
-        Status snapshot (Active, Pending, Suspended, Terminated).
+        Snapshot status (Active, Pending, Suspended, Terminated).
         """
         return pulumi.get(self, "status")
 

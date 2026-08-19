@@ -24,13 +24,14 @@ type NeoliteProKeypairState struct {
 }
 
 func (a *NeoliteProKeypairArgs) Annotate(ann infer.Annotator) {
-	ann.Describe(&a.Name, "Nama keypair.")
+	ann.Describe(&a.Name, "Keypair name.")
 }
 
 func (s *NeoliteProKeypairState) Annotate(ann infer.Annotator) {
-	ann.Describe(&s.KeypairID, "Id keypair di BiznetGIO.")
-	ann.Describe(&s.PublicKey, "Public key yang di-generate.")
-	ann.Describe(&s.PrivateKey, "Private key (sensitive). Write-only: cuma ada di response create, ga bisa di-refetch.")
+	ann.Describe(&s.KeypairID, "Keypair id in BiznetGIO.")
+	ann.Describe(&s.PublicKey, "Generated public key.")
+	ann.Describe(&s.PrivateKey, "Private key (sensitive). Write-only: only present in the create response, "+
+		"can't be re-fetched.")
 }
 
 func (NeoliteProKeypair) WireDependencies(
@@ -50,7 +51,7 @@ func (NeoliteProKeypair) Create(
 	}
 
 	c := GetClient(ctx)
-	// pake raw response: field private key undocumented, aliasnya bisa beda-beda.
+	// uses the raw response: the private key field is undocumented, its alias varies.
 	raw, err := c.NeolitePro().KeypairCreateRaw(ctx, req.Inputs.Name)
 	if err != nil {
 		return infer.CreateResponse[NeoliteProKeypairState]{}, err
@@ -83,7 +84,7 @@ func (NeoliteProKeypair) Read(
 			state.KeypairID = kp.KeypairID
 			state.Name = kp.Name
 			state.PublicKey = kp.PublicKey
-			// private key write-only: keep value lama dari state.
+			// private key write-only: keep the old value from state.
 			return infer.ReadResponse[NeoliteProKeypairArgs, NeoliteProKeypairState]{State: state}, nil
 		}
 	}

@@ -37,20 +37,20 @@ class NeoliteVmArgs:
         """
         The set of arguments for constructing a NeoliteVm resource.
 
-        :param pulumi.Input[_builtins.str] console_password: Password console saat create. Write-only: ga pernah di-refetch dari API.
-        :param pulumi.Input[_builtins.str] cycle: Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
-        :param pulumi.Input[_builtins.int] keypair_id: Id keypair dari `NeoliteKeypair`. Bisa diganti via change-keypair.
-        :param pulumi.Input[_builtins.int] product_id: Product id dari function `getProducts` atau portal.
-        :param pulumi.Input[_builtins.str] select_os: OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
-        :param pulumi.Input[_builtins.str] ssh_and_console_user: User SSH & console yang dipasang saat create.
-        :param pulumi.Input[_builtins.str] description: Deskripsi VM.
-        :param pulumi.Input[_builtins.int] disk_size: Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
-        :param pulumi.Input[_builtins.str] migrate_to_pro: Trigger one-shot migrate ke NEO Lite Pro: isi neolitepro_product_id target. Ganti nilainya buat re-trigger.
-        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
-        :param pulumi.Input[_builtins.str] power_state: Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
-        :param pulumi.Input[_builtins.str] promocode: Kode promo saat order.
-        :param pulumi.Input[_builtins.str] rebuild_os: Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
-        :param pulumi.Input[_builtins.str] vm_name: Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+        :param pulumi.Input[_builtins.str] console_password: Console password at creation. Write-only: never re-fetched from the API.
+        :param pulumi.Input[_builtins.str] cycle: Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        :param pulumi.Input[_builtins.int] keypair_id: Keypair id from `NeoliteKeypair`. Can be changed via change-keypair.
+        :param pulumi.Input[_builtins.int] product_id: Product id from the `getProducts` function or the portal.
+        :param pulumi.Input[_builtins.str] select_os: OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`.
+        :param pulumi.Input[_builtins.str] ssh_and_console_user: SSH and console user set at creation.
+        :param pulumi.Input[_builtins.str] description: VM description.
+        :param pulumi.Input[_builtins.int] disk_size: Target disk size (GB, absolute - not an increment). Can only go up, never down.
+        :param pulumi.Input[_builtins.str] migrate_to_pro: Trigger a one-shot migration to NEO Lite Pro: set the neolitepro_product_id target. Change the value again to re-trigger.
+        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
+        :param pulumi.Input[_builtins.str] power_state: VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes.
+        :param pulumi.Input[_builtins.str] promocode: Promo code to apply at order.
+        :param pulumi.Input[_builtins.str] rebuild_os: When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function.
+        :param pulumi.Input[_builtins.str] vm_name: VM name. Defaults to `server-name`. Can be changed via change-vm-name.
         """
         pulumi.set(__self__, "console_password", console_password)
         pulumi.set(__self__, "cycle", cycle)
@@ -87,7 +87,7 @@ class NeoliteVmArgs:
     @pulumi.getter(name="consolePassword")
     def console_password(self) -> pulumi.Input[_builtins.str]:
         """
-        Password console saat create. Write-only: ga pernah di-refetch dari API.
+        Console password at creation. Write-only: never re-fetched from the API.
         """
         return pulumi.get(self, "console_password")
 
@@ -99,7 +99,7 @@ class NeoliteVmArgs:
     @pulumi.getter
     def cycle(self) -> pulumi.Input[_builtins.str]:
         """
-        Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
         """
         return pulumi.get(self, "cycle")
 
@@ -111,7 +111,7 @@ class NeoliteVmArgs:
     @pulumi.getter(name="keypairId")
     def keypair_id(self) -> pulumi.Input[_builtins.int]:
         """
-        Id keypair dari `NeoliteKeypair`. Bisa diganti via change-keypair.
+        Keypair id from `NeoliteKeypair`. Can be changed via change-keypair.
         """
         return pulumi.get(self, "keypair_id")
 
@@ -123,7 +123,7 @@ class NeoliteVmArgs:
     @pulumi.getter(name="productId")
     def product_id(self) -> pulumi.Input[_builtins.int]:
         """
-        Product id dari function `getProducts` atau portal.
+        Product id from the `getProducts` function or the portal.
         """
         return pulumi.get(self, "product_id")
 
@@ -135,7 +135,7 @@ class NeoliteVmArgs:
     @pulumi.getter(name="selectOs")
     def select_os(self) -> pulumi.Input[_builtins.str]:
         """
-        OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+        OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`.
         """
         return pulumi.get(self, "select_os")
 
@@ -147,7 +147,7 @@ class NeoliteVmArgs:
     @pulumi.getter(name="sshAndConsoleUser")
     def ssh_and_console_user(self) -> pulumi.Input[_builtins.str]:
         """
-        User SSH & console yang dipasang saat create.
+        SSH and console user set at creation.
         """
         return pulumi.get(self, "ssh_and_console_user")
 
@@ -159,7 +159,7 @@ class NeoliteVmArgs:
     @pulumi.getter
     def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Deskripsi VM.
+        VM description.
         """
         return pulumi.get(self, "description")
 
@@ -171,7 +171,7 @@ class NeoliteVmArgs:
     @pulumi.getter(name="diskSize")
     def disk_size(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
-        Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
+        Target disk size (GB, absolute - not an increment). Can only go up, never down.
         """
         return pulumi.get(self, "disk_size")
 
@@ -183,7 +183,7 @@ class NeoliteVmArgs:
     @pulumi.getter(name="migrateToPro")
     def migrate_to_pro(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Trigger one-shot migrate ke NEO Lite Pro: isi neolitepro_product_id target. Ganti nilainya buat re-trigger.
+        Trigger a one-shot migration to NEO Lite Pro: set the neolitepro_product_id target. Change the value again to re-trigger.
         """
         return pulumi.get(self, "migrate_to_pro")
 
@@ -195,7 +195,7 @@ class NeoliteVmArgs:
     @pulumi.getter(name="payWithCreditCard")
     def pay_with_credit_card(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
         """
         return pulumi.get(self, "pay_with_credit_card")
 
@@ -207,7 +207,7 @@ class NeoliteVmArgs:
     @pulumi.getter(name="powerState")
     def power_state(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+        VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes.
         """
         return pulumi.get(self, "power_state")
 
@@ -219,7 +219,7 @@ class NeoliteVmArgs:
     @pulumi.getter
     def promocode(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Kode promo saat order.
+        Promo code to apply at order.
         """
         return pulumi.get(self, "promocode")
 
@@ -231,7 +231,7 @@ class NeoliteVmArgs:
     @pulumi.getter(name="rebuildOs")
     def rebuild_os(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+        When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function.
         """
         return pulumi.get(self, "rebuild_os")
 
@@ -243,7 +243,7 @@ class NeoliteVmArgs:
     @pulumi.getter(name="vmName")
     def vm_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+        VM name. Defaults to `server-name`. Can be changed via change-vm-name.
         """
         return pulumi.get(self, "vm_name")
 
@@ -278,20 +278,20 @@ class NeoliteVm(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[_builtins.str] console_password: Password console saat create. Write-only: ga pernah di-refetch dari API.
-        :param pulumi.Input[_builtins.str] cycle: Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
-        :param pulumi.Input[_builtins.str] description: Deskripsi VM.
-        :param pulumi.Input[_builtins.int] disk_size: Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
-        :param pulumi.Input[_builtins.int] keypair_id: Id keypair dari `NeoliteKeypair`. Bisa diganti via change-keypair.
-        :param pulumi.Input[_builtins.str] migrate_to_pro: Trigger one-shot migrate ke NEO Lite Pro: isi neolitepro_product_id target. Ganti nilainya buat re-trigger.
-        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
-        :param pulumi.Input[_builtins.str] power_state: Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
-        :param pulumi.Input[_builtins.int] product_id: Product id dari function `getProducts` atau portal.
-        :param pulumi.Input[_builtins.str] promocode: Kode promo saat order.
-        :param pulumi.Input[_builtins.str] rebuild_os: Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
-        :param pulumi.Input[_builtins.str] select_os: OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
-        :param pulumi.Input[_builtins.str] ssh_and_console_user: User SSH & console yang dipasang saat create.
-        :param pulumi.Input[_builtins.str] vm_name: Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+        :param pulumi.Input[_builtins.str] console_password: Console password at creation. Write-only: never re-fetched from the API.
+        :param pulumi.Input[_builtins.str] cycle: Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        :param pulumi.Input[_builtins.str] description: VM description.
+        :param pulumi.Input[_builtins.int] disk_size: Target disk size (GB, absolute - not an increment). Can only go up, never down.
+        :param pulumi.Input[_builtins.int] keypair_id: Keypair id from `NeoliteKeypair`. Can be changed via change-keypair.
+        :param pulumi.Input[_builtins.str] migrate_to_pro: Trigger a one-shot migration to NEO Lite Pro: set the neolitepro_product_id target. Change the value again to re-trigger.
+        :param pulumi.Input[_builtins.bool] pay_with_credit_card: Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
+        :param pulumi.Input[_builtins.str] power_state: VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes.
+        :param pulumi.Input[_builtins.int] product_id: Product id from the `getProducts` function or the portal.
+        :param pulumi.Input[_builtins.str] promocode: Promo code to apply at order.
+        :param pulumi.Input[_builtins.str] rebuild_os: When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function.
+        :param pulumi.Input[_builtins.str] select_os: OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`.
+        :param pulumi.Input[_builtins.str] ssh_and_console_user: SSH and console user set at creation.
+        :param pulumi.Input[_builtins.str] vm_name: VM name. Defaults to `server-name`. Can be changed via change-vm-name.
         """
         ...
     @overload
@@ -454,7 +454,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter
     def billingcycle(self) -> pulumi.Output[_builtins.str]:
         """
-        Siklus billing aktif.
+        Active billing cycle.
         """
         return pulumi.get(self, "billingcycle")
 
@@ -462,7 +462,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="ciPassword")
     def ci_password(self) -> pulumi.Output[_builtins.str]:
         """
-        Cloud-init password VM (sensitive).
+        VM cloud-init password (sensitive).
         """
         return pulumi.get(self, "ci_password")
 
@@ -470,7 +470,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="ciUser")
     def ci_user(self) -> pulumi.Output[_builtins.str]:
         """
-        Cloud-init user VM.
+        VM cloud-init user.
         """
         return pulumi.get(self, "ci_user")
 
@@ -478,7 +478,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="consolePassword")
     def console_password(self) -> pulumi.Output[_builtins.str]:
         """
-        Password console saat create. Write-only: ga pernah di-refetch dari API.
+        Console password at creation. Write-only: never re-fetched from the API.
         """
         return pulumi.get(self, "console_password")
 
@@ -486,7 +486,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter
     def cpus(self) -> pulumi.Output[_builtins.int]:
         """
-        Jumlah CPU VM.
+        Number of VM CPUs.
         """
         return pulumi.get(self, "cpus")
 
@@ -494,7 +494,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter
     def cycle(self) -> pulumi.Output[_builtins.str]:
         """
-        Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+        Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
         """
         return pulumi.get(self, "cycle")
 
@@ -502,7 +502,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter
     def description(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Deskripsi VM.
+        VM description.
         """
         return pulumi.get(self, "description")
 
@@ -510,7 +510,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="diskSize")
     def disk_size(self) -> pulumi.Output[Optional[_builtins.int]]:
         """
-        Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
+        Target disk size (GB, absolute - not an increment). Can only go up, never down.
         """
         return pulumi.get(self, "disk_size")
 
@@ -518,7 +518,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="keypairId")
     def keypair_id(self) -> pulumi.Output[_builtins.int]:
         """
-        Id keypair dari `NeoliteKeypair`. Bisa diganti via change-keypair.
+        Keypair id from `NeoliteKeypair`. Can be changed via change-keypair.
         """
         return pulumi.get(self, "keypair_id")
 
@@ -526,7 +526,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="lastInvoice")
     def last_invoice(self) -> pulumi.Output['outputs.NeoliteLastInvoice']:
         """
-        Invoice terakhir VM.
+        VM's last invoice.
         """
         return pulumi.get(self, "last_invoice")
 
@@ -534,7 +534,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="maxDisk")
     def max_disk(self) -> pulumi.Output[_builtins.int]:
         """
-        Ukuran disk maksimal VM (GB).
+        Maximum VM disk size (GB).
         """
         return pulumi.get(self, "max_disk")
 
@@ -542,7 +542,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="maxMem")
     def max_mem(self) -> pulumi.Output[_builtins.int]:
         """
-        Memory maksimal VM (MB).
+        Maximum VM memory (MB).
         """
         return pulumi.get(self, "max_mem")
 
@@ -550,7 +550,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter
     def mem(self) -> pulumi.Output[_builtins.int]:
         """
-        Memory yang dipakai VM (MB).
+        Memory used by the VM (MB).
         """
         return pulumi.get(self, "mem")
 
@@ -558,7 +558,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="migrateToPro")
     def migrate_to_pro(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Trigger one-shot migrate ke NEO Lite Pro: isi neolitepro_product_id target. Ganti nilainya buat re-trigger.
+        Trigger a one-shot migration to NEO Lite Pro: set the neolitepro_product_id target. Change the value again to re-trigger.
         """
         return pulumi.get(self, "migrate_to_pro")
 
@@ -566,7 +566,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="nextDue")
     def next_due(self) -> pulumi.Output[_builtins.str]:
         """
-        Tanggal tagihan berikutnya.
+        Next billing due date.
         """
         return pulumi.get(self, "next_due")
 
@@ -574,7 +574,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="orderId")
     def order_id(self) -> pulumi.Output[_builtins.str]:
         """
-        Order id dari response create.
+        Order id from the creation response.
         """
         return pulumi.get(self, "order_id")
 
@@ -582,7 +582,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="osName")
     def os_name(self) -> pulumi.Output[_builtins.str]:
         """
-        Nama OS yang jalan di VM.
+        Name of the OS running on the VM.
         """
         return pulumi.get(self, "os_name")
 
@@ -590,7 +590,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="payWithCreditCard")
     def pay_with_credit_card(self) -> pulumi.Output[Optional[_builtins.bool]]:
         """
-        Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+        Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
         """
         return pulumi.get(self, "pay_with_credit_card")
 
@@ -598,7 +598,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="powerState")
     def power_state(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+        VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes.
         """
         return pulumi.get(self, "power_state")
 
@@ -606,7 +606,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="productId")
     def product_id(self) -> pulumi.Output[_builtins.int]:
         """
-        Product id dari function `getProducts` atau portal.
+        Product id from the `getProducts` function or the portal.
         """
         return pulumi.get(self, "product_id")
 
@@ -614,7 +614,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="productName")
     def product_name(self) -> pulumi.Output[_builtins.str]:
         """
-        Nama product aktif.
+        Active product name.
         """
         return pulumi.get(self, "product_name")
 
@@ -622,7 +622,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter
     def promocode(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Kode promo saat order.
+        Promo code to apply at order.
         """
         return pulumi.get(self, "promocode")
 
@@ -630,7 +630,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter
     def raw(self) -> pulumi.Output[_builtins.str]:
         """
-        Full JSON response akun terakhir dari API, buat akses field yang belum dimodel (cipassword di-mask).
+        Raw JSON response of the last-read account, for accessing fields not yet modeled (cipassword masked).
         """
         return pulumi.get(self, "raw")
 
@@ -638,7 +638,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="rebuildOs")
     def rebuild_os(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+        When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function.
         """
         return pulumi.get(self, "rebuild_os")
 
@@ -646,7 +646,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="recurringAmount")
     def recurring_amount(self) -> pulumi.Output[_builtins.int]:
         """
-        Nominal recurring per siklus.
+        Recurring amount per cycle.
         """
         return pulumi.get(self, "recurring_amount")
 
@@ -654,7 +654,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter
     def region(self) -> pulumi.Output[_builtins.str]:
         """
-        Region VM.
+        VM region.
         """
         return pulumi.get(self, "region")
 
@@ -662,7 +662,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="regionLabel")
     def region_label(self) -> pulumi.Output[_builtins.str]:
         """
-        Label region VM.
+        VM region label.
         """
         return pulumi.get(self, "region_label")
 
@@ -670,7 +670,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="selectOs")
     def select_os(self) -> pulumi.Output[_builtins.str]:
         """
-        OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+        OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`.
         """
         return pulumi.get(self, "select_os")
 
@@ -678,7 +678,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="sshAndConsoleUser")
     def ssh_and_console_user(self) -> pulumi.Output[_builtins.str]:
         """
-        User SSH & console yang dipasang saat create.
+        SSH and console user set at creation.
         """
         return pulumi.get(self, "ssh_and_console_user")
 
@@ -686,7 +686,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter
     def status(self) -> pulumi.Output[_builtins.str]:
         """
-        Status akun terakhir dari API (Active, Pending, Suspended, Terminated).
+        Last known account status from the API (Active, Pending, Suspended, Terminated).
         """
         return pulumi.get(self, "status")
 
@@ -694,7 +694,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter
     def uptime(self) -> pulumi.Output[_builtins.int]:
         """
-        Uptime VM dalam detik.
+        VM uptime in seconds.
         """
         return pulumi.get(self, "uptime")
 
@@ -702,7 +702,7 @@ class NeoliteVm(pulumi.CustomResource):
     @pulumi.getter(name="vmName")
     def vm_name(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+        VM name. Defaults to `server-name`. Can be changed via change-vm-name.
         """
         return pulumi.get(self, "vm_name")
 

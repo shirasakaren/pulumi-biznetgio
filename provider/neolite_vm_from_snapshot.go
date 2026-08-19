@@ -32,26 +32,26 @@ type NeoliteVmFromSnapshotState struct {
 }
 
 func (a *NeoliteVmFromSnapshotArgs) Annotate(ann infer.Annotator) {
-	ann.Describe(&a.SnapshotID, "Account id snapshot sumber, dari `NeoliteSnapshot`.")
-	ann.Describe(&a.ProductID, "Product id dari function `getProducts` atau portal.")
-	ann.Describe(&a.Cycle, "Siklus billing: m monthly, a annual, q quarterly, s semiannual, "+
+	ann.Describe(&a.SnapshotID, "Account id of the source snapshot, from `NeoliteSnapshot`.")
+	ann.Describe(&a.ProductID, "Product id from the `getProducts` function or the portal.")
+	ann.Describe(&a.Cycle, "Billing cycle: m monthly, a annual, q quarterly, s semiannual, "+
 		"b biennial, t triennial, p4, p5.")
-	ann.Describe(&a.KeypairID, "Id keypair dari `NeoliteKeypair`.")
-	ann.Describe(&a.Name, "Nama VM hasil restore.")
-	ann.Describe(&a.Description, "Deskripsi VM.")
+	ann.Describe(&a.KeypairID, "Keypair id from `NeoliteKeypair`.")
+	ann.Describe(&a.Name, "Name of the restored VM.")
+	ann.Describe(&a.Description, "VM description.")
 	ann.SetDefault(&a.Description, "")
-	ann.Describe(&a.SSHAndConsoleUser, "User SSH & console yang dipasang saat create.")
-	ann.Describe(&a.ConsolePassword, "Password console saat create. Write-only: ga pernah di-refetch dari API.")
-	ann.Describe(&a.Promocode, "Kode promo saat order.")
+	ann.Describe(&a.SSHAndConsoleUser, "SSH and console user set at creation.")
+	ann.Describe(&a.ConsolePassword, "Console password at creation. Write-only: never re-fetched from the API.")
+	ann.Describe(&a.Promocode, "Promo code to apply at order.")
 	ann.SetDefault(&a.Promocode, "")
-	ann.Describe(&a.PayWithCreditCard, "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). "+
-		"Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.")
+	ann.Describe(&a.PayWithCreditCard, "Pay the invoice with the registered credit card at order time. "+
+		"Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.")
 	ann.SetDefault(&a.PayWithCreditCard, true)
 }
 
 func (s *NeoliteVmFromSnapshotState) Annotate(ann infer.Annotator) {
-	ann.Describe(&s.OrderID, "Order id dari response create.")
-	ann.Describe(&s.Status, "Status VM (Active, Pending, Suspended, Terminated).")
+	ann.Describe(&s.OrderID, "Order id from the creation response.")
+	ann.Describe(&s.Status, "VM status (Active, Pending, Suspended, Terminated).")
 }
 
 func (NeoliteVmFromSnapshot) WireDependencies(
@@ -106,7 +106,7 @@ func (NeoliteVmFromSnapshot) Create(
 		if ctx.Err() == context.DeadlineExceeded {
 			return infer.CreateResponse[NeoliteVmFromSnapshotState]{ID: id, Output: partial},
 				infer.ResourceInitFailedError{Reasons: []string{
-					fmt.Sprintf("neolite vm from snapshot %s belum active: %s", id, err),
+					fmt.Sprintf("neolite vm from snapshot %s not active yet: %s", id, err),
 				}}
 		}
 		return infer.CreateResponse[NeoliteVmFromSnapshotState]{}, err

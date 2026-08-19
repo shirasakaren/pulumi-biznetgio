@@ -34,131 +34,131 @@ export class NeoliteVm extends pulumi.CustomResource {
     }
 
     /**
-     * Siklus billing aktif.
+     * Active billing cycle.
      */
     declare public /*out*/ readonly billingcycle: pulumi.Output<string>;
     /**
-     * Cloud-init password VM (sensitive).
+     * VM cloud-init password (sensitive).
      */
     declare public /*out*/ readonly ciPassword: pulumi.Output<string>;
     /**
-     * Cloud-init user VM.
+     * VM cloud-init user.
      */
     declare public /*out*/ readonly ciUser: pulumi.Output<string>;
     /**
-     * Password console saat create. Write-only: ga pernah di-refetch dari API.
+     * Console password at creation. Write-only: never re-fetched from the API.
      */
     declare public readonly consolePassword: pulumi.Output<string>;
     /**
-     * Jumlah CPU VM.
+     * Number of VM CPUs.
      */
     declare public /*out*/ readonly cpus: pulumi.Output<number>;
     /**
-     * Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+     * Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
      */
     declare public readonly cycle: pulumi.Output<string>;
     /**
-     * Deskripsi VM.
+     * VM description.
      */
     declare public readonly description: pulumi.Output<string | undefined>;
     /**
-     * Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
+     * Target disk size (GB, absolute - not an increment). Can only go up, never down.
      */
     declare public readonly diskSize: pulumi.Output<number | undefined>;
     /**
-     * Id keypair dari `NeoliteKeypair`. Bisa diganti via change-keypair.
+     * Keypair id from `NeoliteKeypair`. Can be changed via change-keypair.
      */
     declare public readonly keypairId: pulumi.Output<number>;
     /**
-     * Invoice terakhir VM.
+     * VM's last invoice.
      */
     declare public /*out*/ readonly lastInvoice: pulumi.Output<outputs.NeoliteLastInvoice>;
     /**
-     * Ukuran disk maksimal VM (GB).
+     * Maximum VM disk size (GB).
      */
     declare public /*out*/ readonly maxDisk: pulumi.Output<number>;
     /**
-     * Memory maksimal VM (MB).
+     * Maximum VM memory (MB).
      */
     declare public /*out*/ readonly maxMem: pulumi.Output<number>;
     /**
-     * Memory yang dipakai VM (MB).
+     * Memory used by the VM (MB).
      */
     declare public /*out*/ readonly mem: pulumi.Output<number>;
     /**
-     * Trigger one-shot migrate ke NEO Lite Pro: isi neolitepro_product_id target. Ganti nilainya buat re-trigger.
+     * Trigger a one-shot migration to NEO Lite Pro: set the neolitepro_product_id target. Change the value again to re-trigger.
      */
     declare public readonly migrateToPro: pulumi.Output<string | undefined>;
     /**
-     * Tanggal tagihan berikutnya.
+     * Next billing due date.
      */
     declare public /*out*/ readonly nextDue: pulumi.Output<string>;
     /**
-     * Order id dari response create.
+     * Order id from the creation response.
      */
     declare public /*out*/ readonly orderId: pulumi.Output<string>;
     /**
-     * Nama OS yang jalan di VM.
+     * Name of the OS running on the VM.
      */
     declare public /*out*/ readonly osName: pulumi.Output<string>;
     /**
-     * Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+     * Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
      */
     declare public readonly payWithCreditCard: pulumi.Output<boolean | undefined>;
     /**
-     * Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+     * VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes.
      */
     declare public readonly powerState: pulumi.Output<string | undefined>;
     /**
-     * Product id dari function `getProducts` atau portal.
+     * Product id from the `getProducts` function or the portal.
      */
     declare public readonly productId: pulumi.Output<number>;
     /**
-     * Nama product aktif.
+     * Active product name.
      */
     declare public /*out*/ readonly productName: pulumi.Output<string>;
     /**
-     * Kode promo saat order.
+     * Promo code to apply at order.
      */
     declare public readonly promocode: pulumi.Output<string | undefined>;
     /**
-     * Full JSON response akun terakhir dari API, buat akses field yang belum dimodel (cipassword di-mask).
+     * Raw JSON response of the last-read account, for accessing fields not yet modeled (cipassword masked).
      */
     declare public /*out*/ readonly raw: pulumi.Output<string>;
     /**
-     * Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+     * When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function.
      */
     declare public readonly rebuildOs: pulumi.Output<string | undefined>;
     /**
-     * Nominal recurring per siklus.
+     * Recurring amount per cycle.
      */
     declare public /*out*/ readonly recurringAmount: pulumi.Output<number>;
     /**
-     * Region VM.
+     * VM region.
      */
     declare public /*out*/ readonly region: pulumi.Output<string>;
     /**
-     * Label region VM.
+     * VM region label.
      */
     declare public /*out*/ readonly regionLabel: pulumi.Output<string>;
     /**
-     * OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+     * OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`.
      */
     declare public readonly selectOs: pulumi.Output<string>;
     /**
-     * User SSH & console yang dipasang saat create.
+     * SSH and console user set at creation.
      */
     declare public readonly sshAndConsoleUser: pulumi.Output<string>;
     /**
-     * Status akun terakhir dari API (Active, Pending, Suspended, Terminated).
+     * Last known account status from the API (Active, Pending, Suspended, Terminated).
      */
     declare public /*out*/ readonly status: pulumi.Output<string>;
     /**
-     * Uptime VM dalam detik.
+     * VM uptime in seconds.
      */
     declare public /*out*/ readonly uptime: pulumi.Output<number>;
     /**
-     * Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+     * VM name. Defaults to `server-name`. Can be changed via change-vm-name.
      */
     declare public readonly vmName: pulumi.Output<string | undefined>;
 
@@ -269,59 +269,59 @@ export class NeoliteVm extends pulumi.CustomResource {
  */
 export interface NeoliteVmArgs {
     /**
-     * Password console saat create. Write-only: ga pernah di-refetch dari API.
+     * Console password at creation. Write-only: never re-fetched from the API.
      */
     consolePassword: pulumi.Input<string>;
     /**
-     * Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+     * Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
      */
     cycle: pulumi.Input<string>;
     /**
-     * Deskripsi VM.
+     * VM description.
      */
     description?: pulumi.Input<string | undefined>;
     /**
-     * Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.
+     * Target disk size (GB, absolute - not an increment). Can only go up, never down.
      */
     diskSize?: pulumi.Input<number | undefined>;
     /**
-     * Id keypair dari `NeoliteKeypair`. Bisa diganti via change-keypair.
+     * Keypair id from `NeoliteKeypair`. Can be changed via change-keypair.
      */
     keypairId: pulumi.Input<number>;
     /**
-     * Trigger one-shot migrate ke NEO Lite Pro: isi neolitepro_product_id target. Ganti nilainya buat re-trigger.
+     * Trigger a one-shot migration to NEO Lite Pro: set the neolitepro_product_id target. Change the value again to re-trigger.
      */
     migrateToPro?: pulumi.Input<string | undefined>;
     /**
-     * Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+     * Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
      */
     payWithCreditCard?: pulumi.Input<boolean | undefined>;
     /**
-     * Power state VM: start, stop, suspend, resume, atau shutdown. Update cuma mengirim action kalau nilainya berubah.
+     * VM power state: start, stop, suspend, resume, or shutdown. Update only sends an action when the value changes.
      */
     powerState?: pulumi.Input<string | undefined>;
     /**
-     * Product id dari function `getProducts` atau portal.
+     * Product id from the `getProducts` function or the portal.
      */
     productId: pulumi.Input<number>;
     /**
-     * Kode promo saat order.
+     * Promo code to apply at order.
      */
     promocode?: pulumi.Input<string | undefined>;
     /**
-     * Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. List OS valid ada di function `getOsList`.
+     * When changed, the VM is rebuilt (wipes the OS) with the new OS via the rebuild endpoint. Valid OS values are listed by the `getOsList` function.
      */
     rebuildOs?: pulumi.Input<string | undefined>;
     /**
-     * OS yang dipasang saat create, dari function `getOsList`. Ganti OS = pakai `rebuildOs`.
+     * OS installed at creation, from the `getOsList` function. To change OS, use `rebuildOs`.
      */
     selectOs: pulumi.Input<string>;
     /**
-     * User SSH & console yang dipasang saat create.
+     * SSH and console user set at creation.
      */
     sshAndConsoleUser: pulumi.Input<string>;
     /**
-     * Nama VM. Default `server-name`. Bisa diubah via change-vm-name.
+     * VM name. Defaults to `server-name`. Can be changed via change-vm-name.
      */
     vmName?: pulumi.Input<string | undefined>;
 }

@@ -56,7 +56,7 @@ namespace Shirasakaren.Biznetgio
         public Output<string> Raw { get; private set; } = null!;
 
         /// <summary>
-        /// Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.
+        /// Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.
         /// </summary>
         [Output("size")]
         public Output<int?> Size { get; private set; } = null!;
@@ -154,7 +154,7 @@ namespace Shirasakaren.Biznetgio
         public Input<string>? Promocode { get; set; }
 
         /// <summary>
-        /// Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.
+        /// Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.
         /// </summary>
         [Input("size")]
         public Input<int>? Size { get; set; }

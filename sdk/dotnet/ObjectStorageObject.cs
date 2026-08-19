@@ -32,7 +32,7 @@ namespace Shirasakaren.Biznetgio
         public Output<string> Bucket { get; private set; } = null!;
 
         /// <summary>
-        /// Inline content yang mau di-upload. Exactly one of `source`/`content` required.
+        /// Inline content to upload. Exactly one of `source`/`content` required.
         /// </summary>
         [Output("content")]
         public Output<string?> Content { get; private set; } = null!;
@@ -50,7 +50,7 @@ namespace Shirasakaren.Biznetgio
         public Output<string> Raw { get; private set; } = null!;
 
         /// <summary>
-        /// Path ke file lokal yang mau di-upload. Exactly one of `source`/`content` required.
+        /// Path to the local file to upload. Exactly one of `source`/`content` required.
         /// </summary>
         [Output("source")]
         public Output<string?> Source { get; private set; } = null!;
@@ -136,7 +136,7 @@ namespace Shirasakaren.Biznetgio
         private Input<string>? _content;
 
         /// <summary>
-        /// Inline content yang mau di-upload. Exactly one of `source`/`content` required.
+        /// Inline content to upload. Exactly one of `source`/`content` required.
         /// </summary>
         public Input<string>? Content
         {
@@ -155,7 +155,7 @@ namespace Shirasakaren.Biznetgio
         public Input<string> Key { get; set; } = null!;
 
         /// <summary>
-        /// Path ke file lokal yang mau di-upload. Exactly one of `source`/`content` required.
+        /// Path to the local file to upload. Exactly one of `source`/`content` required.
         /// </summary>
         [Input("source")]
         public Input<string>? Source { get; set; }

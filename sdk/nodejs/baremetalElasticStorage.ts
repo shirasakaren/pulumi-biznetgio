@@ -60,7 +60,7 @@ export class BaremetalElasticStorage extends pulumi.CustomResource {
      */
     declare public /*out*/ readonly raw: pulumi.Output<string>;
     /**
-     * Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.
+     * Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.
      */
     declare public readonly size: pulumi.Output<number | undefined>;
     /**
@@ -149,7 +149,7 @@ export interface BaremetalElasticStorageArgs {
      */
     promocode?: pulumi.Input<string | undefined>;
     /**
-     * Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.
+     * Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.
      */
     size?: pulumi.Input<number | undefined>;
     /**

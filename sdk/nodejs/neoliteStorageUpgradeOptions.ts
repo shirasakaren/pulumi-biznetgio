@@ -13,7 +13,7 @@ export function neoliteStorageUpgradeOptions(args: NeoliteStorageUpgradeOptionsA
 
 export interface NeoliteStorageUpgradeOptionsArgs {
     /**
-     * Account id VM NEO Lite.
+     * Account id of the NEO Lite VM.
      */
     accountId: number;
 }
@@ -30,7 +30,7 @@ export function neoliteStorageUpgradeOptionsOutput(args: NeoliteStorageUpgradeOp
 
 export interface NeoliteStorageUpgradeOptionsOutputArgs {
     /**
-     * Account id VM NEO Lite.
+     * Account id of the NEO Lite VM.
      */
     accountId: pulumi.Input<number>;
 }

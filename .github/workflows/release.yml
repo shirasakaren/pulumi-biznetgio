@@ -403,6 +403,14 @@ jobs:
         PYPI_PUBLISH_ARTIFACTS: all
         PYPI_USERNAME: __token__
         PYPI_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+    - name: Publish NuGet package
+      # publish-tfgen-package only looks for `Pulumi.*.nupkg` (first-party naming), so
+      # it silently skips ours (`Shirasakaren.Biznetgio.*.nupkg`). Push it ourselves.
+      run: |
+        find sdk/dotnet/bin/Debug/ -name '*.nupkg' \
+          -exec dotnet nuget push -k "$NUGET_PUBLISH_KEY" -s https://api.nuget.org/v3/index.json --skip-duplicate {} \;
+      env:
+        NUGET_PUBLISH_KEY: ${{ secrets.NUGET_PUBLISH_KEY }}
     - if: failure() && github.event_name == 'push' && env.SLACK_WEBHOOK_URL != ''
       name: Notify Slack
       uses: 8398a7/action-slack@77eaa4f1c608a7d68b38af4e3f739dcd8cba273e # v3.19.0
@@ -414,7 +422,6 @@ jobs:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   publish_java_sdk:
     runs-on: ubuntu-latest
-    continue-on-error: true
     needs: publish
     name: publish_java_sdk
     permissions:
@@ -456,17 +463,43 @@ jobs:
       run: |
         cd sdk/java/build/portal
         printf '%s' "$JAVA_SIGNING_KEY" | gpg --batch --import
-        for f in *.jar *.pom; do
+        ARTIFACT_DIR="ren/shirasaka/biznetgio/${PROVIDER_VERSION}"
+        # Central Portal validates the bundle as a real Maven repo: every jar/pom
+        # needs its .asc signature plus .md5/.sha1 checksums sitting next to it.
+        for f in "$ARTIFACT_DIR"/*.jar "$ARTIFACT_DIR"/*.pom; do
           gpg --batch --yes --pinentry-mode loopback --passphrase "$JAVA_SIGNING_PASSWORD" --armor --detach-sign "$f"
+          md5sum "$f" | awk '{print $1}' > "$f.md5"
+          sha1sum "$f" | awk '{print $1}' > "$f.sha1"
         done
-        zip -q -r bundle.zip .
-        curl -sSf -u "$OSSRH_USERNAME:$OSSRH_PASSWORD" \
+        zip -q -r bundle.zip ren
+        response=$(curl -sSf -u "$OSSRH_USERNAME:$OSSRH_PASSWORD" \
           -F "bundle=@bundle.zip" \
           -F "publishingType=AUTOMATIC" \
-          https://central.sonatype.com/api/v1/publisher/upload
+          https://central.sonatype.com/api/v1/publisher/upload)
+        echo "deployment id: $response"
+        echo "deployment_id=$response" >> "$GITHUB_OUTPUT"
+      id: upload
       env:
         JAVA_SIGNING_KEY: ${{ secrets.JAVA_SIGNING_KEY }}
         JAVA_SIGNING_PASSWORD: ${{ secrets.JAVA_SIGNING_PASSWORD }}
+        OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+    - name: Verify Central Portal deployment
+      run: |
+        for i in $(seq 1 10); do
+          status=$(curl -sSf -u "$OSSRH_USERNAME:$OSSRH_PASSWORD" -X POST \
+            "https://central.sonatype.com/api/v1/publisher/status?id=${{ steps.upload.outputs.deployment_id }}" \
+            | tee /dev/stderr | python3 -c 'import json,sys; print(json.load(sys.stdin)["deploymentState"])')
+          echo "attempt $i: $status"
+          case "$status" in
+            PUBLISHED|PUBLISHING) exit 0 ;;
+            FAILED) echo "::error::Central Portal deployment failed validation"; exit 1 ;;
+          esac
+          sleep 15
+        done
+        echo "::error::Central Portal deployment did not reach a terminal state in time"
+        exit 1
+      env:
         OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
   publish_go_sdk:

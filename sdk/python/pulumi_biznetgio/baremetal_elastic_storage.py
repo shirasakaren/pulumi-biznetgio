@@ -35,7 +35,7 @@ class BaremetalElasticStorageArgs:
         :param pulumi.Input[_builtins.str] storage_name: Name of the storage. Create-only, changing it replaces the storage.
         :param pulumi.Input[_builtins.bool] pay_with_credit_card: Pay the invoice with the registered credit card. Defaults to true. Set false to leave the invoice unpaid in the portal; the resource stays Pending until paid.
         :param pulumi.Input[_builtins.str] promocode: Promo code to apply at creation.
-        :param pulumi.Input[_builtins.int] size: Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.
+        :param pulumi.Input[_builtins.int] size: Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.
         """
         pulumi.set(__self__, "cycle", cycle)
         pulumi.set(__self__, "metal_account_id", metal_account_id)
@@ -128,7 +128,7 @@ class BaremetalElasticStorageArgs:
     @pulumi.getter
     def size(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
-        Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.
+        Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.
         """
         return pulumi.get(self, "size")
 
@@ -161,7 +161,7 @@ class BaremetalElasticStorage(pulumi.CustomResource):
         :param pulumi.Input[_builtins.bool] pay_with_credit_card: Pay the invoice with the registered credit card. Defaults to true. Set false to leave the invoice unpaid in the portal; the resource stays Pending until paid.
         :param pulumi.Input[_builtins.int] product_id: Product id from `GET /baremetal-neo-elastic-storages/products`. Changing it triggers change-package (`POST .../{account_id}`).
         :param pulumi.Input[_builtins.str] promocode: Promo code to apply at creation.
-        :param pulumi.Input[_builtins.int] size: Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.
+        :param pulumi.Input[_builtins.int] size: Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.
         :param pulumi.Input[_builtins.str] storage_name: Name of the storage. Create-only, changing it replaces the storage.
         """
         ...
@@ -322,7 +322,7 @@ class BaremetalElasticStorage(pulumi.CustomResource):
     @pulumi.getter
     def size(self) -> pulumi.Output[Optional[_builtins.int]]:
         """
-        Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.
+        Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.
         """
         return pulumi.get(self, "size")
 

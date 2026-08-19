@@ -32,51 +32,51 @@ export class NeoliteVmFromSnapshot extends pulumi.CustomResource {
     }
 
     /**
-     * Password console saat create. Write-only: ga pernah di-refetch dari API.
+     * Console password at creation. Write-only: never re-fetched from the API.
      */
     declare public readonly consolePassword: pulumi.Output<string>;
     /**
-     * Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+     * Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
      */
     declare public readonly cycle: pulumi.Output<string>;
     /**
-     * Deskripsi VM.
+     * VM description.
      */
     declare public readonly description: pulumi.Output<string | undefined>;
     /**
-     * Id keypair dari `NeoliteKeypair`.
+     * Keypair id from `NeoliteKeypair`.
      */
     declare public readonly keypairId: pulumi.Output<number>;
     /**
-     * Nama VM hasil restore.
+     * Name of the restored VM.
      */
     declare public readonly name: pulumi.Output<string>;
     /**
-     * Order id dari response create.
+     * Order id from the creation response.
      */
     declare public /*out*/ readonly orderId: pulumi.Output<string>;
     /**
-     * Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+     * Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
      */
     declare public readonly payWithCreditCard: pulumi.Output<boolean | undefined>;
     /**
-     * Product id dari function `getProducts` atau portal.
+     * Product id from the `getProducts` function or the portal.
      */
     declare public readonly productId: pulumi.Output<number>;
     /**
-     * Kode promo saat order.
+     * Promo code to apply at order.
      */
     declare public readonly promocode: pulumi.Output<string | undefined>;
     /**
-     * Account id snapshot sumber, dari `NeoliteSnapshot`.
+     * Account id of the source snapshot, from `NeoliteSnapshot`.
      */
     declare public readonly snapshotId: pulumi.Output<number>;
     /**
-     * User SSH & console yang dipasang saat create.
+     * SSH and console user set at creation.
      */
     declare public readonly sshAndConsoleUser: pulumi.Output<string>;
     /**
-     * Status VM (Active, Pending, Suspended, Terminated).
+     * VM status (Active, Pending, Suspended, Terminated).
      */
     declare public /*out*/ readonly status: pulumi.Output<string>;
 
@@ -150,43 +150,43 @@ export class NeoliteVmFromSnapshot extends pulumi.CustomResource {
  */
 export interface NeoliteVmFromSnapshotArgs {
     /**
-     * Password console saat create. Write-only: ga pernah di-refetch dari API.
+     * Console password at creation. Write-only: never re-fetched from the API.
      */
     consolePassword: pulumi.Input<string>;
     /**
-     * Siklus billing: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
+     * Billing cycle: m monthly, a annual, q quarterly, s semiannual, b biennial, t triennial, p4, p5.
      */
     cycle: pulumi.Input<string>;
     /**
-     * Deskripsi VM.
+     * VM description.
      */
     description?: pulumi.Input<string | undefined>;
     /**
-     * Id keypair dari `NeoliteKeypair`.
+     * Keypair id from `NeoliteKeypair`.
      */
     keypairId: pulumi.Input<number>;
     /**
-     * Nama VM hasil restore.
+     * Name of the restored VM.
      */
     name: pulumi.Input<string>;
     /**
-     * Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.
+     * Pay the invoice with the registered credit card at order time. Defaults to true (auto-charge); set false to leave it unpaid in the portal until settled.
      */
     payWithCreditCard?: pulumi.Input<boolean | undefined>;
     /**
-     * Product id dari function `getProducts` atau portal.
+     * Product id from the `getProducts` function or the portal.
      */
     productId: pulumi.Input<number>;
     /**
-     * Kode promo saat order.
+     * Promo code to apply at order.
      */
     promocode?: pulumi.Input<string | undefined>;
     /**
-     * Account id snapshot sumber, dari `NeoliteSnapshot`.
+     * Account id of the source snapshot, from `NeoliteSnapshot`.
      */
     snapshotId: pulumi.Input<number>;
     /**
-     * User SSH & console yang dipasang saat create.
+     * SSH and console user set at creation.
      */
     sshAndConsoleUser: pulumi.Input<string>;
 }
