@@ -11,7 +11,7 @@ consume it. Maintained by Shirasaka Ren under the `shirasakaren` namespace.
 | GitHub Releases (plugin binaries) | ✅ **LIVE** — `v0.1.2` (plugin auto-downloads) |
 | PyPI (`pulumi-biznetgio`) | ⬜ not yet |
 | NuGet (`Shirasakaren.Biznetgio`) | ⬜ not yet |
-| Maven Central (`ren.shirasaka:biznetgio`) | ⬜ publishing via the Central Portal plugin |
+| Maven Central (`ren.shirasaka:biznetgio`) | ✅ **UPLOADED** — `0.1.5` published via the Central Portal API (syncs to Maven Central automatically) |
 | Go module | ✅ resolved from GitHub automatically |
 | Pulumi Registry listing | ⬜ optional discovery layer — submit after everything else |
 
@@ -272,12 +272,10 @@ do it yourself:
    reverse-DNS of `shirasaka.ren`, the domain you own.
 4. The portal shows a TXT record to publish. Add it in your DNS for
    `shirasaka.ren` (use the exact host/value it displays) and click verify.
-5. Once verified, generate a **publish token** (User → Publishing tokens →
-   Access tokens). Store:
-   - token username → `OSSRH_USERNAME` secret
-   - token password → `OSSRH_PASSWORD` secret
-6. The Java publish job already has the GPG signing secrets configured, so
-   the next `v*` tag publishes `ren.shirasaka:biznetgio` to Maven Central.
-
-Until verification completes, the Java publish step fails on namespace
-permission — everything else in the release pipeline is unaffected.
+5. Generate a **publish token** (User → Publishing tokens → Access tokens)
+   and store it as `OSSRH_USERNAME` / `OSSRH_PASSWORD` secrets. ✅ done —
+   the release pipeline signs with the configured GPG key and uploads the
+   bundle to the Central Portal API on every `v*` tag.
+6. Deployments publish automatically; if a publication fails mid-run,
+   update the secrets and `gh run rerun --failed <run-id>` — the job
+   re-reads secrets at runtime, no new tag needed.
