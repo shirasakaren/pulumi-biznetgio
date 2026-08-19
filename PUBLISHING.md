@@ -7,13 +7,13 @@ consume it. Maintained by Shirasaka Ren under the `shirasakaren` namespace.
 
 | Target | Status |
 | --- | --- |
-| npm (`@shirasakaren/biznetgio`) | ✅ **LIVE** - latest `0.1.2` (`npm install @shirasakaren/biznetgio`) |
-| GitHub Releases (plugin binaries) | ✅ **LIVE** - `v0.1.2` (plugin auto-downloads) |
-| PyPI (`pulumi-biznetgio`) | ⬜ not yet |
-| NuGet (`Shirasakaren.Biznetgio`) | ⬜ not yet |
-| Maven Central (`ren.shirasaka:biznetgio`) | ✅ **UPLOADED** - `0.1.5` published via the Central Portal API (syncs to Maven Central automatically) |
+| npm (`@shirasakaren/biznetgio`) | ✅ **LIVE** - `npm install @shirasakaren/biznetgio` |
+| GitHub Releases (plugin binaries) | ✅ **LIVE** - plugin auto-downloads |
+| PyPI (`pulumi-biznetgio`) | ✅ **LIVE** - `pip install pulumi-biznetgio` |
+| NuGet (`Shirasakaren.Biznetgio`) | 🟡 pending `v0.1.7` - the package icon was an SVG mislabeled `.png`, which NuGet.org rejected outright, now fixed |
+| Maven Central (`ren.shirasaka:biznetgio`) | 🟡 pending `v0.1.7` - the release GPG key wasn't published to a keyserver, so Central Portal rejected the signature on every prior attempt, now fixed |
 | Go module | ✅ resolved from GitHub automatically |
-| Pulumi Registry listing | ⬜ optional discovery layer - submit after everything else |
+| Pulumi Registry listing | 🟡 in review - [pulumi/registry#12144](https://github.com/pulumi/registry/pull/12144) |
 
 ## Architecture
 

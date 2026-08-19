@@ -1,4 +1,14 @@
-## 0.1.6 (Unreleased)
+## 0.1.7 (Unreleased)
+
+BUG FIXES:
+
+* Fix the NuGet package: `assets/logo.png` was actually SVG content saved with a `.png` extension (from an
+  earlier attempt to work around a 404), so NuGet.org rejected the whole package with "Unsupported icon image
+  format." It's a real rasterized PNG now, referenced via the schema's `logoUrl`.
+* Publish the release GPG key to public keyservers - Central Portal validates signatures against them, and
+  without this every Maven Central deployment failed validation even with a correct signature.
+
+## 0.1.6
 
 BUG FIXES:
 

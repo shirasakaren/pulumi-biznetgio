@@ -11,7 +11,7 @@
   "homepage": "https://biznetgio.creations.ren",
   "license": "Apache-2.0",
   "repository": "github.com/shirasakaren/pulumi-biznetgio",
-  "logoUrl": "https://raw.githubusercontent.com/shirasakaren/pulumi-biznetgio/main/assets/logo.svg",
+  "logoUrl": "https://raw.githubusercontent.com/shirasakaren/pulumi-biznetgio/main/assets/logo.png",
   "pluginDownloadURL": "github://api.github.com/shirasakaren/pulumi-biznetgio",
   "publisher": "shirasakaren",
   "namespace": "biznetgio",

@@ -28,7 +28,7 @@ func Provider() p.Provider {
 		WithLicense("Apache-2.0").
 		WithNamespace("biznetgio").
 		WithPluginDownloadURL("github://api.github.com/shirasakaren/pulumi-biznetgio").
-		WithLogoURL("https://raw.githubusercontent.com/shirasakaren/pulumi-biznetgio/main/assets/logo.svg").
+		WithLogoURL("https://raw.githubusercontent.com/shirasakaren/pulumi-biznetgio/main/assets/logo.png").
 		WithLanguageMap(map[string]any{
 			"nodejs": map[string]any{"packageName": "@shirasakaren/biznetgio"},
 			"python": map[string]any{"packageName": "pulumi_biznetgio"},

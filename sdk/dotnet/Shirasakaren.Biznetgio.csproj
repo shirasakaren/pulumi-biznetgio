@@ -10,7 +10,7 @@
     <RepositoryUrl>https://github.com/shirasakaren/pulumi-biznetgio</RepositoryUrl>
     <PackageIcon>logo.png</PackageIcon>
 
-    <Version>0.1.6</Version>
+    <Version>0.1.7</Version>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>

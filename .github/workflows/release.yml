@@ -463,6 +463,12 @@ jobs:
       run: |
         cd sdk/java/build/portal
         printf '%s' "$JAVA_SIGNING_KEY" | gpg --batch --import
+        # Central Portal checks the signature against public keyservers, not just
+        # the signature math - push the public key so it can actually find it.
+        KEY_FPR=$(gpg --batch --with-colons --fingerprint --list-secret-keys | awk -F: '$1=="fpr" {print $10; exit}')
+        gpg --keyserver keyserver.ubuntu.com --send-keys "$KEY_FPR" || true
+        gpg --keyserver keys.openpgp.org --send-keys "$KEY_FPR" || true
+        sleep 30
         ARTIFACT_DIR="ren/shirasaka/biznetgio/${PROVIDER_VERSION}"
         # Central Portal validates the bundle as a real Maven repo: every jar/pom
         # needs its .asc signature plus .md5/.sha1 checksums sitting next to it.
@@ -486,7 +492,7 @@ jobs:
         OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
     - name: Verify Central Portal deployment
       run: |
-        for i in $(seq 1 10); do
+        for i in $(seq 1 16); do
           status=$(curl -sSf -u "$OSSRH_USERNAME:$OSSRH_PASSWORD" -X POST \
             "https://central.sonatype.com/api/v1/publisher/status?id=${{ steps.upload.outputs.deployment_id }}" \
             | tee /dev/stderr | python3 -c 'import json,sys; print(json.load(sys.stdin)["deploymentState"])')
