@@ -1,4 +1,4 @@
-module github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio
+module github.com/shirasakaren/pulumi-biznetgio/sdk/go/pulumi-biznetgio
 
 go 1.25.11
 

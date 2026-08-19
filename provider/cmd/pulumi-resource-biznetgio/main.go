@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/biznetgio/pulumi-biznetgio/provider"
+	"github.com/shirasakaren/pulumi-biznetgio/provider"
 )
 
 func main() {

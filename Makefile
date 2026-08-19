@@ -2,13 +2,13 @@ PROJECT_NAME := Pulumi BiznetGIO Provider
 
 PACK             := biznetgio
 PACKDIR          := sdk
-PROJECT          := github.com/biznetgio/pulumi-biznetgio
-NODE_MODULE_NAME := @biznetgio/biznetgio
-NUGET_PKG_NAME   := Biznetgio.Biznetgio
+PROJECT          := github.com/shirasakaren/pulumi-biznetgio
+NODE_MODULE_NAME := @shirasakaren/biznetgio
+NUGET_PKG_NAME   := Shirasakaren.Biznetgio
 
 PROVIDER        := pulumi-resource-${PACK}
 PROVIDER_PATH   := provider
-VERSION_PATH    := ${PROVIDER_PATH}/version.Version
+VERSION_PATH    := ${PROVIDER_PATH}.Version
 
 PULUMI          := pulumi
 
@@ -45,7 +45,7 @@ prepare:
 # Local & branch builds will just used this fixed default version unless specified
 PROVIDER_VERSION ?= 1.0.0-alpha.0+dev
 # Use this normalised version everywhere rather than the raw input to ensure consistency.
-VERSION_GENERIC = $(shell pulumictl convert-version --language generic --version "$(PROVIDER_VERSION)")
+VERSION_GENERIC = $(PROVIDER_VERSION)
 
 # Need to pick up locally pinned pulumi-langage-* plugins.
 export PULUMI_IGNORE_AMBIENT_PLUGINS = true
@@ -73,6 +73,7 @@ sdk/%: $(SCHEMA_FILE)
 sdk/java: $(SCHEMA_FILE)
 	rm -rf $@
 	$(PULUMI) package gen-sdk --language java $(SCHEMA_FILE)
+	python3 scripts/fix-java-gradle.py $@
 
 sdk/python: $(SCHEMA_FILE)
 	rm -rf $@
@@ -82,6 +83,7 @@ sdk/python: $(SCHEMA_FILE)
 sdk/dotnet: $(SCHEMA_FILE)
 	rm -rf $@
 	$(PULUMI) package gen-sdk --language dotnet $(SCHEMA_FILE) --version "${VERSION_GENERIC}"
+	python3 scripts/fix-dotnet-sdk.py $@ ${VERSION_GENERIC}
 
 
 sdk/go: ${SCHEMA_FILE}
@@ -116,6 +118,7 @@ nodejs_sdk: sdk/nodejs
 	cd ${PACKDIR}/nodejs/ && \
 		yarn install && \
 		yarn run tsc
+	python3 scripts/fix-nodejs-pkg.py ${PACKDIR}/nodejs ${VERSION_GENERIC}
 	cp README.md LICENSE ${PACKDIR}/nodejs/package.json ${PACKDIR}/nodejs/yarn.lock ${PACKDIR}/nodejs/bin/
 
 python_sdk: sdk/python

@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Immutable;
 
-namespace Biznetgio.Biznetgio
+namespace Shirasakaren.Biznetgio
 {
     public static class Config
     {

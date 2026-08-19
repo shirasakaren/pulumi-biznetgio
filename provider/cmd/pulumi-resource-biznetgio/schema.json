@@ -1,28 +1,35 @@
 {
   "name": "biznetgio",
   "displayName": "Pulumi BiznetGIO Provider",
-  "description": "Pulumi provider for BiznetGIO cloud — NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.",
+  "description": "Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren — NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.",
   "keywords": [
     "biznetgio",
     "cloud",
     "indonesia",
     "neo"
   ],
-  "homepage": "https://www.biznetgio.com",
+  "homepage": "https://biznetgio.creations.ren",
   "license": "Apache-2.0",
-  "repository": "github.com/biznetgio/pulumi-biznetgio",
-  "publisher": "biznetgio",
+  "repository": "github.com/shirasakaren/pulumi-biznetgio",
+  "logoUrl": "https://raw.githubusercontent.com/shirasakaren/pulumi-biznetgio/main/assets/logo.svg",
+  "pluginDownloadURL": "github://api.github.com/shirasakaren/pulumi-biznetgio",
+  "publisher": "shirasakaren",
   "namespace": "biznetgio",
   "language": {
     "dotnet": {
-      "packageName": "Biznetgio.Biznetgio"
+      "packageName": "Shirasakaren.Biznetgio"
     },
     "go": {
-      "importBasePath": "github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio"
+      "importBasePath": "github.com/shirasakaren/pulumi-biznetgio/sdk/go/pulumi-biznetgio"
     },
-    "java": {},
+    "java": {
+      "basePackage": "ren.shirasaka.biznetgio",
+      "packages": {
+        "biznetgio": "ren.shirasaka:biznetgio"
+      }
+    },
     "nodejs": {
-      "packageName": "@biznetgio/biznetgio"
+      "packageName": "@shirasakaren/biznetgio"
     },
     "python": {
       "packageName": "pulumi_biznetgio"

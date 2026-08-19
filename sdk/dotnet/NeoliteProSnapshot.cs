@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace Biznetgio.Biznetgio
+namespace Shirasakaren.Biznetgio
 {
     [BiznetgioResourceType("biznetgio:index:NeoliteProSnapshot")]
     public partial class NeoliteProSnapshot : global::Pulumi.CustomResource
@@ -84,6 +84,7 @@ namespace Biznetgio.Biznetgio
             var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
+                PluginDownloadURL = "github://api.github.com/shirasakaren/pulumi-biznetgio",
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.

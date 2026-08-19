@@ -2,8 +2,8 @@ template: native
 provider: biznetgio
 major-version: 0
 providerDefaultBranch: main
-publishRegistry: false
-providerVersion: github.com/biznetgio/pulumi-biznetgio/provider.Version
+publishRegistry: true
+providerVersion: github.com/shirasakaren/pulumi-biznetgio/provider.Version
 parallel: 3
 sdkModuleDir: sdk/go/pulumi-biznetgio
 esc:

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace Biznetgio.Biznetgio
+namespace Shirasakaren.Biznetgio
 {
     [BiznetgioResourceType("biznetgio:index:NeoliteVmFromSnapshot")]
     public partial class NeoliteVmFromSnapshot : global::Pulumi.CustomResource
@@ -108,6 +108,7 @@ namespace Biznetgio.Biznetgio
             var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
+                PluginDownloadURL = "github://api.github.com/shirasakaren/pulumi-biznetgio",
                 AdditionalSecretOutputs =
                 {
                     "consolePassword",

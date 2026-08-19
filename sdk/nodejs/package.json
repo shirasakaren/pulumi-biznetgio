@@ -1,14 +1,14 @@
 {
-    "name": "@biznetgio/biznetgio",
-    "version": "${VERSION}",
+    "name": "@shirasakaren/biznetgio",
+    "version": "0.1.2",
     "keywords": [
         "biznetgio",
         "cloud",
         "indonesia",
         "neo"
     ],
-    "homepage": "https://www.biznetgio.com",
-    "repository": "github.com/biznetgio/pulumi-biznetgio",
+    "homepage": "https://biznetgio.creations.ren",
+    "repository": "https://github.com/shirasakaren/pulumi-biznetgio",
     "license": "Apache-2.0",
     "scripts": {
         "build": "tsc"
@@ -22,6 +22,12 @@
     },
     "pulumi": {
         "resource": true,
-        "name": "biznetgio"
-    }
+        "name": "biznetgio",
+        "server": "github://api.github.com/shirasakaren/pulumi-biznetgio"
+    },
+    "main": "./index.js",
+    "types": "./index.d.ts",
+    "files": [
+        "**/*"
+    ]
 }

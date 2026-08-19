@@ -10,4 +10,4 @@ pluginManagement {
   }
 }
 
-rootProject.name = "com.biznetgio.biznetgio"
+rootProject.name = "ren.shirasaka.biznetgio"

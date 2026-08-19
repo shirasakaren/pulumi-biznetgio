@@ -7,8 +7,8 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/shirasakaren/pulumi-biznetgio/sdk/go/pulumi-biznetgio/internal"
 )
 
 func NeoliteProIPAvailability(ctx *pulumi.Context, args *NeoliteProIPAvailabilityArgs, opts ...pulumi.InvokeOption) (*NeoliteProIPAvailabilityResult, error) {

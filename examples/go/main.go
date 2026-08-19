@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	biznetgio "github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio"
-	bngcfg "github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio/config"
+	biznetgio "github.com/shirasakaren/pulumi-biznetgio/sdk/go/pulumi-biznetgio"
+	bngcfg "github.com/shirasakaren/pulumi-biznetgio/sdk/go/pulumi-biznetgio/config"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

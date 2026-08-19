@@ -4,7 +4,7 @@
     "@types/node": "^20"
   },
   "dependencies": {
-    "@biznetgio/biznetgio": "file:../../sdk/nodejs/bin",
+    "@shirasakaren/biznetgio": "file:../../sdk/nodejs/bin",
     "@pulumi/pulumi": "3.213.0",
     "typescript": "^4.0.0"
   }

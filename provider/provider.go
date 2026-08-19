@@ -9,7 +9,7 @@ import (
 	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
 
-	"github.com/biznetgio/pulumi-biznetgio/provider/client"
+	"github.com/shirasakaren/pulumi-biznetgio/provider/client"
 )
 
 var Version string
@@ -19,20 +19,22 @@ const Name string = "biznetgio"
 func Provider() p.Provider {
 	p, err := infer.NewProviderBuilder().
 		WithDisplayName("Pulumi BiznetGIO Provider").
-		WithDescription("Pulumi provider for BiznetGIO cloud — NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.").
-		WithHomepage("https://www.biznetgio.com").
-		WithRepository("github.com/biznetgio/pulumi-biznetgio").
-		WithPublisher("biznetgio").
+		WithDescription("Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren — NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.").
+		WithHomepage("https://biznetgio.creations.ren").
+		WithRepository("github.com/shirasakaren/pulumi-biznetgio").
+		WithPublisher("shirasakaren").
 		WithKeywords("biznetgio", "cloud", "indonesia", "neo").
 		WithLicense("Apache-2.0").
 		WithNamespace("biznetgio").
+		WithPluginDownloadURL("github://api.github.com/shirasakaren/pulumi-biznetgio").
+		WithLogoURL("https://raw.githubusercontent.com/shirasakaren/pulumi-biznetgio/main/assets/logo.svg").
 		WithLanguageMap(map[string]any{
-			"nodejs": map[string]any{"packageName": "@biznetgio/biznetgio"},
+			"nodejs": map[string]any{"packageName": "@shirasakaren/biznetgio"},
 			"python": map[string]any{"packageName": "pulumi_biznetgio"},
-			"dotnet": map[string]any{"packageName": "Biznetgio.Biznetgio"},
-			"java":   map[string]any{},
+			"dotnet": map[string]any{"packageName": "Shirasakaren.Biznetgio"},
+			"java":   map[string]any{"packages": map[string]any{"biznetgio": "ren.shirasaka:biznetgio"}, "basePackage": "ren.shirasaka.biznetgio"},
 		}).
-		WithGoImportPath("github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio").
+		WithGoImportPath("github.com/shirasakaren/pulumi-biznetgio/sdk/go/pulumi-biznetgio").
 		WithResources(
 			// metal dulu
 			infer.Resource(Baremetal{}),

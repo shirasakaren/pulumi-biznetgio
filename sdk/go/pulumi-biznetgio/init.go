@@ -6,9 +6,9 @@ package pulumibiznetgio
 import (
 	"fmt"
 
-	"github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio/internal"
 	"github.com/blang/semver"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/shirasakaren/pulumi-biznetgio/sdk/go/pulumi-biznetgio/internal"
 )
 
 type module struct {

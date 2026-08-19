@@ -1,5 +1,8 @@
 # Pulumi BiznetGIO Provider
 
+> **Unofficial** community provider by [Shirasaka Ren](https://shirasaka.ren),
+> not affiliated with or endorsed by PT Biznet Gio Nusantara.
+
 A native [Pulumi](https://www.pulumi.com) provider for managing
 [BiznetGIO](https://www.biznetgio.com) cloud infrastructure via the
 [BiznetGIO Portal API](https://api.portal.biznetgio.com/v1/docs).
@@ -8,17 +11,20 @@ Covers NEO Metal (bare metal), NEO Lite / NEO Lite Pro (VMs), NEO GPU, and
 NEO Object Storage (S3-compatible), with matching provider functions for
 catalog lookups (products, OS lists, upgrade options, IP availability).
 
+Documentation: https://biznetgio.creations.ren
+
 ## Install
 
-The provider is published as `biznetgio` in the Pulumi Registry. SDK packages:
+SDK packages (the `pulumi-resource-biznetgio` plugin is downloaded
+automatically from GitHub Releases via `pluginDownloadURL`):
 
 | Language | Package |
 |---|---|
-| Node.js | `@biznetgio/biznetgio` |
-| Python | `pulumi_biznetgio` |
-| Go | `github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio` |
-| .NET | `Biznetgio.Biznetgio` |
-| Java | `com.biznetgio.biznetgio` |
+| Node.js | `@shirasakaren/biznetgio` |
+| Python | `shirasakaren-biznetgio` (import `pulumi_biznetgio`) |
+| Go | `github.com/shirasakaren/pulumi-biznetgio/sdk/go/pulumi-biznetgio` |
+| .NET | `Shirasakaren.Biznetgio` |
+| Java | `com.shirasakaren.biznetgio` |
 
 ## Authentication
 
@@ -36,7 +42,7 @@ The token is sent as the `x-token` header. `baseUrl` defaults to
 ## Example
 
 ```typescript
-import * as biznetgio from "@biznetgio/biznetgio";
+import * as biznetgio from "@shirasakaren/biznetgio";
 
 const plans = biznetgio.getNeoliteProducts();
 
@@ -106,10 +112,30 @@ make lint            # golangci-lint
 
 ## Publishing
 
-`make ci-mgmt` regenerates release workflows from `.ci-mgmt.yaml`. Before
-publishing, replace the placeholder `biznetgio` GitHub org with the real one
-and set `publishRegistry: true`. Release secrets come from a Pulumi ESC
-environment (`imports/github-secrets` in `.ci-mgmt.yaml`).
+Push a `v*.*.*` tag (or trigger the `release` workflow manually) and GitHub
+Actions builds the SDKs, runs the language test matrix, and publishes:
+
+- plugin binaries to **GitHub Releases** (Pulumi downloads them via
+  `pluginDownloadURL: github://api.github.com/shirasakaren/pulumi-biznetgio`)
+- `@shirasakaren/biznetgio` to npm, `shirasakaren-biznetgio` to PyPI,
+  `Shirasakaren.Biznetgio` to NuGet, `com.shirasakaren.biznetgio` to Maven
+  Central, and the Go SDK module to GitHub
+
+**npm is live:** `npm install @shirasakaren/biznetgio` (latest `0.1.1`). See
+[PUBLISHING.md](PUBLISHING.md) for the full release runbook covering every
+registry.
+
+Secrets required (GitHub repository secrets):
+
+| Secret | Used for |
+|---|---|
+| `NPM_TOKEN` | npm publish |
+| `PYPI_API_TOKEN` | PyPI publish |
+| `NUGET_PUBLISH_KEY` | NuGet publish |
+| `OSSRH_USERNAME` / `OSSRH_PASSWORD` | Maven Central (Sonatype) |
+| `JAVA_SIGNING_KEY_ID` / `JAVA_SIGNING_KEY` / `JAVA_SIGNING_PASSWORD` | Maven artifact signing |
+| `CODECOV_TOKEN` | coverage upload (optional) |
+| `SLACK_WEBHOOK_URL` | failure notifications (optional) |
 
 ## License
 

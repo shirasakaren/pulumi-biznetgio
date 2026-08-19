@@ -7,8 +7,8 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/shirasakaren/pulumi-biznetgio/sdk/go/pulumi-biznetgio/internal"
 )
 
 func NeoliteProStorageUpgradeOptions(ctx *pulumi.Context, args *NeoliteProStorageUpgradeOptionsArgs, opts ...pulumi.InvokeOption) (*NeoliteProStorageUpgradeOptionsResult, error) {

@@ -10,7 +10,7 @@ import (
 
 	"github.com/pulumi/pulumi-go-provider/infer"
 
-	"github.com/biznetgio/pulumi-biznetgio/provider/client"
+	"github.com/shirasakaren/pulumi-biznetgio/provider/client"
 )
 
 type NeoliteProVm struct{}

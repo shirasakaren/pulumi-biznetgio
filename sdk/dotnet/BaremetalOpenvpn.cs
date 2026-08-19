@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace Biznetgio.Biznetgio
+namespace Shirasakaren.Biznetgio
 {
     public static class BaremetalOpenvpn
     {

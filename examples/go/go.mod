@@ -1,11 +1,11 @@
-module github.com/biznetgio/pulumi-biznetgio/examples/go
+module github.com/shirasakaren/pulumi-biznetgio/examples/go
 
 go 1.25.11
 
-replace github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio => ../../sdk/go/pulumi-biznetgio
+replace github.com/shirasakaren/pulumi-biznetgio/sdk/go/pulumi-biznetgio => ../../sdk/go/pulumi-biznetgio
 
 require (
-	github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio v0.0.99
+	github.com/shirasakaren/pulumi-biznetgio/sdk/go/pulumi-biznetgio v0.0.99
 	github.com/pulumi/pulumi/sdk/v3 v3.256.0
 )
 

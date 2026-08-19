@@ -1,5 +1,5 @@
 import * as pulumi from "@pulumi/pulumi";
-import * as biznetgio from "@biznetgio/biznetgio";
+import * as biznetgio from "@shirasakaren/biznetgio";
 
 // token: `pulumi config set biznetgio:apiToken <token> --secret` atau env BIZNETGIO_API_KEY
 const apiToken = biznetgio.config.apiToken;

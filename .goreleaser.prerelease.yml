@@ -19,7 +19,7 @@ builds:
     - -s
     - -w
     - -X
-      github.com/biznetgio/pulumi-biznetgio/provider/pkg/version.Version={{.Tag}}
+      github.com/shirasakaren/pulumi-biznetgio/provider.Version={{.Tag}}
   binary: pulumi-resource-biznetgio
 - id: build-provider-sign-windows
   dir: provider
@@ -47,10 +47,3 @@ changelog:
   skip: true
 release:
   disable: true
-blobs:
-- provider: s3
-  region: us-west-2
-  bucket: get.pulumi.com
-  folder: releases/plugins/
-  ids:
-  - archive

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace Biznetgio.Biznetgio.Inputs
+namespace Shirasakaren.Biznetgio.Inputs
 {
 
     public sealed class GpuOnDemandArgsArgs : global::Pulumi.ResourceArgs

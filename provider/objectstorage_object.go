@@ -10,7 +10,7 @@ import (
 	p "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
 
-	"github.com/biznetgio/pulumi-biznetgio/provider/client"
+	"github.com/shirasakaren/pulumi-biznetgio/provider/client"
 )
 
 type ObjectStorageObject struct{}

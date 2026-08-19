@@ -4,9 +4,9 @@
 package config
 
 import (
-	"github.com/biznetgio/pulumi-biznetgio/sdk/go/pulumi-biznetgio/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+	"github.com/shirasakaren/pulumi-biznetgio/sdk/go/pulumi-biznetgio/internal"
 )
 
 var _ = internal.GetEnvOrDefault

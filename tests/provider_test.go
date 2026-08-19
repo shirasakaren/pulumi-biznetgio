@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/biznetgio/pulumi-biznetgio/provider"
+	"github.com/shirasakaren/pulumi-biznetgio/provider"
 )
 
 func TestProviderName(t *testing.T) {

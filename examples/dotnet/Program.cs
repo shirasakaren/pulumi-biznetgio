@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Pulumi;
-using Biznetgio.Biznetgio;
+using Shirasakaren.Biznetgio;
 
 return await Deployment.RunAsync(() =>
 {

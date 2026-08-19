@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace Biznetgio.Biznetgio
+namespace Shirasakaren.Biznetgio
 {
     [BiznetgioResourceType("pulumi:providers:biznetgio")]
     public partial class Provider : global::Pulumi.ProviderResource
@@ -43,6 +43,7 @@ namespace Biznetgio.Biznetgio
             var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
+                PluginDownloadURL = "github://api.github.com/shirasakaren/pulumi-biznetgio",
                 AdditionalSecretOutputs =
                 {
                     "apiToken",

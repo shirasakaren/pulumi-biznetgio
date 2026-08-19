@@ -16,7 +16,7 @@ func (s *ObjectStorageService) path(seg, status string) string {
 }
 
 func (s *ObjectStorageService) bucketPath(accountID int64, bucketName, rest string) string {
-	return fmt.Sprintf("/object-storages/accounts/%d/buckets/%s%s", accountID, bucketName, rest)
+	return fmt.Sprintf("/object-storages/accounts/%d/buckets/%s%s", accountID, url.PathEscape(bucketName), rest)
 }
 
 func (s *ObjectStorageService) Create(ctx context.Context, req NOSCreatePayload) (map[string]any, error) {
@@ -100,7 +100,7 @@ func (s *ObjectStorageService) CredentialUpdateStatus(
 	ctx context.Context, accountID int64, accessKey string, active bool,
 ) (map[string]any, error) {
 	raw, err := s.client.doJSON(ctx, http.MethodPut,
-		fmt.Sprintf("/object-storages/accounts/%d/credentials/%s", accountID, accessKey),
+		fmt.Sprintf("/object-storages/accounts/%d/credentials/%s", accountID, url.PathEscape(accessKey)),
 		map[string]bool{"active": active})
 	if err != nil {
 		return nil, err
@@ -112,7 +112,7 @@ func (s *ObjectStorageService) CredentialDelete(
 	ctx context.Context, accountID int64, accessKey string,
 ) (map[string]any, error) {
 	raw, err := s.client.doJSON(ctx, http.MethodDelete,
-		fmt.Sprintf("/object-storages/accounts/%d/credentials/%s", accountID, accessKey), nil)
+		fmt.Sprintf("/object-storages/accounts/%d/credentials/%s", accountID, url.PathEscape(accessKey)), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -297,7 +297,7 @@ func (s *ObjectStorageService) ObjectCopy(
 	ctx context.Context, accountID int64, bucketName, toBucketName, objectName string,
 ) (map[string]any, error) {
 	raw, err := s.client.doJSON(ctx, http.MethodPost,
-		s.bucketPath(accountID, bucketName, "/copy/"+toBucketName+"/"+objectName), nil)
+		s.bucketPath(accountID, bucketName, "/copy/"+url.PathEscape(toBucketName)+"/"+url.PathEscape(objectName)), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -308,7 +308,7 @@ func (s *ObjectStorageService) ObjectMove(
 	ctx context.Context, accountID int64, bucketName, toBucketName, objectName string,
 ) (map[string]any, error) {
 	raw, err := s.client.doJSON(ctx, http.MethodPut,
-		s.bucketPath(accountID, bucketName, "/move/"+toBucketName+"/"+objectName), nil)
+		s.bucketPath(accountID, bucketName, "/move/"+url.PathEscape(toBucketName)+"/"+url.PathEscape(objectName)), nil)
 	if err != nil {
 		return nil, err
 	}
