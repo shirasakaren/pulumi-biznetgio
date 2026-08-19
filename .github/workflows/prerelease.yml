@@ -6,6 +6,7 @@ on:
     tags:
     - v*.*.*-**
 env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   PROVIDER: biznetgio
   TRAVIS_OS_NAME: linux
   GOVERSION: "1.21.x"
@@ -124,7 +125,7 @@ jobs:
       uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-    - if: failure() && github.event_name == 'push' && secrets.SLACK_WEBHOOK_URL != ''
+    - if: failure() && github.event_name == 'push' && env.SLACK_WEBHOOK_URL != ''
       name: Notify Slack
       uses: 8398a7/action-slack@77eaa4f1c608a7d68b38af4e3f739dcd8cba273e # v3.19.0
       with:
@@ -191,7 +192,7 @@ jobs:
       with:
         name: ${{ matrix.language  }}-sdk.tar.gz
         path: ${{ github.workspace}}/sdk/${{ matrix.language }}.tar.gz
-    - if: failure() && github.event_name == 'push' && secrets.SLACK_WEBHOOK_URL != ''
+    - if: failure() && github.event_name == 'push' && env.SLACK_WEBHOOK_URL != ''
       name: Notify Slack
       uses: 8398a7/action-slack@77eaa4f1c608a7d68b38af4e3f739dcd8cba273e # v3.19.0
       with:
@@ -265,7 +266,7 @@ jobs:
         cd examples && go test -count=1 -cover -timeout 2h -tags=${{ matrix.language }} -parallel 4 .
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - if: failure() && github.event_name == 'push' && secrets.SLACK_WEBHOOK_URL != ''
+    - if: failure() && github.event_name == 'push' && env.SLACK_WEBHOOK_URL != ''
       name: Notify Slack
       uses: 8398a7/action-slack@77eaa4f1c608a7d68b38af4e3f739dcd8cba273e # v3.19.0
       with:
@@ -321,7 +322,7 @@ jobs:
       with:
         args: -p 3 -f .goreleaser.prerelease.yml --clean --skip=validate --timeout 60m0s
         version: latest
-    - if: failure() && github.event_name == 'push' && secrets.SLACK_WEBHOOK_URL != ''
+    - if: failure() && github.event_name == 'push' && env.SLACK_WEBHOOK_URL != ''
       name: Notify Slack
       uses: 8398a7/action-slack@77eaa4f1c608a7d68b38af4e3f739dcd8cba273e # v3.19.0
       with:
@@ -399,7 +400,7 @@ jobs:
         PYPI_PUBLISH_ARTIFACTS: all
         PYPI_USERNAME: __token__
         PYPI_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-    - if: failure() && github.event_name == 'push' && secrets.SLACK_WEBHOOK_URL != ''
+    - if: failure() && github.event_name == 'push' && env.SLACK_WEBHOOK_URL != ''
       name: Notify Slack
       uses: 8398a7/action-slack@77eaa4f1c608a7d68b38af4e3f739dcd8cba273e # v3.19.0
       with:
