@@ -48,5 +48,5 @@ jobs:
       - uses: pulumi/actions@v5
       - run: make provider VERSION_GENERIC=0.0.0
       - run: |
-          pulumi package get-schema ./bin/pulumi-resource-biznetgio > /tmp/schema.json
+          pulumi package get-schema ./bin/pulumi-resource-biznetgio | jq 'del(.version)' > /tmp/schema.json
           diff -u provider/cmd/pulumi-resource-biznetgio/schema.json /tmp/schema.json

@@ -1,7 +1,6 @@
 {
   "name": "biznetgio",
   "displayName": "Pulumi BiznetGIO Provider",
-  "version": "0.0.0",
   "description": "Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren - NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.",
   "keywords": [
     "biznetgio",
