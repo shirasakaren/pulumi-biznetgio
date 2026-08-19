@@ -298,7 +298,7 @@ func (s *NeoliteService) KeypairCreate(ctx context.Context, name string) (*Keypa
 	return decodeJSON[*KeypairResource](raw)
 }
 
-// KeypairCreateRaw create keypair, return raw response map — private key cuma
+// KeypairCreateRaw create keypair, return raw response map - private key cuma
 // keluar di response ini dan field-nya undocumented, jadi jangan di-decode typed.
 func (s *NeoliteService) KeypairCreateRaw(ctx context.Context, name string) (map[string]any, error) {
 	raw, err := s.client.doJSON(ctx, http.MethodPost, "/neolites/keypairs/", map[string]string{"name": name})

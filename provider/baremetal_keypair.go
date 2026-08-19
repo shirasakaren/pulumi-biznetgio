@@ -93,7 +93,7 @@ func (BaremetalKeypair) Read(
 	for _, it := range items {
 		if id, ok := bmtInt64(it, "keypair_id", "id"); ok && id == keypairID {
 			resp.State = keypairStateFromMap(ctx, req.Inputs, it)
-			// list gak bawa private key — keep value lama
+			// list gak bawa private key - keep value lama
 			resp.State.PrivateKey = req.State.PrivateKey
 			return resp, nil
 		}
@@ -129,7 +129,7 @@ func keypairStateFromMap(_ context.Context, args BaremetalKeypairArgs, m map[str
 	if v, ok := bmtString(m, "public_key", "publickey"); ok {
 		st.PublicKey = &v
 	}
-	// private key cuma di response create — alias defensif, jangan nebak nama
+	// private key cuma di response create - alias defensif, jangan nebak nama
 	if v, ok := bmtString(m, "private_key", "private", "secret_key", "pem"); ok {
 		st.PrivateKey = &v
 	}

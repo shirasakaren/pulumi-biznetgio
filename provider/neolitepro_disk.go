@@ -40,7 +40,7 @@ func (a *NeoliteProDiskArgs) Annotate(ann infer.Annotator) {
 	ann.Describe(&a.Promocode, "Kode promo saat order.")
 	ann.SetDefault(&a.Promocode, "")
 	ann.Describe(&a.PayWithCreditCard, "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). "+
-		"Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.")
+		"Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.")
 	ann.SetDefault(&a.PayWithCreditCard, true)
 	ann.Describe(&a.Size, "Ukuran disk (GB). Default 30 (minimal product disk pro). Cuma bisa naik, bukan turun.")
 	ann.SetDefault(&a.Size, int64(30))

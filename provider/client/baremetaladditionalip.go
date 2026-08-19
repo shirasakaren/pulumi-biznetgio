@@ -30,7 +30,7 @@ func (s *BaremetalAdditionalIPService) List(ctx context.Context, status string) 
 	return decodeJSON[[]map[string]any](raw)
 }
 
-// docs bilang id string di get, int di delete — ikut docs aja
+// docs bilang id string di get, int di delete - ikut docs aja
 func (s *BaremetalAdditionalIPService) Get(ctx context.Context, accountID string) (map[string]any, error) {
 	raw, err := s.client.doJSON(ctx, http.MethodGet, fmt.Sprintf("/baremetal-additional-ips/%s", accountID), nil)
 	if err != nil {

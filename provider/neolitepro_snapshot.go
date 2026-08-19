@@ -36,7 +36,7 @@ func (a *NeoliteProSnapshotArgs) Annotate(ann infer.Annotator) {
 	ann.Describe(&a.Cycle, "Siklus billing: m monthly, a annual, q quarterly, s semiannual, "+
 		"b biennial, t triennial, p4, p5.")
 	ann.Describe(&a.PayWithCreditCard, "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). "+
-		"Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.")
+		"Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.")
 	ann.SetDefault(&a.PayWithCreditCard, true)
 	ann.Describe(&a.Promocode, "Kode promo saat order.")
 	ann.SetDefault(&a.Promocode, "")

@@ -1,7 +1,8 @@
 {
   "name": "biznetgio",
   "displayName": "Pulumi BiznetGIO Provider",
-  "description": "Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren — NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.",
+  "version": "0.1.5",
+  "description": "Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren - NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.",
   "keywords": [
     "biznetgio",
     "cloud",
@@ -789,7 +790,7 @@
         },
         "size": {
           "type": "integer",
-          "description": "Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.",
+          "description": "Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.",
           "default": 100
         },
         "status": {
@@ -834,7 +835,7 @@
         },
         "size": {
           "type": "integer",
-          "description": "Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.",
+          "description": "Storage size in GB. Defaults to 100. Changing it triggers upgrade (`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.",
           "default": 100
         },
         "storageName": {
@@ -1103,7 +1104,7 @@
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.",
+          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
           "default": true
         },
         "productId": {
@@ -1154,7 +1155,7 @@
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.",
+          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
           "default": true
         },
         "productId": {
@@ -1235,7 +1236,7 @@
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.",
+          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
           "default": true
         },
         "productId": {
@@ -1286,7 +1287,7 @@
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.",
+          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
           "default": true
         },
         "productId": {
@@ -1377,7 +1378,7 @@
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.",
+          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
           "default": true
         },
         "promocode": {
@@ -1417,7 +1418,7 @@
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.",
+          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
           "default": true
         },
         "promocode": {
@@ -1466,7 +1467,7 @@
         },
         "diskSize": {
           "type": "integer",
-          "description": "Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun."
+          "description": "Ukuran disk target (GB, absolute - bukan tambahan). Cuma bisa naik, bukan turun."
         },
         "keypairId": {
           "type": "integer",
@@ -1502,7 +1503,7 @@
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.",
+          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
           "default": true
         },
         "powerState": {
@@ -1549,7 +1550,7 @@
         },
         "sshAndConsoleUser": {
           "type": "string",
-          "description": "User SSH & console yang dipasang saat create."
+          "description": "User SSH \u0026 console yang dipasang saat create."
         },
         "status": {
           "type": "string",
@@ -1608,7 +1609,7 @@
         },
         "diskSize": {
           "type": "integer",
-          "description": "Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun."
+          "description": "Ukuran disk target (GB, absolute - bukan tambahan). Cuma bisa naik, bukan turun."
         },
         "keypairId": {
           "type": "integer",
@@ -1616,7 +1617,7 @@
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.",
+          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
           "default": true
         },
         "powerState": {
@@ -1642,7 +1643,7 @@
         },
         "sshAndConsoleUser": {
           "type": "string",
-          "description": "User SSH & console yang dipasang saat create."
+          "description": "User SSH \u0026 console yang dipasang saat create."
         },
         "vmName": {
           "type": "string",
@@ -1685,7 +1686,7 @@
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.",
+          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
           "default": true
         },
         "promocode": {
@@ -1725,7 +1726,7 @@
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.",
+          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
           "default": true
         },
         "promocode": {
@@ -1774,7 +1775,7 @@
         },
         "diskSize": {
           "type": "integer",
-          "description": "Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun."
+          "description": "Ukuran disk target (GB, absolute - bukan tambahan). Cuma bisa naik, bukan turun."
         },
         "keypairId": {
           "type": "integer",
@@ -1814,7 +1815,7 @@
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.",
+          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
           "default": true
         },
         "powerState": {
@@ -1861,7 +1862,7 @@
         },
         "sshAndConsoleUser": {
           "type": "string",
-          "description": "User SSH & console yang dipasang saat create."
+          "description": "User SSH \u0026 console yang dipasang saat create."
         },
         "status": {
           "type": "string",
@@ -1920,7 +1921,7 @@
         },
         "diskSize": {
           "type": "integer",
-          "description": "Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun."
+          "description": "Ukuran disk target (GB, absolute - bukan tambahan). Cuma bisa naik, bukan turun."
         },
         "keypairId": {
           "type": "integer",
@@ -1932,7 +1933,7 @@
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.",
+          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
           "default": true
         },
         "powerState": {
@@ -1958,7 +1959,7 @@
         },
         "sshAndConsoleUser": {
           "type": "string",
-          "description": "User SSH & console yang dipasang saat create."
+          "description": "User SSH \u0026 console yang dipasang saat create."
         },
         "vmName": {
           "type": "string",
@@ -2005,7 +2006,7 @@
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.",
+          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
           "default": true
         },
         "productId": {
@@ -2023,7 +2024,7 @@
         },
         "sshAndConsoleUser": {
           "type": "string",
-          "description": "User SSH & console yang dipasang saat create."
+          "description": "User SSH \u0026 console yang dipasang saat create."
         },
         "status": {
           "type": "string",
@@ -2066,7 +2067,7 @@
         },
         "payWithCreditCard": {
           "type": "boolean",
-          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.",
+          "description": "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.",
           "default": true
         },
         "productId": {
@@ -2084,7 +2085,7 @@
         },
         "sshAndConsoleUser": {
           "type": "string",
-          "description": "User SSH & console yang dipasang saat create."
+          "description": "User SSH \u0026 console yang dipasang saat create."
         }
       },
       "requiredInputs": [

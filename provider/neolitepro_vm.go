@@ -66,7 +66,7 @@ func (a *NeoliteProVmArgs) Annotate(ann infer.Annotator) {
 	ann.Describe(&a.Cycle, "Siklus billing: m monthly, a annual, q quarterly, s semiannual, "+
 		"b biennial, t triennial, p4, p5.")
 	ann.Describe(&a.PayWithCreditCard, "Bayar invoice pake kartu kredit saat order. Default true (auto-charge). "+
-		"Set false kalau mau ninggalin invoice unpaid di portal — resource bakal stuck Pending sampai dibayar.")
+		"Set false kalau mau ninggalin invoice unpaid di portal - resource bakal stuck Pending sampai dibayar.")
 	ann.SetDefault(&a.PayWithCreditCard, true)
 	ann.Describe(&a.Promocode, "Kode promo saat order.")
 	ann.SetDefault(&a.Promocode, "")
@@ -74,7 +74,7 @@ func (a *NeoliteProVmArgs) Annotate(ann infer.Annotator) {
 		"Update cuma mengirim action kalau nilainya berubah.")
 	ann.Describe(&a.RebuildOS, "Kalau berubah, VM di-rebuild (wipe OS) pake OS baru via endpoint rebuild. "+
 		"List OS valid ada di function `getOsList`.")
-	ann.Describe(&a.DiskSize, "Ukuran disk target (GB, absolute — bukan tambahan). Cuma bisa naik, bukan turun.")
+	ann.Describe(&a.DiskSize, "Ukuran disk target (GB, absolute - bukan tambahan). Cuma bisa naik, bukan turun.")
 }
 
 func (s *NeoliteProVmState) Annotate(ann infer.Annotator) {

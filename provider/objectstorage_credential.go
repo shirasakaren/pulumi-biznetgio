@@ -183,7 +183,7 @@ func osFindCredential(
 }
 
 // osResolveAccessKey balikin access key plaintext dari keyForm (hash atau literal).
-// Hash mode butuh list credentials — fallback dipake kalo ga ketemu (state lama).
+// Hash mode butuh list credentials - fallback dipake kalo ga ketemu (state lama).
 func osResolveAccessKey(
 	ctx context.Context, c *client.Client, accountID int64, keyForm, fallback string,
 ) (string, bool, error) {

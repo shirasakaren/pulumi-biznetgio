@@ -1,4 +1,4 @@
-# Publishing Runbook — pulumi-biznetgio
+# Publishing Runbook - pulumi-biznetgio
 
 Complete guide to get this community provider published everywhere users can
 consume it. Maintained by Shirasaka Ren under the `shirasakaren` namespace.
@@ -7,13 +7,13 @@ consume it. Maintained by Shirasaka Ren under the `shirasakaren` namespace.
 
 | Target | Status |
 | --- | --- |
-| npm (`@shirasakaren/biznetgio`) | ✅ **LIVE** — latest `0.1.2` (`npm install @shirasakaren/biznetgio`) |
-| GitHub Releases (plugin binaries) | ✅ **LIVE** — `v0.1.2` (plugin auto-downloads) |
+| npm (`@shirasakaren/biznetgio`) | ✅ **LIVE** - latest `0.1.2` (`npm install @shirasakaren/biznetgio`) |
+| GitHub Releases (plugin binaries) | ✅ **LIVE** - `v0.1.2` (plugin auto-downloads) |
 | PyPI (`pulumi-biznetgio`) | ⬜ not yet |
 | NuGet (`Shirasakaren.Biznetgio`) | ⬜ not yet |
-| Maven Central (`ren.shirasaka:biznetgio`) | ✅ **UPLOADED** — `0.1.5` published via the Central Portal API (syncs to Maven Central automatically) |
+| Maven Central (`ren.shirasaka:biznetgio`) | ✅ **UPLOADED** - `0.1.5` published via the Central Portal API (syncs to Maven Central automatically) |
 | Go module | ✅ resolved from GitHub automatically |
-| Pulumi Registry listing | ⬜ optional discovery layer — submit after everything else |
+| Pulumi Registry listing | ⬜ optional discovery layer - submit after everything else |
 
 ## Architecture
 
@@ -36,13 +36,13 @@ installs its SDK from its own registry.
 
 ## Do you need PyPI / NuGet / Maven?
 
-Yes — each is a separate ecosystem:
+Yes - each is a separate ecosystem:
 
 - **npm** covers TypeScript/JavaScript only (done).
 - **PyPI** covers Python users (`import pulumi_biznetgio`).
 - **NuGet** covers C#/.NET users.
 - **Maven Central** covers Java users.
-- **Go** needs no upload — Go resolves the module straight from this GitHub repo via tags.
+- **Go** needs no upload - Go resolves the module straight from this GitHub repo via tags.
 
 Skipping one registry simply means that language can't install the SDK.
 
@@ -75,7 +75,7 @@ releases automate npm automatically.
   it) so no long-lived token sits in the repo. Instructions below.
 </Note>
 
-## 2. npm — automation (publish is live)
+## 2. npm - automation (publish is live)
 
 The `release.yml` workflow publishes npm automatically on every `v*.*.*` tag
 using the `NPM_TOKEN` secret. To replace the token with **npm Trusted
@@ -96,7 +96,7 @@ npm publish --access public
 
 ## 3. PyPI
 
-Package: `pulumi-biznetgio` (import stays `pulumi_biznetgio` — PyPI normalizes `_` to `-`).
+Package: `pulumi-biznetgio` (import stays `pulumi_biznetgio` - PyPI normalizes `_` to `-`).
 
 1. Create a [PyPI](https://pypi.org) account (2FA on).
 2. Reserve the name by publishing once, or use a Trusted Publisher directly:
@@ -110,7 +110,7 @@ Package: `pulumi-biznetgio` (import stays `pulumi_biznetgio` — PyPI normalizes
    ```
 
 4. The release workflow publishes via `pypa/gh-action-pypi-publish` with
-   `id-token: write` — no token needed once the Trusted Publisher exists.
+   `id-token: write` - no token needed once the Trusted Publisher exists.
 
 ## 4. NuGet
 
@@ -151,7 +151,7 @@ a DNS TXT record on that domain (see §13 for the exact steps).
    gradle -p ./sdk/java publishToSonatype closeAndReleaseSonatypeStagingRepository
    ```
 
-   Do this step early — Maven has the most account/signing setup.
+   Do this step early - Maven has the most account/signing setup.
 
 ## 6. Go SDK
 
@@ -190,7 +190,7 @@ pulumi plugin ls
 
 ## 8. Pulumi Registry listing (optional, do last)
 
-The Registry is a discovery/docs layer — installs work without it.
+The Registry is a discovery/docs layer - installs work without it.
 
 1. Fork [pulumi/registry](https://github.com/pulumi/registry).
 2. Add to `community-packages/package-list.json`:
@@ -203,10 +203,10 @@ The Registry is a discovery/docs layer — installs work without it.
    ```
 
 3. Open a PR. Publisher identity shows as `shirasakaren` (from provider
-   metadata) — correct for a community provider.
+   metadata) - correct for a community provider.
 4. Update this README with the Registry URL after acceptance.
 
-## 9. First release — the exact order
+## 9. First release - the exact order
 
 1. All identity checks (done): no `github.com/biznetgio` / `@biznetgio`
    references anywhere in the repo.
@@ -252,30 +252,30 @@ The Registry is a discovery/docs layer — installs work without it.
 - Normal CI keeps `permissions: contents: read`; only the release job gets
   `contents: write` / `id-token: write`.
 - Never commit tokens; the npm token used for the first publish is a
-  publish-only token — store it as `NPM_TOKEN` or delete it after enabling
+  publish-only token - store it as `NPM_TOKEN` or delete it after enabling
   Trusted Publishing.
 
 ## 12. Versioning
 
-Start at `v0.1.0`, follow semver, and do not rush `v1.0.0` — the provider
+Start at `v0.1.0`, follow semver, and do not rush `v1.0.0` - the provider
 schema is the public API contract. Each release bumps the SDK versions in
 lockstep via the release workflow.
 
-## 13. Sonatype namespace verification — user steps (blocking)
+## 13. Sonatype namespace verification - user steps (blocking)
 
 This is the only step that requires the Sonatype web UI (no API exists), so
 do it yourself:
 
 1. Sign in at https://central.sonatype.com with your account.
 2. Namespaces → **Add Namespace** → `ren.shirasaka`.
-3. Pick verification method **DNS record** — the namespace is the
+3. Pick verification method **DNS record** - the namespace is the
    reverse-DNS of `shirasaka.ren`, the domain you own.
 4. The portal shows a TXT record to publish. Add it in your DNS for
    `shirasaka.ren` (use the exact host/value it displays) and click verify.
 5. Generate a **publish token** (User → Publishing tokens → Access tokens)
-   and store it as `OSSRH_USERNAME` / `OSSRH_PASSWORD` secrets. ✅ done —
+   and store it as `OSSRH_USERNAME` / `OSSRH_PASSWORD` secrets. ✅ done  - 
    the release pipeline signs with the configured GPG key and uploads the
    bundle to the Central Portal API on every `v*` tag.
 6. Deployments publish automatically; if a publication fails mid-run,
-   update the secrets and `gh run rerun --failed <run-id>` — the job
+   update the secrets and `gh run rerun --failed <run-id>` - the job
    re-reads secrets at runtime, no new tag needed.

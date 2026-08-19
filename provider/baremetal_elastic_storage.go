@@ -40,7 +40,7 @@ func (a *BaremetalElasticStorageArgs) Annotate(ann infer.Annotator) {
 	ann.Describe(&a.MetalAccountID, "Account id of the target baremetal. "+
 		"Can only be set at creation (no re-attach endpoint).")
 	ann.Describe(&a.Size, "Storage size in GB. Defaults to 100. Changing it triggers upgrade "+
-		"(`PUT .../{account_id}`) — grow-only, shrinking is rejected by the API.")
+		"(`PUT .../{account_id}`) - grow-only, shrinking is rejected by the API.")
 	ann.SetDefault(&a.Size, int64(100))
 	ann.Describe(&a.Promocode, "Promo code to apply at creation.")
 	ann.Describe(&a.PayWithCreditCard, "Pay the invoice with the registered credit card. Defaults to true. "+

@@ -216,7 +216,7 @@ func (s *ObjectStorageService) DirectoryCreate(
 	return decodeJSON[map[string]any](raw)
 }
 
-// responnya bytes, bukan envelope — jangan di-unwrap
+// responnya bytes, bukan envelope - jangan di-unwrap
 func (s *ObjectStorageService) ObjectDownload(
 	ctx context.Context, accountID int64, bucketName, objectName string,
 ) ([]byte, error) {

@@ -19,7 +19,7 @@ const Name string = "biznetgio"
 func Provider() p.Provider {
 	p, err := infer.NewProviderBuilder().
 		WithDisplayName("Pulumi BiznetGIO Provider").
-		WithDescription("Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren — NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.").
+		WithDescription("Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren - NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.").
 		WithHomepage("https://biznetgio.creations.ren").
 		WithRepository("github.com/shirasakaren/pulumi-biznetgio").
 		WithPublisher("shirasakaren").
