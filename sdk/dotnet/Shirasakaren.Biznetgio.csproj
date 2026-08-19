@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://biznetgio.creations.ren</PackageProjectUrl>
     <RepositoryUrl>https://github.com/shirasakaren/pulumi-biznetgio</RepositoryUrl>
     <PackageIcon>logo.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
 
     <Version>0.1.7</Version>
     <TargetFramework>net6.0</TargetFramework>
@@ -49,6 +50,13 @@
   </ItemGroup>
 
   <ItemGroup>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

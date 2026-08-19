@@ -5,7 +5,7 @@
 <h1 align="center">Pulumi BiznetGIO Provider</h1>
 
 <p align="center">
-  Manage <a href="https://www.biznetgio.com">BiznetGIO</a> cloud infrastructure — bare metal, VMs, GPUs, object storage — as code.
+  Manage <a href="https://www.biznetgio.com">BiznetGIO</a> cloud infrastructure - bare metal, VMs, GPUs, object storage - as code.
 </p>
 
 <p align="center">
@@ -18,7 +18,11 @@
   <a href="./LICENSE"><img src="https://img.shields.io/github/license/shirasakaren/pulumi-biznetgio" alt="License"></a>
 </p>
 
-> **Unofficial** community provider maintained by [Shirasaka Ren](https://shirasaka.ren) — not affiliated with or
+<p align="center">
+  <a href="https://biznetgio.creations.ren"><img src="https://img.shields.io/badge/%F0%9F%93%96%20docs-biznetgio.creations.ren-008541?style=for-the-badge" alt="Documentation site"></a>
+</p>
+
+> **Unofficial** community provider maintained by [Shirasaka Ren](https://shirasaka.ren) - not affiliated with or
 > endorsed by PT Biznet Gio Nusantara.
 
 Covers **NEO Metal** (bare metal), **NEO Lite / NEO Lite Pro** (VMs), **NEO GPU**, and **NEO Object Storage**
@@ -39,7 +43,7 @@ This README is intentionally short.
 <tr><td>Java</td><td><code>ren.shirasaka:biznetgio</code> on Maven Central</td></tr>
 </table>
 
-The plugin binary itself is downloaded automatically from GitHub Releases — no separate install step needed.
+The plugin binary itself is downloaded automatically from GitHub Releases - no separate install step needed.
 
 ## Quickstart
 
@@ -91,10 +95,10 @@ Python, Go, C#, and Java examples: [docs site →](https://biznetgio.creations.r
 <summary><b>Notes on the BiznetGIO API</b> (click to expand)</summary>
 
 - The Portal API doesn't publish response schemas. Response handling is defensive and cross-checked against
-  BiznetGIO's own SDKs and CLI — every resource exposes a secret-marked `raw` output (secrets redacted) with the
+  BiznetGIO's own SDKs and CLI - every resource exposes a secret-marked `raw` output (secrets redacted) with the
   full last-read payload, so you're never blocked on an unmodeled field.
 - Power actions are declarative (`powerState`); the API is only called when the value changes. One-shot actions
-  (reset, rebuild, reserve GPU hours, migrate-to-pro) are trigger attributes — change the value to re-fire.
+  (reset, rebuild, reserve GPU hours, migrate-to-pro) are trigger attributes - change the value to re-fire.
 - Long-running provisioning is polled until active; on timeout the partial state is kept and the next `pulumi up`
   resumes the update.
 - Out of scope: products with no public API (NEO Virtual Compute, NEO Kubernetes, NEO DNS, domains, web hosting,

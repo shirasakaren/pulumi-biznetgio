@@ -5,7 +5,7 @@
 This directory contains the default OpenInspect setup for Pulumi provider repositories managed by
 `ci-mgmt`. The files it ships are generated and are overwritten on every regeneration, including
 the `setup.d` and `start.d` hooks that more specific templates contribute. Files you add yourself
-are left alone — see [Customizing Setup and Start](#customizing-setup-and-start).
+are left alone - see [Customizing Setup and Start](#customizing-setup-and-start).
 
 ## Setup vs Start
 
@@ -43,7 +43,7 @@ A failed start hook is fatal to the session, so a hook whose failure the session
 should catch its own errors rather than propagate them.
 
 `setup.d`, `start.d`, and the `*.local.py` files are a convention of these generated scripts. The
-sandbox only ever runs `.openinspect/setup.py` and `.openinspect/start.py` — hook discovery,
+sandbox only ever runs `.openinspect/setup.py` and `.openinspect/start.py` - hook discovery,
 ordering, and failure handling are decided here, not by the sandbox.
 
 ### Exported variables
@@ -57,7 +57,7 @@ ordering, and failure handling are decided here, not by the sandbox.
 | `PYTHONDONTWRITEBYTECODE` | `1`, so a hook importing a sibling module leaves no `__pycache__` in the checkout |
 
 Both entrypoints take the checkout from their working directory, and exit non-zero if it holds no
-`.openinspect` — so run them from the repository root.
+`.openinspect` - so run them from the repository root.
 
 Read those rather than deriving paths from `__file__`. A hook's own depth changes with where it
 lives, so counting parent directories means the same expression resolves differently in
@@ -76,7 +76,7 @@ generated script *and every hook it dispatches*, not each hook separately. Excee
 hook and counts as a failure, with the same consequences as a non-zero exit. The exact limits are
 the sandbox's to set and change; `SETUP_TIMEOUT_SECONDS` and `START_TIMEOUT_SECONDS` override them.
 
-The asymmetry is the point. Expensive work — installing dependencies, building, warming caches —
+The asymmetry is the point. Expensive work - installing dependencies, building, warming caches -
 belongs in `setup.d`, where it runs once and is baked into the image. `start.d` is a session
 entrypoint: reconcile what the branch changed, then get out of the way.
 

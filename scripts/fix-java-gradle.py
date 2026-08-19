@@ -84,7 +84,7 @@ publishing {
 
             pom {
                 name = "pulumi-biznetgio"
-                description = "Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren — NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage."
+                description = "Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren - NEO Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage."
                 url = "https://github.com/shirasakaren/pulumi-biznetgio"
 
                 licenses {
