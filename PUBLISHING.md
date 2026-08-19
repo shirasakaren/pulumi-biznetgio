@@ -10,8 +10,8 @@ consume it. Maintained by Shirasaka Ren under the `shirasakaren` namespace.
 | npm (`@shirasakaren/biznetgio`) | ✅ **LIVE** - `npm install @shirasakaren/biznetgio` |
 | GitHub Releases (plugin binaries) | ✅ **LIVE** - plugin auto-downloads |
 | PyPI (`pulumi-biznetgio`) | ✅ **LIVE** - `pip install pulumi-biznetgio` |
-| NuGet (`Shirasakaren.Biznetgio`) | 🟡 pending `v0.1.7` - the package icon was an SVG mislabeled `.png`, which NuGet.org rejected outright, now fixed |
-| Maven Central (`ren.shirasaka:biznetgio`) | 🟡 pending `v0.1.7` - the release GPG key wasn't published to a keyserver, so Central Portal rejected the signature on every prior attempt, now fixed |
+| NuGet (`Shirasakaren.Biznetgio`) | ✅ **LIVE** - `dotnet add package Shirasakaren.Biznetgio` |
+| Maven Central (`ren.shirasaka:biznetgio`) | ✅ **LIVE** - `implementation("ren.shirasaka:biznetgio:0.1.7")` |
 | Go module | ✅ resolved from GitHub automatically |
 | Pulumi Registry listing | 🟡 in review - [pulumi/registry#12144](https://github.com/pulumi/registry/pull/12144) |
 
