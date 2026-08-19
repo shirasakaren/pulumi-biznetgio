@@ -123,6 +123,7 @@ nodejs_sdk: sdk/nodejs
 
 python_sdk: sdk/python
 	cp README.md ${PACKDIR}/python/
+	python3 scripts/fix-python-sdk.py ${PACKDIR}/python ${VERSION_GENERIC}
 	cd ${PACKDIR}/python/ && \
 		rm -rf ./bin/ ../python.bin/ && cp -R . ../python.bin && mv ../python.bin ./bin && \
 		python3 -m venv venv && \
