@@ -69,6 +69,12 @@ tasks.register('javadocJar', Jar) {
 }
 
 publishing {
+    repositories {
+        maven {
+            name = 'localPortalRepo'
+            url = uri("${buildDir}/local-repo")
+        }
+    }
     publications {
         mainPublication(MavenPublication) {
             artifactId = "biznetgio"
@@ -106,13 +112,11 @@ publishing {
     }
 }
 
-// collect every artifact the Central Portal bundle needs into build/portal
+// publish to a local maven repo, then collect the artifacts for the portal bundle
 tasks.register('assemblePortal', Copy) {
-    dependsOn jar, sourcesJar, javadocJar, 'generatePomFileForMainPublication'
-    from(jar, sourcesJar, javadocJar)
-    from(tasks.named('generatePomFileForMainPublication')) {
-        rename { 'pom-default.xml' }
-    }
+    dependsOn 'publishMainPublicationPublicationToLocalPortalRepoRepository'
+    from layout.buildDirectory.dir("local-repo/ren/shirasaka/biznetgio/${project.version}")
+    include '*.jar', '*.pom'
     into layout.buildDirectory.dir('portal')
 }
 """)

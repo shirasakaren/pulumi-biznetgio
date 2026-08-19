@@ -456,7 +456,7 @@ jobs:
       run: |
         cd sdk/java/build/portal
         printf '%s' "$JAVA_SIGNING_KEY" | gpg --batch --import
-        for f in *.jar pom-default.xml; do
+        for f in *.jar *.pom; do
           gpg --batch --yes --pinentry-mode loopback --passphrase "$JAVA_SIGNING_PASSWORD" --armor --detach-sign "$f"
         done
         zip -q -r bundle.zip .
