@@ -264,12 +264,12 @@ func (NeoliteVm) Update(
 		if err != nil {
 			if errors.Is(err, context.DeadlineExceeded) {
 				return infer.UpdateResponse[NeoliteVmState]{
-						Output: NeoliteVmState{NeoliteVmArgs: in},
-					}, infer.ResourceInitFailedError{Reasons: []string{
-						fmt.Sprintf("neolite vm %d not active yet: %s", id, err),
-					}}
+					Output: NeoliteVmState{NeoliteVmArgs: in},
+				}, infer.ResourceInitFailedError{Reasons: []string{
+					fmt.Sprintf("neolite vm %d not active yet: %s", id, err),
+				}}
 			}
-			return infer.UpdateResponse[NeoliteVmState]{}, fmt.Errorf("neolite vm %d gagal balik active: %w", id, err)
+			return infer.UpdateResponse[NeoliteVmState]{}, fmt.Errorf("neolite vm %d failed to return to active: %w", id, err)
 		}
 	}
 

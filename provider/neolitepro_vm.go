@@ -235,12 +235,13 @@ func (NeoliteProVm) Update(
 		if err != nil {
 			if errors.Is(err, context.DeadlineExceeded) {
 				return infer.UpdateResponse[NeoliteProVmState]{
-						Output: NeoliteProVmState{NeoliteProVmArgs: in},
-					}, infer.ResourceInitFailedError{Reasons: []string{
-						fmt.Sprintf("neolite pro vm %d not active yet: %s", id, err),
-					}}
+					Output: NeoliteProVmState{NeoliteProVmArgs: in},
+				}, infer.ResourceInitFailedError{Reasons: []string{
+					fmt.Sprintf("neolite pro vm %d not active yet: %s", id, err),
+				}}
 			}
-			return infer.UpdateResponse[NeoliteProVmState]{}, fmt.Errorf("neolite pro vm %d gagal balik active: %w", id, err)
+			return infer.UpdateResponse[NeoliteProVmState]{},
+				fmt.Errorf("neolite pro vm %d failed to return to active: %w", id, err)
 		}
 	}
 

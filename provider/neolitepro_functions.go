@@ -184,7 +184,7 @@ func (NeoliteProIPAvailability) Invoke(
 var (
 	_ infer.Fn[NeoliteProProductsArgs, NeoliteProProductsResult]                           = NeoliteProProducts{}
 	_ infer.Fn[NeoliteProOsListArgs, NeoliteProOsListResult]                               = NeoliteProOsList{}
-	_ infer.Fn[NeoliteProChangePackageOptionsArgs, NeoliteProChangePackageOptionsResult]   = NeoliteProChangePackageOptions{}  //nolint:lll // gofmt merge balik
-	_ infer.Fn[NeoliteProStorageUpgradeOptionsArgs, NeoliteProStorageUpgradeOptionsResult] = NeoliteProStorageUpgradeOptions{} //nolint:lll // gofmt merge balik
+	_ infer.Fn[NeoliteProChangePackageOptionsArgs, NeoliteProChangePackageOptionsResult]   = NeoliteProChangePackageOptions{}  //nolint:lll // gofmt re-wraps this back onto one line
+	_ infer.Fn[NeoliteProStorageUpgradeOptionsArgs, NeoliteProStorageUpgradeOptionsResult] = NeoliteProStorageUpgradeOptions{} //nolint:lll // gofmt re-wraps this back onto one line
 	_ infer.Fn[NeoliteProIPAvailabilityArgs, NeoliteProIPAvailabilityResult]               = NeoliteProIPAvailability{}
 )

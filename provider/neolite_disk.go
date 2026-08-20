@@ -145,12 +145,12 @@ func (NeoliteDisk) Update(
 	if err != nil {
 		if errors.Is(err, context.DeadlineExceeded) {
 			return infer.UpdateResponse[NeoliteDiskState]{
-					Output: NeoliteDiskState{NeoliteDiskArgs: req.Inputs},
-				}, infer.ResourceInitFailedError{Reasons: []string{
-					fmt.Sprintf("neolite disk %d not active yet: %s", id, err),
-				}}
+				Output: NeoliteDiskState{NeoliteDiskArgs: req.Inputs},
+			}, infer.ResourceInitFailedError{Reasons: []string{
+				fmt.Sprintf("neolite disk %d not active yet: %s", id, err),
+			}}
 		}
-		return infer.UpdateResponse[NeoliteDiskState]{}, fmt.Errorf("neolite disk %d gagal balik active: %w", id, err)
+		return infer.UpdateResponse[NeoliteDiskState]{}, fmt.Errorf("neolite disk %d failed to return to active: %w", id, err)
 	}
 
 	state := NeoliteDiskState{NeoliteDiskArgs: req.Inputs}
